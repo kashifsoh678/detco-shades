@@ -1,107 +1,193 @@
+"use client";
+
 import React from 'react';
+import { Phone, Mail, MapPin, Clock, MessageSquare, Send, Globe } from 'lucide-react';
 
 export default function ContactPage() {
     return (
-        <main className="min-h-screen bg-white">
-            {/* Header */}
-            <div className="bg-primary py-12">
-                <div className="container mx-auto px-4 text-center">
-                    <h1 className="text-4xl font-bold text-white">Contact Us</h1>
-                    <p className="text-teal-100 mt-2">Get in touch with our expert engineering team</p>
+        <main className="min-h-screen bg-gray-50">
+
+            {/* --- HERO SECTION --- */}
+            <div className="relative h-[300px] flex items-center justify-center bg-primary overflow-hidden">
+                <div className="absolute inset-0 bg-[url('https://placehold.co/1920x600/0f766e/ffffff?text=Contact+Us+Background')] opacity-10 bg-cover bg-center" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
+                <div className="container mx-auto px-4 relative z-10 text-center">
+                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 shadow-sm">Contact Us</h1>
+                    <p className="text-xl text-teal-100 max-w-2xl mx-auto">
+                        Get in touch with our engineering team for inquiries, quotes, and project consultations.
+                    </p>
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 py-16">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <div className="container mx-auto px-4 py-16  relative z-20">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-                    {/* Contact Information & Map */}
-                    <div>
-                        <h2 className="text-2xl font-bold text-gray-800 mb-8 border-b-2 border-primary inline-block pb-2">
-                            Headquarters
-                        </h2>
+                    {/* --- LEFT COLUMN: Contact Info --- */}
+                    <div className="lg:col-span-1 space-y-6">
 
-                        <div className="space-y-6 mb-12">
-                            <div className="flex items-start gap-4">
-                                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-primary text-xl">📍</div>
-                                <div>
-                                    <h3 className="font-bold text-gray-900">Address</h3>
-                                    <p className="text-gray-600">Jeddah, Saudi Arabia</p>
-                                    <p className="text-gray-500 text-sm mt-1">Service across: Riyadh, Dammam, Khobar, Jubail, Yanbu, Tabuk</p>
+                        {/* Main Contact Card */}
+                        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+                            <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                                Get in Touch
+                            </h2>
+
+                            <div className="space-y-6">
+                                <div className="flex items-start gap-4 group">
+                                    <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">
+                                        <Phone size={20} />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Phone</p>
+                                        <p className="font-medium text-gray-900">+966 55 961 1821</p>
+                                        <p className="text-gray-500 text-sm">+966 50 830 4644</p>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="flex items-start gap-4">
-                                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-primary text-xl">📞</div>
-                                <div>
-                                    <h3 className="font-bold text-gray-900">Phone</h3>
-                                    <p className="text-gray-600">+966 55 961 1821</p>
-                                    <p className="text-gray-600">+966 50 830 4644</p>
+                                <div className="flex items-start gap-4 group">
+                                    <div className="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-green-600 group-hover:bg-green-600 group-hover:text-white transition-colors shrink-0">
+                                        <MessageSquare size={20} />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">WhatsApp</p>
+                                        <a href="https://wa.me/966559611821" target="_blank" rel="noopener noreferrer" className="font-medium text-gray-900 hover:text-green-600 transition-colors">
+                                            Chat with Support
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="flex items-start gap-4">
-                                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-primary text-xl">✉️</div>
-                                <div>
-                                    <h3 className="font-bold text-gray-900">Email</h3>
-                                    <p className="text-gray-600">info@detco.sa</p>
-                                    <p className="text-gray-600">rfq@detco.sa</p>
+                                <div className="flex items-start gap-4 group">
+                                    <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">
+                                        <Mail size={20} />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Email</p>
+                                        <a href="mailto:info@detco.sa" className="font-medium text-gray-900 hover:text-primary transition-colors">info@detco.sa</a>
+                                        <p className="text-gray-500 text-sm">rfq@detco.sa</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Google Map */}
-                        <div className="w-full h-64 bg-gray-200 rounded-lg overflow-hidden relative">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118924.97746194749!2d39.10738092285157!3d21.543333399999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c3d01fb1137e59%3A0xe059579737b118db!2sJeddah%20Saudi%20Arabia!5e0!3m2!1sen!2ssa!4v1703350000000!5m2!1sen!2ssa"
-                                width="100%"
-                                height="100%"
-                                style={{ border: 0 }}
-                                allowFullScreen={true}
-                                loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
-                                title="Detco Location"
-                            ></iframe>
+                        {/* Working Hours & Locations */}
+                        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+                            <div className="space-y-6">
+                                <div className="flex items-start gap-4">
+                                    <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center text-primary shrink-0">
+                                        <Clock size={20} />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Working Hours</p>
+                                        <p className="font-medium text-gray-900">Sat - Thu: 8:00 AM - 6:00 PM</p>
+                                        <p className="text-gray-500 text-sm">Friday: Closed</p>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-start gap-4">
+                                    <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center text-primary shrink-0">
+                                        <MapPin size={20} />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Office Locations</p>
+                                        <p className="font-medium text-gray-900">Jeddah (HQ)</p>
+                                        <p className="text-gray-500 text-sm mt-1">
+                                            Serving: Riyadh, Dammam, Mecca, Medina, & All Saudi Regions
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {/* --- RIGHT COLUMN: RFQ Form --- */}
+                    <div className="lg:col-span-2">
+                        <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border border-gray-100 h-full">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-2">Request a Quote</h2>
+                            <p className="text-gray-500 mb-8">Fill out the form below and our engineering team will respond within 24 hours.</p>
+
+                            <form className="space-y-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label htmlFor="name" className="text-sm font-bold text-gray-700">Full Name <span className="text-red-500">*</span></label>
+                                        <input type="text" id="name" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-gray-400" placeholder="John Doe" required />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label htmlFor="company" className="text-sm font-bold text-gray-700">Company Name</label>
+                                        <input type="text" id="company" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-gray-400" placeholder="Your Company Ltd." />
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label htmlFor="email" className="text-sm font-bold text-gray-700">Email Address <span className="text-red-500">*</span></label>
+                                        <input type="email" id="email" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-gray-400" placeholder="john@company.com" required />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label htmlFor="phone" className="text-sm font-bold text-gray-700">Phone Number <span className="text-red-500">*</span></label>
+                                        <input type="tel" id="phone" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-gray-400" placeholder="+966 50 000 0000" required />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label htmlFor="service" className="text-sm font-bold text-gray-700">Interested Service</label>
+                                    <select id="service" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-gray-600">
+                                        <option>Car Parking Shades</option>
+                                        <option>Tensile Structures</option>
+                                        <option>Swimming Pool Shades</option>
+                                        <option>Other Inquiry</option>
+                                    </select>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label htmlFor="message" className="text-sm font-bold text-gray-700">Project Details <span className="text-red-500">*</span></label>
+                                    <textarea id="message" rows={5} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-gray-400" placeholder="Please describe your project requirements, location, and estimated size..." required></textarea>
+                                </div>
+
+                                <button type="submit" className="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-teal-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 group">
+                                    SUBMIT REQUEST
+                                    <Send size={18} className="group-hover:translate-x-1 transition-transform" />
+                                </button>
+                            </form>
                         </div>
                     </div>
 
-                    {/* Contact Form */}
-                    <div className="bg-gray-50 p-8 rounded-lg shadow-sm">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6">Send Message</h2>
-                        <form className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name <span className="text-red-500">*</span></label>
-                                    <input type="text" id="name" className="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="Your Name" />
-                                </div>
-                                <div>
-                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email <span className="text-red-500">*</span></label>
-                                    <input type="email" id="email" className="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="your@email.com" />
-                                </div>
-                            </div>
+                </div>
+            </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                                    <input type="tel" id="phone" className="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="+966..." />
-                                </div>
-                                <div>
-                                    <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">City <span className="text-red-500">*</span></label>
-                                    <input type="text" id="city" className="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="Jeddah" />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message <span className="text-red-500">*</span></label>
-                                <textarea id="message" rows={4} className="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="How can we help you?"></textarea>
-                            </div>
-
-                            <button type="submit" className="w-full bg-primary text-white font-bold py-3 rounded hover:bg-teal-700 transition-colors">
-                                SEND MESSAGE
-                            </button>
-                        </form>
+            {/* --- GOOGLE MAP SECTION --- */}
+            <div className="container mx-auto px-4 pb-20">
+                <div className="bg-white p-4 rounded-[2rem] shadow-xl border border-gray-100">
+                    <div className="mb-6 px-4 pt-2 flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div>
+                            <h2 className="text-2xl font-bold text-gray-900">Visit Our Headquarters</h2>
+                            <p className="text-gray-500">We welcome you to discuss your shading projects in person.</p>
+                        </div>
+                        <a
+                            href="https://goo.gl/maps/example"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-6 py-2.5 bg-white border border-gray-200 text-gray-700 font-bold rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all text-sm shadow-sm flex items-center gap-2"
+                        >
+                            <MapPin size={16} className="text-primary" />
+                            Open in Google Maps
+                        </a>
+                    </div>
+                    <div className="w-full h-[450px] rounded-3xl overflow-hidden relative border border-gray-100">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118924.97746194749!2d39.10738092285157!3d21.543333399999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c3d01fb1137e59%3A0xe059579737b118db!2sJeddah%20Saudi%20Arabia!5e0!3m2!1sen!2ssa!4v1703350000000!5m2!1sen!2ssa"
+                            width="100%"
+                            height="100%"
+                            style={{ border: 0, filter: 'grayscale(0.1)' }}
+                            allowFullScreen={true}
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            title="Detco Office Location"
+                            className="w-full h-full"
+                        ></iframe>
                     </div>
                 </div>
             </div>
+
         </main>
     );
 }

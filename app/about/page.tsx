@@ -11,23 +11,20 @@ export default function AboutPage() {
         <main className="min-h-screen bg-white">
             {/* 1. Hero / Header */}
             <div className="relative py-16 md:py-24 bg-primary overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://placehold.co/1920x600/0f766e/ffffff?text=Fabric+Pattern')] opacity-10 bg-cover bg-center" />
+                <div className="absolute inset-0 bg-[url('https://placehold.co/1920x600/0f766e/ffffff?text=About+Us')] opacity-10 bg-cover bg-center" />
                 <div className="container mx-auto px-4 text-center relative z-10">
-                    <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
+                    <h1
+
                         className="text-3xl md:text-5xl font-bold text-white mb-4"
                     >
                         About Detco
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
+                    </h1>
+                    <p
+
                         className="text-teal-100 text-base md:text-xl max-w-2xl mx-auto"
                     >
                         Pioneers in Tensile Structures & Sun Control Solutions in Saudi Arabia
-                    </motion.p>
+                    </p>
                 </div>
             </div>
 

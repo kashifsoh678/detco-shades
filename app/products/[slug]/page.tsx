@@ -49,9 +49,9 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         <main className="min-h-screen bg-white">
 
             {/* --- HERO SECTION --- */}
-            <div className="relative h-[400px] flex items-center bg-primary overflow-hidden">
+            <div className="relative min-h-[400px] flex items-center bg-primary overflow-hidden py-20">
                 <div className="absolute inset-0 bg-[url('https://placehold.co/1920x600/0f766e/ffffff?text=Fabric+Pattern')] opacity-10 bg-cover bg-center" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent" />
 
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-4xl">
@@ -93,7 +93,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                             {images.length > 1 && (
                                 <div className="grid grid-cols-4 gap-4">
                                     {images.slice(1, 5).map((img, idx) => (
-                                        <div key={idx} className="relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer hover:ring-2 ring-primary ring-offset-2 transition-all opacity-90 hover:opacity-100">
+                                        <div key={idx} className="relative aspect-4/3 rounded-xl overflow-hidden cursor-pointer hover:ring-2 ring-primary ring-offset-2 transition-all opacity-90 hover:opacity-100">
                                             <Image src={img.src} alt={img.alt} fill className="object-cover" />
                                         </div>
                                     ))}
@@ -137,7 +137,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                         <div className="sticky top-24 space-y-8">
 
                             {/* CTA Box (Primary Focus) */}
-                            <div className="bg-gradient-to-br from-teal-900 to-teal-800 text-white p-8 rounded-3xl shadow-2xl relative overflow-hidden group">
+                            <div className="bg-linear-to-br from-teal-900 to-teal-800 text-white p-8 rounded-3xl shadow-2xl relative overflow-hidden group">
                                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay" />
                                 <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-teal-500/20 rounded-full blur-3xl group-hover:bg-teal-400/30 transition-all duration-700" />
 
