@@ -1,0 +1,1 @@
+# detco-shades
