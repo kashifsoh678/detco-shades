@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Detco - Sun Shades & Tensile Structures Saudi Arabia",
-  description: "Detco specializes in high-quality sun shades, PVC, HDPE, and tensile structures for car parks, swimming pools, and commercial projects in Saudi Arabia.",
+  title: "Car Parking Shades Manufacturer | DetcoShades",
+  description: "DetcoShades is a leading car parking shades manufacturer providing custom UV-resistant shade solutions for commercial and residential projects in Saudi Arabia.",
 };
 
 import Navbar from "@/components/Navbar";

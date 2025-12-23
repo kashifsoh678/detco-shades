@@ -5,6 +5,31 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 export default function Hero() {
+    const text = "We deliver premier sun control solutions and car shading systems across Saudi Arabia, combining durability with architectural elegance.";
+    const characters = Array.from(text);
+
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.03, // Speed of typing
+                delayChildren: 0.5,
+            },
+        },
+    };
+
+    const characterVariants = {
+        hidden: { opacity: 0, y: 10 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.1,
+            },
+        },
+    };
+
     return (
         <section className="relative w-full min-h-[85vh] flex items-center bg-gray-900 overflow-hidden">
             {/* Background Image with Ken Burns Effect */}
@@ -32,7 +57,7 @@ export default function Hero() {
                     >
                         <div className="h-0.5 w-12 bg-primary"></div>
                         <span className="text-primary font-bold tracking-widest uppercase text-sm md:text-base">
-                            Detco Systems Co.
+                            Smart Shade Engineering Solutions
                         </span>
                     </motion.div>
 
@@ -43,27 +68,35 @@ export default function Hero() {
                         transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
                         className="text-5xl md:text-7xl font-bold text-white mb-8 leading-tight"
                     >
-                        Engineering Excellence in <br className="hidden md:block" />
+                        Premium Shade & <br className="hidden md:block" />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-teal-200">
-                            Tensile Structures
+                            Canopy Solutions
                         </span>
                     </motion.h1>
 
-                    {/* Description */}
+                    {/* Typing Animation Description */}
                     <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-                        className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl leading-relaxed"
+                        variants={containerVariants}
+                        initial="hidden"
+                        animate="visible"
+                        className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl leading-relaxed flex flex-wrap"
                     >
-                        We deliver premier sun control solutions and car shading systems across Saudi Arabia, combining durability with architectural elegance.
+                        {/* {characters.map((char, index) => (
+                            <motion.span variants={characterVariants} key={index} className={char === " " ? "mr-1.5" : ""}>
+                                {char}
+                            </motion.span>
+                        ))} */}
+
+                        <motion.span variants={characterVariants}>
+                            {text}
+                        </motion.span>
                     </motion.p>
 
                     {/* Buttons */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
+                        transition={{ duration: 0.8, delay: 0.9, ease: "easeOut" }} // Delayed until typing finishes roughly
                         className="flex flex-col sm:flex-row gap-5"
                     >
                         <Link href="/products">
@@ -92,7 +125,7 @@ export default function Hero() {
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 1.5, duration: 1 }}
+                transition={{ delay: 3, duration: 1 }}
                 className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
             >
                 <span className="text-white/50 text-xs tracking-widest uppercase">Scroll</span>
