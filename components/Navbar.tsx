@@ -19,41 +19,44 @@ export default function Navbar() {
     const pathname = usePathname();
 
     return (
-        <header className="sticky top-0 z-50 bg-white shadow-sm">
+        <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 transition-all duration-300">
             <div className="container mx-auto px-4 max-md:py-4">
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center h-20 md:h-28">
                     {/* Logo */}
-                    <Link href="/" className="flex flex-col">
-                        {/* Official Logo */}
+                    <Link href="/" className="flex flex-col relative z-50 group">
                         <Image
                             src="/images/detco_logo.png"
                             alt="DETCO - Al-Dorman Est."
                             width={260}
                             height={100}
-                            className="h-10 md:h-20 xl:h-30 w-auto object-contain"
+                            className="h-10 md:h-20 xl:h-30 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                             priority
                             unoptimized
                         />
                     </Link>
 
                     {/* Desktop Nav */}
-                    <nav className="hidden md:flex items-center gap-8">
+                    <nav className="hidden md:flex items-center gap-8 lg:gap-10">
                         {navLinks.map((link) => {
                             const isActive = pathname === link.href;
                             return (
                                 <Link
                                     key={link.name}
                                     href={link.href}
-                                    className={`text-sm font-medium transition-colors hover:text-primary ${isActive ? 'text-primary' : 'text-gray-600'
-                                        }`}
+                                    className={`relative text-sm font-bold tracking-wide transition-colors duration-300 hover:text-primary py-2
+                                        ${isActive ? 'text-primary' : 'text-gray-600'}
+                                    `}
                                 >
                                     {link.name.toUpperCase()}
+                                    {isActive && (
+                                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary rounded-full" />
+                                    )}
                                 </Link>
                             );
                         })}
                         <Link
                             href="/contact"
-                            className="bg-primary text-white text-xs font-bold px-4 py-2 rounded transition-colors hover:bg-teal-700"
+                            className="bg-primary text-white text-xs lg:text-sm font-bold px-6 py-3 rounded shadow-lg shadow-teal-700/20 hover:shadow-teal-700/40 hover:-translate-y-0.5 transition-all duration-300"
                         >
                             GET A QUOTE
                         </Link>
@@ -61,41 +64,41 @@ export default function Navbar() {
 
                     {/* Mobile Menu Button */}
                     <button
-                        className="md:hidden p-2 text-gray-600"
+                        className="md:hidden p-2 text-gray-800 focus:outline-none z-50 relative"
                         onClick={() => setIsOpen(!isOpen)}
                         aria-label="Toggle menu"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d={isOpen ? "M6 18L18 6M6 6l12 12" : "M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"} />
-                        </svg>
+                        <div className="w-6 h-5 flex flex-col justify-between">
+                            <span className={`w-full h-0.5 bg-current transform transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-2' : ''}`} />
+                            <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isOpen ? 'opacity-0' : ''}`} />
+                            <span className={`w-full h-0.5 bg-current transform transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-2.5' : ''}`} />
+                        </div>
                     </button>
                 </div>
             </div>
 
-            {/* Mobile Nav */}
-            {isOpen && (
-                <div className="md:hidden border-t border-gray-100 bg-white">
-                    <nav className="flex flex-col p-4 gap-4">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                className="text-sm font-medium text-gray-600 hover:text-primary"
-                                onClick={() => setIsOpen(false)}
-                            >
-                                {link.name.toUpperCase()}
-                            </Link>
-                        ))}
+            {/* Mobile Nav Overlay */}
+            <div className={`fixed inset-0 bg-white/95 backdrop-blur-xl z-40 transform transition-transform duration-300 ease-in-out md:hidden ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+                <div className="flex flex-col items-center justify-center h-full space-y-8 p-8">
+                    {navLinks.map((link) => (
                         <Link
-                            href="/contact"
+                            key={link.name}
+                            href={link.href}
+                            className="text-2xl font-bold text-gray-800 hover:text-primary transition-colors"
                             onClick={() => setIsOpen(false)}
-                            className="bg-primary text-white text-xs font-bold px-4 py-3 rounded text-center"
                         >
-                            GET A QUOTE
+                            {link.name.toUpperCase()}
                         </Link>
-                    </nav>
+                    ))}
+                    <Link
+                        href="/contact"
+                        onClick={() => setIsOpen(false)}
+                        className="mt-8 bg-primary text-white text-lg font-bold px-8 py-4 rounded-lg shadow-xl"
+                    >
+                        GET A QUOTE
+                    </Link>
                 </div>
-            )}
+            </div>
         </header>
     );
 }

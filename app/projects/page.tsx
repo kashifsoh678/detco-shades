@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import ProjectCard from '@/components/ProjectCard';
 
 // Detailed project placeholders based on analysis style
 const projects = [
@@ -22,25 +23,17 @@ export default function ProjectsPage() {
             </div>
 
             <div className="container mx-auto px-4 py-16">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {projects.map((project) => (
-                        <div key={project.id} className="bg-white border border-gray-100 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow">
-                            <div className="relative h-64 bg-gray-200">
-                                <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url('${project.image}')` }}></div>
-                                <div className="absolute top-4 left-4 bg-white/90 px-3 py-1 text-xs font-bold text-primary rounded-full">
-                                    {project.category}
-                                </div>
-                            </div>
-                            <div className="p-6">
-                                <h3 className="text-xl font-bold text-gray-800 mb-2">{project.title}</h3>
-                                <p className="flex items-center text-gray-500 text-sm mb-4">
-                                    <span className="mr-1">📍</span> {project.location}
-                                </p>
-                                <Link href="/contact" className="text-primary font-bold text-sm hover:underline">
-                                    REQUEST SIMILAR &rarr;
-                                </Link>
-                            </div>
-                        </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    {projects.map((project, index) => (
+                        <ProjectCard
+                            key={project.id}
+                            id={project.id}
+                            title={project.title}
+                            category={project.category}
+                            location={project.location}
+                            image={project.image}
+                            index={index}
+                        />
                     ))}
                 </div>
             </div>

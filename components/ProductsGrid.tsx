@@ -6,21 +6,21 @@ import { motion, Variants } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
 const products = [
-    { id: 1, name: 'HDPE Car Parking Shades', image: 'https://placehold.co/600x400/e0e0e0/006666?text=HDPE+Shades' },
-    { id: 2, name: 'PVC Car Parking Shades', image: 'https://placehold.co/600x400/e0e0e0/006666?text=PVC+Shades' },
-    { id: 3, name: 'Tensile Structures', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Tensile+Structures' },
-    { id: 4, name: 'Sails', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Sails' },
-    { id: 5, name: 'Multi Level Sails', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Multi+Level+Sails' },
-    { id: 6, name: 'Single Cantilever', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Single+Cantilever' },
-    { id: 7, name: 'T-Cantilever', image: 'https://placehold.co/600x400/e0e0e0/006666?text=T-Cantilever' },
-    { id: 8, name: 'Square & Rectangles', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Square+Rectangles' },
-    { id: 9, name: 'Single Post', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Single+Post' },
-    { id: 10, name: 'Walk Shade', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Walk+Shade' },
-    { id: 11, name: 'Mega Spans', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Mega+Spans' },
-    { id: 12, name: 'Double Cantilever', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Double+Cantilever' },
-    { id: 13, name: 'Automatic Awnings', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Automatic+Awnings' },
-    { id: 14, name: 'Rubber Wheel Stoppers', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Wheel+Stoppers' },
-    { id: 15, name: 'Car Parking Marking', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Car+Parking+Marking' },
+    { id: 1, slug: 'hdpe-car-parking-shades', name: 'HDPE Car Parking Shades', image: 'https://placehold.co/600x400/e0e0e0/006666?text=HDPE+Shades' },
+    { id: 2, slug: 'pvc-car-parking-shades', name: 'PVC Car Parking Shades', image: 'https://placehold.co/600x400/e0e0e0/006666?text=PVC+Shades' },
+    { id: 3, slug: 'tensile-structures', name: 'Tensile Structures', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Tensile+Structures' },
+    { id: 4, slug: 'sails', name: 'Sails', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Sails' },
+    { id: 5, slug: 'multi-level-sails', name: 'Multi Level Sails', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Multi+Level+Sails' },
+    { id: 6, slug: 'single-cantilever', name: 'Single Cantilever', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Single+Cantilever' },
+    { id: 7, slug: 't-cantilever', name: 'T-Cantilever', image: 'https://placehold.co/600x400/e0e0e0/006666?text=T-Cantilever' },
+    { id: 8, slug: 'square-rectangles', name: 'Square & Rectangles', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Square+Rectangles' },
+    { id: 9, slug: 'single-post', name: 'Single Post', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Single+Post' },
+    { id: 10, slug: 'walk-shade', name: 'Walk Shade', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Walk+Shade' },
+    { id: 11, slug: 'mega-spans', name: 'Mega Spans', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Mega+Spans' },
+    { id: 12, slug: 'double-cantilever', name: 'Double Cantilever', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Double+Cantilever' },
+    { id: 13, slug: 'automatic-awnings', name: 'Automatic Awnings', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Automatic+Awnings' },
+    { id: 14, slug: 'rubber-wheel-stoppers', name: 'Rubber Wheel Stoppers', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Wheel+Stoppers' },
+    { id: 15, slug: 'car-parking-marking', name: 'Car Parking Marking', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Car+Parking+Marking' },
 ];
 
 const container: Variants = {
@@ -68,7 +68,7 @@ export default function ProductsGrid({ showHeader = false }: ProductsGridProps) 
                                 Our Collection
                             </span>
                             <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
-                                Premium Products
+                                Our Shade Solutions
                             </h2>
                         </motion.div>
 
@@ -97,7 +97,7 @@ export default function ProductsGrid({ showHeader = false }: ProductsGridProps) 
                     {products.map((product) => (
                         <motion.div key={product.id} variants={item}>
                             <Link
-                                href={`/products/${product.id}`}
+                                href={`/products/${product.slug}`}
                                 className="group block relative overflow-hidden rounded-xl bg-white shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100"
                             >
                                 {/* Image Container */}

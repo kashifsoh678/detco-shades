@@ -3,25 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Ruler, Sparkles } from 'lucide-react';
-
-const features = [
-    {
-        icon: ShieldCheck,
-        title: "All-Weather Protection",
-        description: "Engineered to withstand harsh climates, offering superior UV resistance and durability."
-    },
-    {
-        icon: Ruler,
-        title: "Custom Engineering",
-        description: "Tailored shading solutions designed to fit unique architectural requirements perfectly."
-    },
-    {
-        icon: Sparkles,
-        title: "Premium Materials",
-        description: "Utilizing high-grade PVC, PVDF, and HDPE fabrics for long-lasting aesthetics and performance."
-    }
-];
+import WhyChooseUs from './WhyChooseUs';
 
 export default function Introduction() {
     return (
@@ -41,8 +23,7 @@ export default function Introduction() {
                                 About Us
                             </span>
                             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
-                                Leading Experts in <br />
-                                <span className="text-primary">Shading Systems</span>
+                                Why <span className="text-primary">DetcoShades?</span>
                             </h2>
                             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
                                 Detco Systems Co. specializes in providing high-quality sun shades tailored to meet diverse outdoor needs in Saudi Arabia.
@@ -67,28 +48,7 @@ export default function Introduction() {
 
                     {/* Right Side: Feature Grid */}
                     <div className="lg:w-1/2 w-full">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {features.map((feature, index) => (
-                                <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                                    className={`bg-white p-8 rounded-xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300 ${index === 2 ? 'md:col-span-2' : ''}`}
-                                >
-                                    <div className="w-14 h-14 bg-teal-50 rounded-full flex items-center justify-center mb-6 text-primary">
-                                        <feature.icon size={28} strokeWidth={1.5} />
-                                    </div>
-                                    <h3 className="text-xl font-bold text-gray-900 mb-3">
-                                        {feature.title}
-                                    </h3>
-                                    <p className="text-sm text-gray-600 leading-relaxed">
-                                        {feature.description}
-                                    </p>
-                                </motion.div>
-                            ))}
-                        </div>
+                        <WhyChooseUs columns={2} />
                     </div>
 
                 </div>
