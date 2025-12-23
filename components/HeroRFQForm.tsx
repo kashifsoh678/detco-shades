@@ -48,9 +48,10 @@ export default function HeroRFQForm() {
                     <div className="relative group/input">
                         <select
                             id="hero-service"
+                            defaultValue=""
                             className="w-full px-4 py-3 bg-white/10 border border-white/10 rounded-xl text-white placeholder:text-teal-100/60 focus:outline-none focus:ring-2 focus:ring-teal-400/50 focus:bg-white/20 transition-all text-sm backdrop-blur-sm [&>option]:text-gray-900 appearance-none cursor-pointer"
                         >
-                            <option value="" disabled selected className="text-gray-400">Select Project Type</option>
+                            <option value="" disabled className="text-gray-400">Select Project Type</option>
                             <option>Car Parking Shades</option>
                             <option>Tensile Structures</option>
                             <option>Swimming Pool Shades</option>

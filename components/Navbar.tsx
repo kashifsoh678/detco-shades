@@ -18,6 +18,18 @@ export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
 
+    // Prevent body scroll when menu is open
+    React.useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
+
     return (
         <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 transition-all duration-300">
             <div className="container mx-auto px-4 max-md:py-4">
@@ -44,7 +56,7 @@ export default function Navbar() {
                                     key={link.name}
                                     href={link.href}
                                     className={`relative text-sm font-bold tracking-wide transition-colors duration-300 hover:text-primary py-2
-                                        ${isActive ? 'text-primary' : 'text-gray-600'}
+                                        ${isActive ? 'text-primary' : 'text_gray-600'}
                                     `}
                                 >
                                     {link.name.toUpperCase()}
@@ -62,7 +74,7 @@ export default function Navbar() {
                         </Link>
                     </nav>
 
-                    {/* Mobile Menu Button */}
+                    {/* Mobile Menu Button - Visible even when menu is open due to z-index logic if we want, but better to have dedicated close inside overlay */}
                     <button
                         className="md:hidden p-2 text-gray-800 focus:outline-none z-50 relative"
                         onClick={() => setIsOpen(!isOpen)}
@@ -78,26 +90,37 @@ export default function Navbar() {
             </div>
 
             {/* Mobile Nav Overlay */}
-            <div className={`fixed inset-0 bg-white/95 backdrop-blur-xl z-40 transform transition-transform duration-300 ease-in-out md:hidden ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-                <div className="flex flex-col items-center justify-center h-full space-y-8 p-8">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            href={link.href}
-                            className="text-2xl font-bold text-gray-800 hover:text-primary transition-colors"
-                            onClick={() => setIsOpen(false)}
-                        >
-                            {link.name.toUpperCase()}
-                        </Link>
-                    ))}
+            <div
+                className={`fixed inset-0 w-screen h-screen bg-white z-[100] flex flex-col items-center justify-center space-y-8 p-8 transition-transform duration-300 ease-in-out md:hidden ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            >
+                {/* Close Button Inside Overlay */}
+                <button
+                    onClick={() => setIsOpen(false)}
+                    className="absolute top-6 right-6 p-4 text-gray-400 hover:text-gray-900 focus:outline-none"
+                    aria-label="Close menu"
+                >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                </button>
+
+                {navLinks.map((link) => (
                     <Link
-                        href="/contact"
+                        key={link.name}
+                        href={link.href}
+                        className="text-2xl font-bold text-gray-800 hover:text-primary transition-colors"
                         onClick={() => setIsOpen(false)}
-                        className="mt-8 bg-primary text-white text-lg font-bold px-8 py-4 rounded-lg shadow-xl"
                     >
-                        CONTACT US
+                        {link.name.toUpperCase()}
                     </Link>
-                </div>
+                ))}
+                <Link
+                    href="/contact"
+                    onClick={() => setIsOpen(false)}
+                    className="mt-8 bg-primary text-white text-lg font-bold px-8 py-4 rounded-lg shadow-xl"
+                >
+                    CONTACT US
+                </Link>
             </div>
         </header>
     );
