@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
     return (
@@ -9,9 +10,19 @@ export default function Footer() {
 
                     {/* Column 1: About */}
                     <div>
-                        <h3 className="text-xl font-bold mb-6 border-b border-gray-600 pb-2 inline-block">About Detco</h3>
+                        <div className="mb-6">
+                            <Image
+                                src="/images/detco_logo.png"
+                                alt="DETCO Logo"
+                                width={180}
+                                height={70}
+                                className="h-30 w-auto object-contain brightness-0 invert opacity-90"
+                                unoptimized
+                            />
+                        </div>
+                        <h3 className="text-xl font-bold mb-6 border-b border-gray-600 pb-2 inline-block">Al-Dorman Est.</h3>
                         <p className="text-gray-400 leading-relaxed mb-6">
-                            Detco Systems Co. is a leader in sun shade solutions in Saudi Arabia, providing innovative designs and durable materials for all your shading needs.
+                            Al-Dorman Est. For Trading & Contracting (DETCO) is a premier provider of shade and tent services in Saudi Arabia. We specialize in engineering, manufacturing, and installing high-quality tensile structures.
                         </p>
                         <div className="flex gap-4">
                             {/* Social placeholders */}
@@ -56,7 +67,7 @@ export default function Footer() {
 
                 {/* Bottom Bar */}
                 <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-                    <p>&copy; {new Date().getFullYear()} Detco Shades Systems. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} Al-Dorman Est. (DETCO). All rights reserved.</p>
                     <p>Designed for Excellence.</p>
                 </div>
             </div>

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 const navLinks = [
@@ -19,13 +20,20 @@ export default function Navbar() {
 
     return (
         <header className="sticky top-0 z-50 bg-white shadow-sm">
-            <div className="container mx-auto px-4 py-4">
+            <div className="container mx-auto px-4 max-md:py-4">
                 <div className="flex justify-between items-center">
                     {/* Logo */}
                     <Link href="/" className="flex flex-col">
-                        {/* Placeholder Logo Text until Image is provided */}
-                        <span className="text-2xl font-bold text-gray-800">DETCO</span>
-                        <span className="text-[10px] tracking-widest text-primary font-bold uppercase">Shades Systems</span>
+                        {/* Official Logo */}
+                        <Image
+                            src="/images/detco_logo.png"
+                            alt="DETCO - Al-Dorman Est."
+                            width={260}
+                            height={100}
+                            className="h-10 md:h-20 xl:h-30 w-auto object-contain"
+                            priority
+                            unoptimized
+                        />
                     </Link>
 
                     {/* Desktop Nav */}

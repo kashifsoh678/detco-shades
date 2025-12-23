@@ -49,7 +49,7 @@ export default function ClientsTicker() {
                     {allClients.map((client, index) => (
                         <div
                             key={`${client.name}-${index}`}
-                            className="relative w-[120px] h-[50px] md:w-[150px] md:h-[60px] flex-shrink-0 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer"
+                            className="relative w-[120px] h-[50px] md:w-[150px] md:h-[60px] shrink-0 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer"
                         >
                             <Image
                                 src={client.logo}

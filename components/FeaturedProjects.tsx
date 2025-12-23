@@ -76,7 +76,7 @@ export default function FeaturedProjects() {
                             className="group flex flex-col bg-white rounded-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
                         >
                             {/* Image - Hover View Icon */}
-                            <div className="aspect-[4/3] w-full overflow-hidden relative">
+                            <div className="aspect-4/3 w-full overflow-hidden relative">
                                 <div
                                     className="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                                     style={{ backgroundImage: `url('${project.image}')` }}
