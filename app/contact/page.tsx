@@ -156,35 +156,18 @@ export default function ContactPage() {
 
             {/* --- GOOGLE MAP SECTION --- */}
             <div className="container mx-auto px-4 pb-20">
-                <div className="bg-white p-4 rounded-[2rem] shadow-xl border border-gray-100">
-                    <div className="mb-6 px-4 pt-2 flex flex-col md:flex-row items-center justify-between gap-4">
-                        <div>
-                            <h2 className="text-2xl font-bold text-gray-900">Visit Our Headquarters</h2>
-                            <p className="text-gray-500">We welcome you to discuss your shading projects in person.</p>
-                        </div>
-                        <a
-                            href="https://goo.gl/maps/example"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="px-6 py-2.5 bg-white border border-gray-200 text-gray-700 font-bold rounded-full hover:bg-gray-50 hover:border-gray-300 transition-all text-sm shadow-sm flex items-center gap-2"
-                        >
-                            <MapPin size={16} className="text-primary" />
-                            Open in Google Maps
-                        </a>
-                    </div>
-                    <div className="w-full h-[450px] rounded-3xl overflow-hidden relative border border-gray-100">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118924.97746194749!2d39.10738092285157!3d21.543333399999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c3d01fb1137e59%3A0xe059579737b118db!2sJeddah%20Saudi%20Arabia!5e0!3m2!1sen!2ssa!4v1703350000000!5m2!1sen!2ssa"
-                            width="100%"
-                            height="100%"
-                            style={{ border: 0, filter: 'grayscale(0.1)' }}
-                            allowFullScreen={true}
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                            title="Detco Office Location"
-                            className="w-full h-full"
-                        ></iframe>
-                    </div>
+                <div className="w-full h-[450px] rounded-2xl overflow-hidden relative border border-gray-100">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118924.97746194749!2d39.10738092285157!3d21.543333399999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c3d01fb1137e59%3A0xe059579737b118db!2sJeddah%20Saudi%20Arabia!5e0!3m2!1sen!2ssa!4v1703350000000!5m2!1sen!2ssa"
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0, filter: 'grayscale(0.1)' }}
+                        allowFullScreen={true}
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        title="Detco Office Location"
+                        className="w-full h-full"
+                    ></iframe>
                 </div>
             </div>
 
