@@ -95,7 +95,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                         {service.processStep && service.processStep.length > 0 && (
                             <div>
                                 <h3 className="text-2xl font-bold text-gray-900 mb-8">Our Process</h3>
-                                <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-linear-to-b before:from-transparent before:via-gray-200 before:to-transparent">
+                                <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent">
                                     {service.processStep.map((step, idx) => (
                                         <div key={idx} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
 

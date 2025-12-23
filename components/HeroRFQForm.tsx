@@ -7,7 +7,7 @@ export default function HeroRFQForm() {
     return (
         <div className="bg-white/5 backdrop-blur-xl border border-white/20 p-6 md:p-8 rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] max-w-md w-full mx-auto md:ml-auto md:mr-0 z-20 relative group hover:border-white/30 transition-all duration-500">
             {/* Glossy overlay effect */}
-            <div className="absolute inset-0 rounded-3xl bg-linear-to-b from-white/10 to-transparent opacity-50 pointer-events-none" />
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-white/10 to-transparent opacity-50 pointer-events-none" />
 
             <div className="relative z-10">
                 <h3 className="text-xl md:text-2xl font-bold text-white mb-2 tracking-tight">Get a Fast Quote</h3>
@@ -66,7 +66,7 @@ export default function HeroRFQForm() {
 
                     <button
                         type="submit"
-                        className="w-full bg-linear-to-r from-teal-500 to-teal-600 hover:from-teal-400 hover:to-teal-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-teal-900/30 hover:shadow-teal-500/20 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 group border border-white/10"
+                        className="w-full bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-400 hover:to-teal-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-teal-900/30 hover:shadow-teal-500/20 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 group border border-white/10"
                     >
                         REQUEST ESTIMATE
                         <Send size={16} className="group-hover:translate-x-1 transition-transform" />

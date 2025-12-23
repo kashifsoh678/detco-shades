@@ -1,0 +1,11 @@
+# robots.txt for Detco Shades Website
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://detco.sa/sitemap.xml
+
+# Crawl-delay (optional, can be adjusted)
+Crawl-delay: 1

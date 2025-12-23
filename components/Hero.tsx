@@ -44,7 +44,7 @@ export default function Hero() {
                 />
 
                 {/* Dramatic Gradient Overlay */}
-                <div className="absolute inset-0 bg-linear-to-r from-black/90 via-black/60 to-black/40" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/40" />
             </div>
 
             {/* Content Container */}
@@ -74,7 +74,7 @@ export default function Hero() {
                             className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight"
                         >
                             Premium Shade & <br className="hidden md:block" />
-                            <span className="text-transparent bg-clip-text bg-linear-to-r from-teal-400 to-teal-200">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-teal-200">
                                 Canopy Solutions
                             </span>
                         </motion.h1>

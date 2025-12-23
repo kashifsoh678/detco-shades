@@ -67,7 +67,7 @@ export default function QualityStandards() {
                     <div className="lg:w-1/2 w-full">
                         <div className="relative h-[500px] w-full bg-gray-100 rounded-2xl overflow-hidden shadow-2xl">
                             <div className="absolute inset-0 bg-[url('https://placehold.co/800x1000/e0e0e0/006666?text=Quality+Control')] bg-cover bg-center" />
-                            <div className="absolute inset-0 bg-linear-to-t from-primary/80 to-transparent flex items-end p-8">
+                            <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex items-end p-8">
                                 <div className="text-white">
                                     <p className="font-bold text-2xl mb-2">Engineered for Durability</p>
                                     <p className="opacity-90">Every connection, weld, and stitch is inspected.</p>
