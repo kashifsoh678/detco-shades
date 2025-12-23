@@ -1,0 +1,72 @@
+import React from 'react';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
+import { servicesData } from '@/data/services';
+
+export default function ServicesPage() {
+    return (
+        <main className="min-h-screen bg-white">
+            {/* Hero Section */}
+            <div className="relative py-16 md:py-24 bg-primary overflow-hidden">
+                <div className="absolute inset-0 bg-[url('https://placehold.co/1920x600/0f766e/ffffff?text=Our+Services')] opacity-10 bg-cover bg-center" />
+                <div className="container mx-auto px-4 text-center relative z-10">
+                    <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
+                        Our Services
+                    </h1>
+                    <p className="text-teal-100 text-base md:text-xl max-w-2xl mx-auto">
+                        End-to-end tensile structure solutions from concept to completion.
+                    </p>
+                </div>
+            </div>
+
+            {/* Services Grid */}
+            <div className="container mx-auto px-4 py-20">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {servicesData.map((service, index) => (
+                        <Link
+                            key={service.id}
+                            href={`/services/${service.id}`}
+                            className="group bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+                        >
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-teal-50 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110" />
+
+                            <div className="relative z-10">
+                                <div className="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                                    <service.icon size={28} strokeWidth={1.5} />
+                                </div>
+
+                                <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
+                                    {service.title}
+                                </h3>
+                                <p className="text-gray-500 leading-relaxed mb-8">
+                                    {service.shortDescription}
+                                </p>
+
+                                <div className="flex items-center text-primary font-bold text-sm tracking-wide group-hover:gap-2 transition-all">
+                                    LEARN MORE
+                                    <ArrowRight size={16} className="ml-2 group-hover:ml-0" />
+                                </div>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            </div>
+
+            {/* CTA Section */}
+            <div className="bg-teal-50 py-20">
+                <div className="container mx-auto px-4 text-center">
+                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Need a Custom Solution?</h2>
+                    <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+                        Our engineering team can tackle unique challenges. Contact us to discuss your specific requirements.
+                    </p>
+                    <Link
+                        href="/contact"
+                        className="inline-flex items-center justify-center bg-primary text-white font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-xl hover:bg-teal-700 transition-all transform hover:-translate-y-1"
+                    >
+                        Request Consultation
+                    </Link>
+                </div>
+            </div>
+        </main>
+    );
+}

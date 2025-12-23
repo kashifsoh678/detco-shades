@@ -9,9 +9,9 @@ const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'About Us', href: '/about' },
     { name: 'Products', href: '/products' },
+    { name: 'Services', href: '/services' },
     { name: 'Projects', href: '/projects' },
     { name: 'Clients', href: '/clients' },
-    { name: 'Contact Us', href: '/contact' },
 ];
 
 export default function Navbar() {
@@ -58,7 +58,7 @@ export default function Navbar() {
                             href="/contact"
                             className="bg-primary text-white text-xs lg:text-sm font-bold px-6 py-3 rounded shadow-lg shadow-teal-700/20 hover:shadow-teal-700/40 hover:-translate-y-0.5 transition-all duration-300"
                         >
-                            GET A QUOTE
+                            CONTACT US
                         </Link>
                     </nav>
 
@@ -95,7 +95,7 @@ export default function Navbar() {
                         onClick={() => setIsOpen(false)}
                         className="mt-8 bg-primary text-white text-lg font-bold px-8 py-4 rounded-lg shadow-xl"
                     >
-                        GET A QUOTE
+                        CONTACT US
                     </Link>
                 </div>
             </div>
