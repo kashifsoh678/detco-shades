@@ -10,7 +10,7 @@ export default function ContactPage() {
             {/* --- HERO SECTION --- */}
             <div className="relative h-[300px] flex items-center justify-center bg-primary overflow-hidden">
                 <div className="absolute inset-0 bg-[url('https://placehold.co/1920x600/0f766e/ffffff?text=Contact+Us+Background')] opacity-10 bg-cover bg-center" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
                 <div className="container mx-auto px-4 relative z-10 text-center">
                     <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 shadow-sm">Contact Us</h1>
                     <p className="text-xl text-teal-100 max-w-2xl mx-auto">

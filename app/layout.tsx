@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 import Navbar from "@/components/Navbar";
 import TopBar from "@/components/TopBar";
 import Footer from "@/components/Footer";
+import MainProvider from "@/providers/MainProvider";
 
 export default function RootLayout({
   children,
@@ -32,12 +33,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
         suppressHydrationWarning
       >
-        <TopBar />
-        <Navbar />
-        <div className="grow">
-          {children}
-        </div>
-        <Footer />
+        <MainProvider>
+          <TopBar />
+          <Navbar />
+          <div className="grow">
+            {children}
+          </div>
+          <Footer />
+        </MainProvider>
       </body>
     </html>
   );
