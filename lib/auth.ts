@@ -1,4 +1,16 @@
 import { SignJWT, jwtVerify } from "jose";
+import bcrypt from "bcryptjs";
+
+export async function hashPassword(password: string): Promise<string> {
+  return await bcrypt.hash(password, 10);
+}
+
+export async function comparePassword(
+  plain: string,
+  hashed: string,
+): Promise<boolean> {
+  return await bcrypt.compare(plain, hashed);
+}
 
 const secretKey =
   process.env.JWT_SECRET_KEY || "your-secret-key-change-this-in-env";
