@@ -152,8 +152,7 @@ const ClientsPage = () => {
                             </div>
 
                             <div className="space-y-1">
-                                <h3 className="font-bold text-gray-900 truncate">{client.name}</h3>
-                                <p className="text-[10px] text-gray-400 font-medium">Order: {client.order}</p>
+                                <h3 className="font-bold text-gray-900 truncate capitalize">{client.name}</h3>
                             </div>
 
                             {/* Action Menu */}
@@ -213,7 +212,7 @@ const ClientsPage = () => {
                 <ClientForm
                     initialData={selectedClient}
                     onSubmit={onFormSubmit}
-                    isLoading={isCreating || isUpdating}
+                    isLoading={isCreating || isUpdating || isModalLocked}
                     onLoadingChange={setIsModalLocked}
                 />
             </DataModal>

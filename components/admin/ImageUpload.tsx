@@ -119,7 +119,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     <div
                         onClick={() => !isUploading && fileInputRef.current?.click()}
                         className={cn(
-                            "w-full h-40 rounded-xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-primary hover:bg-primary/5 transition-all text-gray-500",
+                            "w-full h-60 rounded-xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-primary hover:bg-primary/5 transition-all text-gray-500",
                             isUploading && "opacity-50 cursor-not-allowed"
                         )}
                     >

@@ -102,16 +102,17 @@ const ClientForm: React.FC<ClientFormProps> = ({
                 )}
 
                 <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
+                    {/* <div className="space-y-2">
                         <label className="text-sm font-semibold text-gray-700">Display Order</label>
                         <Input
                             type="number"
                             {...register("order", { valueAsNumber: true })}
-                            disabled={isLoading}
+                            disabled={true}
+                            className="bg-gray-50 cursor-not-allowed"
                         />
-                    </div>
+                    </div> */}
 
-                    <div className="flex items-center gap-2 pt-8">
+                    <div className="flex items-center gap-2">
                         <input
                             type="checkbox"
                             id="isActive"
@@ -126,7 +127,7 @@ const ClientForm: React.FC<ClientFormProps> = ({
                 </div>
             </div>
 
-            <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
+            <div className="flex justify-end gap-3 border-t pt-4  border-gray-100 ">
                 <Button
                     type="submit"
                     disabled={isLoading}

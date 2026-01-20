@@ -43,7 +43,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
                 </Button>
                 <Button
                     disabled={loading}
-                    variant={variant}
+                    variant={"default"}
                     onClick={onConfirm}
                 >
                     {loading ? (

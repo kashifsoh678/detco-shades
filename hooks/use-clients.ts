@@ -33,7 +33,11 @@ export const useClients = (page = 1, limit = 10, all = false) => {
       toast.success("Client created successfully");
     },
     onError: (error: any) => {
-      toast.error(error.response?.data?.error || "Failed to create client");
+      const msg =
+        error.response?.data?.error ||
+        error.response?.data?.message ||
+        "Failed to create client";
+      toast.error(msg);
     },
   });
 
@@ -48,7 +52,11 @@ export const useClients = (page = 1, limit = 10, all = false) => {
       toast.success("Client updated successfully");
     },
     onError: (error: any) => {
-      toast.error(error.response?.data?.error || "Failed to update client");
+      const msg =
+        error.response?.data?.error ||
+        error.response?.data?.message ||
+        "Failed to update client";
+      toast.error(msg);
     },
   });
 
@@ -62,7 +70,11 @@ export const useClients = (page = 1, limit = 10, all = false) => {
       toast.success("Client deleted successfully");
     },
     onError: (error: any) => {
-      toast.error(error.response?.data?.error || "Failed to delete client");
+      const msg =
+        error.response?.data?.error ||
+        error.response?.data?.message ||
+        "Failed to delete client";
+      toast.error(msg);
     },
   });
 

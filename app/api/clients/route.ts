@@ -56,7 +56,7 @@ export async function GET(request: Request) {
   } catch (error) {
     console.error("GET Clients Error:", error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { error: "Internal server error" },
       { status: 500 },
     );
   }
@@ -72,26 +72,46 @@ export async function POST(request: Request) {
     const auth = await verifyAdmin();
     if (!auth.authenticated) return auth.response!;
 
-    const { name, imageId, order } = await request.json();
+    const { name, imageId } = await request.json();
 
     if (!name || !imageId) {
       return NextResponse.json(
-        { message: "Name and imageId are required" },
+        { error: "Name and imageId are required" },
         { status: 400 },
       );
     }
 
-    // 1. Transaction: Create Client and Mark Media as 'attached'
+    // 2. Transaction: Validate uniqueness and Auto-calculate Order
     const result = await db.transaction(async (tx) => {
+      // Check name uniqueness manually for better error message (Case-Insensitive)
+      const existing = await tx
+        .select()
+        .from(clients)
+        .where(sql`lower(${clients.name}) = lower(${name})`)
+        .limit(1);
+
+      if (existing.length > 0) {
+        throw new Error("A client with this name already exists");
+      }
+
+      // Calculate next order (Max + 1)
+      const maxOrderResult = await tx
+        .select({ maxOrder: sql<number>`max(${clients.order})` })
+        .from(clients);
+
+      const nextOrder = (maxOrderResult[0]?.maxOrder ?? 0) + 1;
+
+      // Insert Client
       const [newClient] = await tx
         .insert(clients)
         .values({
           name,
           imageId,
-          order: order || 0,
+          order: nextOrder,
         })
         .returning();
 
+      // Mark Media as 'attached'
       await tx
         .update(media)
         .set({ status: "attached" })
@@ -101,10 +121,13 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json(result, { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     console.error("POST Client Error:", error);
+    if (error.message === "A client with this name already exists") {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
     return NextResponse.json(
-      { message: "Internal server error" },
+      { error: "Internal server error" },
       { status: 500 },
     );
   }

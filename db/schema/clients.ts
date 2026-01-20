@@ -13,11 +13,11 @@ export const clients = pgTable(
   "clients",
   {
     id: uuid("id").defaultRandom().primaryKey(),
-    name: text("name").notNull(),
-    imageId: uuid("image_id")
-      .references(() => media.id, { onDelete: "cascade" })
-      .notNull(),
-    order: integer("order").default(0).notNull(),
+    name: text("name").notNull().unique(),
+    imageId: uuid("image_id").references(() => media.id, {
+      onDelete: "set null",
+    }),
+    order: integer("order").notNull().unique(),
     isActive: boolean("is_active").default(true).notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),

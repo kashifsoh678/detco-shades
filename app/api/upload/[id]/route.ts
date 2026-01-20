@@ -26,7 +26,7 @@ export async function DELETE(
     });
 
     if (!item) {
-      return NextResponse.json({ message: "Media not found" }, { status: 404 });
+      return NextResponse.json({ error: "Media not found" }, { status: 404 });
     }
 
     // 3. Delete from Cloudinary
@@ -46,7 +46,7 @@ export async function DELETE(
   } catch (error) {
     console.error("DELETE Media Error:", error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { error: "Internal server error" },
       { status: 500 },
     );
   }

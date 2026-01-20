@@ -58,7 +58,7 @@ const Modal: React.FC<ModalProps> = ({
                         </DialogDescription>
                     )}
                 </DialogHeader>
-                <div className="py-2">
+                <div className="">
                     {children}
                 </div>
             </DialogContent>
