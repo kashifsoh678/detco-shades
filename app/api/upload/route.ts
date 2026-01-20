@@ -2,15 +2,13 @@ import { NextResponse } from "next/server";
 import { uploadToCloudinary } from "@/lib/cloudinary";
 import { db } from "@/db";
 import { media } from "@/db/schema/media";
-import { getSession } from "@/lib/auth"; // For basic auth check
+import { verifyAdmin } from "@/lib/auth";
 
 export async function POST(request: Request) {
   try {
-    // Basic Auth Check
-    const cookie = request.headers.get("cookie");
-    // In a real app, use getSession() or verify cookie here
-    // For now, let's assume the user is authenticated if they reached here
-    // (Middleware protects /api/auth, but we should protect /api/upload too)
+    // 1. Auth Check (Zero Redundancy)
+    const auth = await verifyAdmin();
+    if (!auth.authenticated) return auth.response!;
 
     const formData = await request.json();
     const { file, folder, fileName, resourceType } = formData;
@@ -22,7 +20,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // 1. Upload to Cloudinary
+    // 2. Upload to Cloudinary
     // Dynamically use the folder provided by the frontend.
     // Example: "Home/products/images" or "Home/services"
     const uploadResult = await uploadToCloudinary(file, {
@@ -30,7 +28,7 @@ export async function POST(request: Request) {
       resourceType: resourceType || "auto",
     });
 
-    // 2. Track in Database as 'pending'
+    // 3. Track in Database as 'pending'
     const [insertedMedia] = await db
       .insert(media)
       .values({
