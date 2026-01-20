@@ -6,7 +6,7 @@ import { Home, ArrowLeft, Search } from 'lucide-react'
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">
+    <main className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">
       <div className="max-w-2xl w-full text-center">
         {/* 404 Number */}
         <div className="mb-8">
@@ -37,7 +37,7 @@ export default function NotFound() {
             <Home size={20} />
             Go to Homepage
           </Link>
-          
+
           <Link
             href="/products"
             className="inline-flex items-center gap-2 bg-white text-primary border-2 border-primary font-bold px-8 py-4 rounded-xl hover:bg-primary hover:text-white transition-all shadow-md"

@@ -1,7 +1,13 @@
+"use client"
 import React from 'react';
+import { AdminDashboardRoutes, hasAdminPath } from './Navbar';
+import { usePathname } from 'next/navigation';
 
 export default function TopBar() {
-    return (
+    const pathname = usePathname();
+    const isDashboardRoute = hasAdminPath(pathname);
+
+    return !isDashboardRoute && (
         <div className="bg-white border-b border-gray-100 py-2 hidden md:block">
             <div className="container mx-auto px-4 flex justify-between items-center text-xs text-gray-500">
                 <div className="flex items-center gap-4">

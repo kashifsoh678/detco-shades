@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 
 const navLinks = [
     { name: 'Home', href: '/' },
@@ -14,39 +14,52 @@ const navLinks = [
     { name: 'Clients', href: '/clients' },
 ];
 
+export const AdminDashboardRoutes = [
+    '/admin',
+    '/admin/projects',
+    '/admin/clients',
+    '/admin/services',
+    '/admin/products',
+]
+
+export function hasAdminPath(str: string) {
+    return str.toLowerCase().startsWith('/admin');
+}
+
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
     const menuRef = useRef<HTMLDivElement>(null);
 
+    const isDashboardRoute = hasAdminPath(pathname);
     // Prevent body scroll when menu is open
     useEffect(() => {
         if (isOpen) {
             // Store the current scroll position
             const scrollY = window.scrollY;
-            
+
             // Prevent scrolling
             document.body.style.position = 'fixed';
             document.body.style.top = `-${scrollY}px`;
             document.body.style.width = '100%';
             document.body.style.overflow = 'hidden';
-            
+
             // Prevent scrolling on iOS
             document.documentElement.style.overflow = 'hidden';
             document.documentElement.style.position = 'fixed';
             document.documentElement.style.width = '100%';
-            
+
             return () => {
                 // Restore scrolling
                 document.body.style.position = '';
                 document.body.style.top = '';
                 document.body.style.width = '';
                 document.body.style.overflow = '';
-                
+
                 document.documentElement.style.overflow = '';
                 document.documentElement.style.position = '';
                 document.documentElement.style.width = '';
-                
+
                 // Restore scroll position
                 window.scrollTo(0, scrollY);
             };
@@ -75,19 +88,19 @@ export default function Navbar() {
         setIsOpen(false);
     }, [pathname]);
 
-    return (
+    return !isDashboardRoute && (
         <>
+
             <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 transition-all duration-300">
                 <div className="container mx-auto px-4 py-4 lg:py-4">
                     <div className="flex justify-between items-center h-10 lg:h-18 xl:h-28">
-                        {/* Logo */}
-                        <Link href="/" className="flex flex-col relative z-50 group">
+                        <Link href="/" className={`flex flex-col relative z-50 group   `}>
                             <Image
                                 src="/images/detco_logo.png"
                                 alt="DETCO - Al-Dorman Est."
                                 width={260}
                                 height={100}
-                                className="h-14 md:h-18 lg:h-24 xl:h-38 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                                className="h-28 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                                 priority
                                 unoptimized
                             />
@@ -120,6 +133,8 @@ export default function Navbar() {
                             </Link>
                         </nav>
 
+
+
                         {/* Mobile Menu Button - Hide when menu is open */}
                         {!isOpen && (
                             <button
@@ -140,10 +155,10 @@ export default function Navbar() {
             </header>
 
             {/* Mobile Nav Overlay - Full Screen (Outside header for proper positioning) */}
+
             <div
-                className={`fixed top-0 left-0 right-0 bottom-0 w-full h-full bg-white z-[9999] flex flex-col items-center justify-center space-y-4 p-6 lg:hidden transition-all duration-300 ease-in-out ${
-                    isOpen ? 'translate-x-0 opacity-100 visible' : 'translate-x-full opacity-0 invisible'
-                }`}
+                className={`fixed top-0 left-0 right-0 bottom-0 w-full h-full bg-white z-9999 flex flex-col items-center justify-center space-y-4 p-6 lg:hidden transition-all duration-300 ease-in-out ${isOpen ? 'translate-x-0 opacity-100 visible' : 'translate-x-full opacity-0 invisible'
+                    }`}
                 ref={menuRef}
                 role="dialog"
                 aria-modal="true"
@@ -172,11 +187,10 @@ export default function Navbar() {
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className={`text-2xl font-bold transition-colors w-full   text-center py-3 px-4 ${
-                                    isActive 
-                                        ? 'text-primary border-b-2 border-primary' 
-                                        : 'text-gray-800 hover:text-primary'
-                                }`}
+                                className={`text-2xl font-bold transition-colors w-full   text-center py-3 px-4 ${isActive
+                                    ? 'text-primary border-b-2 border-primary'
+                                    : 'text-gray-800 hover:text-primary'
+                                    }`}
                                 onClick={() => setIsOpen(false)}
                             >
                                 {link.name.toUpperCase()}
@@ -194,6 +208,8 @@ export default function Navbar() {
                     CONTACT US
                 </Link>
             </div>
+
         </>
-    );
+    )
+
 }
