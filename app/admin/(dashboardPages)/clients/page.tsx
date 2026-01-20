@@ -212,7 +212,7 @@ const ClientsPage = () => {
                 <ClientForm
                     initialData={selectedClient}
                     onSubmit={onFormSubmit}
-                    isLoading={isCreating || isUpdating || isModalLocked}
+                    isLoading={isCreating || isUpdating}
                     onLoadingChange={setIsModalLocked}
                 />
             </DataModal>
