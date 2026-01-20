@@ -22,6 +22,8 @@ import TopBar from "@/components/TopBar";
 import Footer from "@/components/Footer";
 import MainProvider from "@/providers/MainProvider";
 
+import { Toaster } from "@/components/ui/sonner";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -40,6 +42,7 @@ export default function RootLayout({
             {children}
           </div>
           <Footer />
+          <Toaster position="top-right" richColors />
         </MainProvider>
       </body>
     </html>

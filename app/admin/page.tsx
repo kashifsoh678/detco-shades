@@ -9,6 +9,9 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
+import axiosInstance from '@/lib/axios'
+import { useAuth } from '@/context/AuthContext'
+import { toast } from 'sonner'
 
 // Define validation schema using Zod
 const formSchema = z.object({
@@ -39,6 +42,7 @@ export const DashboardNavbar = () => {
 }
 const LoginPage = () => {
     const router = useRouter()
+    const { login } = useAuth()
     const [isLoading, setIsLoading] = useState(false)
 
     const {
@@ -48,24 +52,27 @@ const LoginPage = () => {
     } = useForm<FormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            email: "",
-            password: "",
+            email: "admin@detco.sa",
+            password: "admin123",
         },
     })
 
-    // Simulated login handler
+    // Secure login handler
     const onSubmit = async (data: FormData) => {
         setIsLoading(true)
         try {
-            console.log("Login data:", data)
-            // Simulate API call delay
-            await new Promise((resolve) => setTimeout(resolve, 1000))
+            // Call the secure API route
+            // The API sets the HttpOnly cookie
+            const response = await axiosInstance.post('/auth/login', data)
 
-            // In a real app, you would validate credentials here
-            // For now, redirect to dashboard
-            router.push('/admin/dashboard')
-        } catch (error) {
+            // Update the Auth Context (which updates client state and redirects)
+            await login(response.data.user)
+            toast.success("Welcome back, Admin!")
+
+        } catch (error: any) {
             console.error("Login failed:", error)
+            const msg = error.response?.data?.message || "Invalid email or password"
+            toast.error(msg)
         } finally {
             setIsLoading(false)
         }
@@ -89,6 +96,7 @@ const LoginPage = () => {
                     </div>
 
                     <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+
                         <div className="space-y-4">
                             <div>
                                 <label

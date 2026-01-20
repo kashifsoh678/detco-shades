@@ -2,63 +2,77 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User, AuthState } from '@/types/auth';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+import axiosInstance from '@/lib/axios';
+import { hasAdminPath } from '@/components/Navbar';
 
 interface AuthContextType extends AuthState {
-    login: (user: User, token: string) => void;
-    logout: () => void;
+    login: (user: User, token?: string) => Promise<void>;
+    logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const router = useRouter();
+    const pathname = usePathname();
     const [state, setState] = useState<AuthState>({
         user: null,
         isAuthenticated: false,
         isLoading: true,
     });
+    const isDashboardRoute = hasAdminPath(pathname);
+
 
     useEffect(() => {
-        // Check for persisted auth state (e.g., localStorage)
         const checkAuth = async () => {
-            // Mock check
-            const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
-            const userStr = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
-
-            if (token && userStr) {
-                try {
-                    const user = JSON.parse(userStr);
-                    setState({
-                        user,
-                        isAuthenticated: true,
-                        isLoading: false,
-                    });
-                } catch (e) {
-                    setState(prev => ({ ...prev, isLoading: false }));
-                }
-            } else {
-                setState(prev => ({ ...prev, isLoading: false }));
+            try {
+                const { data } = await axiosInstance.get('/auth/me');
+                setState({
+                    user: data.user,
+                    isAuthenticated: true,
+                    isLoading: false,
+                });
+            } catch (error) {
+                setState({
+                    user: null,
+                    isAuthenticated: false,
+                    isLoading: false,
+                });
             }
         };
 
         checkAuth();
-    }, []);
+    }, [!isDashboardRoute,]); // Re-check on route change if needed, though middleware handles protection
 
-    const login = (user: User, token: string) => {
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
+    const login = async (user: User, token?: string) => {
+        // In this secure flow, the login API sets the cookie. 
+        // We just update the client state to reflect success.
+        // NOTE: The actual API call is typically done in the Login Form, 
+        // managing the POST request there, then calling this context method OR
+        // we can move the API call here. 
+        // For consistency with typical patterns, let's assume the form calls this:
+
+        // Wait, to ensure state is sync with server, we should probably fetch 'me' or just set state 
+        // if the form passed the user object from the login response.
+
         setState({
             user,
             isAuthenticated: true,
             isLoading: false,
         });
+
+        // Navigation handles by the component or here
         router.push('/admin/dashboard');
     };
 
-    const logout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+    const logout = async () => {
+        try {
+            await axiosInstance.post('/auth/logout');
+        } catch (error) {
+            console.error('Logout failed', error);
+        }
+
         setState({
             user: null,
             isAuthenticated: false,

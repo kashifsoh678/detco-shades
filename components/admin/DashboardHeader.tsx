@@ -1,7 +1,6 @@
 "use client"
 
 import React from 'react'
-import { useRouter } from 'next/navigation'
 import { Menu, LogOut, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -9,13 +8,15 @@ interface DashboardHeaderProps {
     onMenuClick: () => void
 }
 
-export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
-    const router = useRouter()
+import { toast } from 'sonner'
+import { useAuth } from '@/context/AuthContext'
 
-    const handleLogout = () => {
-        // Implement any logout logic here (clearing tokens, etc.)
-        // For now, simple redirect
-        router.push('/admin')
+export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
+    const { logout } = useAuth()
+
+    const handleLogout = async () => {
+        await logout()
+        toast.success("Logged out successfully")
     }
 
     return (
