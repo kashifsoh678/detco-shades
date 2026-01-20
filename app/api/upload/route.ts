@@ -10,8 +10,11 @@ export async function POST(request: Request) {
     const auth = await verifyAdmin();
     if (!auth.authenticated) return auth.response!;
 
-    const formData = await request.json();
-    const { file, folder, fileName, resourceType } = formData;
+    const data = await request.formData();
+    const file = data.get("file") as unknown as File;
+    const folder = data.get("folder") as string;
+    const fileName = (data.get("fileName") as string) || file.name;
+    const resourceType = (data.get("resourceType") as string) || "auto";
 
     if (!file || !folder) {
       return NextResponse.json(
@@ -20,12 +23,15 @@ export async function POST(request: Request) {
       );
     }
 
+    // Convert file to base64 for Cloudinary
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    const fileBase64 = `data:${file.type};base64,${buffer.toString("base64")}`;
+
     // 2. Upload to Cloudinary
-    // Dynamically use the folder provided by the frontend.
-    // Example: "Home/products/images" or "Home/services"
-    const uploadResult = await uploadToCloudinary(file, {
-      folder: folder.startsWith("Home") ? folder : `Home/${folder}`,
-      resourceType: resourceType || "auto",
+    const uploadResult = await uploadToCloudinary(fileBase64, {
+      folder: folder.startsWith("Home") ? folder : `Detco/${folder}`,
+      resourceType: (resourceType as any) || "auto",
     });
 
     // 3. Track in Database as 'pending'
@@ -37,17 +43,11 @@ export async function POST(request: Request) {
         resourceType: (uploadResult.resource_type as any) || "image",
         status: "pending",
         folder: folder,
-        fileName: fileName || "unnamed",
+        fileName: fileName || file.name,
       })
       .returning();
 
-    return NextResponse.json(
-      {
-        message: "Upload successful",
-        media: insertedMedia,
-      },
-      { status: 200 },
-    );
+    return NextResponse.json(insertedMedia, { status: 200 });
   } catch (error) {
     console.error("Upload Route Error:", error);
     return NextResponse.json(

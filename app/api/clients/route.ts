@@ -14,12 +14,23 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
+    const showAll = searchParams.get("all") === "true";
     const offset = (page - 1) * limit;
+
+    let filter = eq(clients.isActive, true);
+
+    // If 'all' is requested, verify admin
+    if (showAll) {
+      const auth = await verifyAdmin();
+      if (auth.authenticated) {
+        filter = sql`true` as any; // Show all
+      }
+    }
 
     // 1. Fetch data and total count in parallel (optimized)
     const [data, [totalResult]] = await Promise.all([
       db.query.clients.findMany({
-        where: eq(clients.isActive, true),
+        where: filter,
         with: {
           image: true,
         },
@@ -27,10 +38,7 @@ export async function GET(request: Request) {
         limit,
         offset,
       }),
-      db
-        .select({ count: count() })
-        .from(clients)
-        .where(eq(clients.isActive, true)),
+      db.select({ count: count() }).from(clients).where(filter),
     ]);
 
     const total = totalResult.count;
