@@ -6,9 +6,9 @@ export async function middleware(request: NextRequest) {
   const currentUser = request.cookies.get("session")?.value;
 
   // Define protected and public routes
-  const isProtectedRoute =
-    request.nextUrl.pathname.startsWith("/admin/dashboard");
   const isLoginPage = request.nextUrl.pathname === "/admin";
+  const isProtectedRoute =
+    request.nextUrl.pathname.startsWith("/admin") && !isLoginPage;
 
   // Decrypt the session if it exists
   let userSession = null;

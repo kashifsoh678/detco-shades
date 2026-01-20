@@ -1,26 +1,54 @@
 import { NextResponse } from "next/server";
-import { encrypt } from "@/lib/auth";
-import { API_CONFIG } from "@/constants/api";
+import { encrypt, comparePassword } from "@/lib/auth";
+
+import { db } from "@/db";
+import { users } from "@/db/schema/users";
+import { eq } from "drizzle-orm";
 
 export async function POST(request: Request) {
-  const body = await request.json();
-  const { email, password } = body;
+  try {
+    const body = await request.json();
+    const { email, password } = body;
 
-  // TODO: Replace with Real DB Check
-  if (email === "admin@detco.sa" && password === "admin123") {
-    const user = {
-      id: "1",
-      name: "Admin User",
-      email,
-      role: "admin",
+    // Fetch user from DB
+    const user = await db.query.users.findFirst({
+      where: eq(users.email, email),
+    });
+
+    // Validate user and hash
+    const isValid = user && (await comparePassword(password, user.password));
+
+    if (!isValid) {
+      return NextResponse.json(
+        { message: "Invalid credentials" },
+        { status: 401 },
+      );
+    }
+
+    if (!user.isActive) {
+      return NextResponse.json(
+        { message: "Account is disabled" },
+        { status: 403 },
+      );
+    }
+
+    // Create user object for session (exclude password)
+    const userPayload = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
     };
 
-    // Create the session
+    // Create session (JWT)
     const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
-    const session = await encrypt({ user, expires });
+    const session = await encrypt({ user: userPayload, expires });
 
-    // Save the session in a cookie
-    const response = NextResponse.json({ user }, { status: 200 });
+    // 4. Set Cookie
+    const response = NextResponse.json(
+      { message: "Login successful", user: userPayload },
+      { status: 200 },
+    );
 
     response.cookies.set("session", session, {
       expires,
@@ -31,7 +59,11 @@ export async function POST(request: Request) {
     });
 
     return response;
+  } catch (error) {
+    console.error("Login error:", error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 },
+    );
   }
-
-  return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
 }
