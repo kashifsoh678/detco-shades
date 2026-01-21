@@ -100,9 +100,9 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
 
                         {/* Overview / Details from Quill */}
                         <div className="prose prose-lg prose-headings:font-bold prose-headings:text-gray-900 text-gray-600 max-w-none prose-primary">
-                            <h2 className="text-3xl font-bold text-gray-900 mb-6">Service Overview</h2>
+                            <h2 className="text-3xl font-bold text-gray-900 mb-6">Overview</h2>
                             <div
-                                className="quill-content leading-relaxed"
+                                className="quill-content leading-relaxed   "
                                 dangerouslySetInnerHTML={{ __html: service.details }}
                             />
                         </div>

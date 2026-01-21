@@ -29,3 +29,33 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Base styles for content rendered from Quill/Rich Text */
+.quill-content {
+  @apply space-y-2 text-justify break-words;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.quill .ql-container {
+  @apply h-full min-h-[380px] max-h-[580px];
+}
+
+.quill-content p {
+  @apply leading-relaxed;
+}
+
+.quill-content ul,
+.quill-content ol {
+  @apply list-outside pl-5 space-y-1;
+}
+
+.quill-content a {
+  @apply text-primary underline break-all;
+}
+
+.quill-content pre {
+  @apply whitespace-pre-wrap;
+  max-width: 100%;
+  overflow-x: auto;
+}

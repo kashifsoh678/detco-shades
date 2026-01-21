@@ -21,7 +21,7 @@ export default function ProjectsPage() {
                     <h1
                         className="text-3xl md:text-5xl font-bold text-white mb-4"
                     >
-                        Completed Projects
+                        Our Projects
                     </h1>
                     <p
                         className="text-teal-100 text-base md:text-xl max-w-2xl mx-auto"

@@ -20,22 +20,26 @@ import { Service, ServiceCreate } from "@/hooks/use-services";
 import { cn } from "@/lib/utils";
 
 const serviceSchema = z.object({
-    title: z.string().min(1, "Title is required").max(200),
-    slug: z.string().min(1, "Slug is required").max(200),
-    shortDescription: z.string().min(1, "Short description is required").max(300),
+    title: z.string().trim().min(1, "Title is required").max(200),
+    slug: z.string().trim().min(1, "Slug is required").max(200),
+    shortDescription: z.string().trim().min(1, "Short description is required").max(300),
     details: z.string().min(1, "Details are required"),
     iconName: z.string().min(1, "Icon is required"),
     coverImageId: z.string().nullable(),
     coverImageUrl: z.string().optional(),
-    features: z.array(z.string()).min(1, "At least one feature is required").max(10, "Maximum 10 features are allowed"),
+    features: z
+        .array(z.string().trim().min(1, "Feature name cannot be empty"))
+        .min(1, "At least one feature is required")
+        .max(10, "Maximum 10 features are allowed"),
     processSteps: z
         .array(
             z.object({
-                title: z.string().min(1, "Step title is required").max(100),
-                description: z.string().min(1, "Step description is required").max(200),
+                title: z.string().trim().min(1, "Step title is required").max(100),
+                description: z.string().trim().min(1, "Step description is required").max(300),
             })
         )
-        .min(1, "At least one process step is required").max(10, "Maximum 10 process steps are allowed"),
+        .min(1, "At least one process step is required")
+        .max(10, "Maximum 10 process steps are allowed"),
     isActive: z.boolean(),
 });
 
@@ -68,7 +72,7 @@ const ServiceForm = ({
     isLoading,
     onLoadingChange,
 }: ServiceFormProps) => {
-    const [currentStep, setCurrentStep] = useState(3);
+    const [currentStep, setCurrentStep] = useState(0);
 
     const form = useForm<ServiceFormValues>({
         resolver: zodResolver(serviceSchema),
@@ -179,7 +183,23 @@ const ServiceForm = ({
                 </p>
             </div>
 
-            <form onSubmit={handleSubmit((data) => onSubmit(data as any))} className="flex-1 flex flex-col ">
+            <form
+                onSubmit={handleSubmit((data) => onSubmit(data as any))}
+                onKeyDown={(e) => {
+                    // Prevent form submission on Enter key
+                    if (e.key === "Enter") {
+                        if (e.target instanceof HTMLInputElement) {
+                            e.preventDefault();
+                            nextStep();
+                        } else if (e.target instanceof HTMLButtonElement) {
+                            // Prevent buttons from triggering form submit on Enter if they are inside the form
+                            e.preventDefault();
+                            (e.target as any).click();
+                        }
+                    }
+                }}
+                className="flex-1 flex flex-col "
+            >
                 {/* Hidden slug field */}
                 <input type="hidden" {...register("slug")} />
 
@@ -362,11 +382,10 @@ const ServiceForm = ({
                                         placeholder="Elaborate on technical aspects, standards, and results..."
                                         maxLength={5000}
                                         className="min-h-[400px]"
+                                        error={errors.details?.message}
                                     />
                                 </div>
-                                {errors.details && (
-                                    <p className="text-[12px] text-red-500 font-medium pl-1 animate-in fade-in slide-in-from-top-1">{errors.details.message}</p>
-                                )}
+
                             </>
                         )}
                     </div>
@@ -387,6 +406,7 @@ const ServiceForm = ({
                     <div className="flex gap-3">
                         {currentStep < STEPS.length - 1 ? (
                             <Button
+                                key="next-step-btn"
                                 type="button"
                                 onClick={nextStep}
                                 variant={"default"}
@@ -396,6 +416,7 @@ const ServiceForm = ({
                             </Button>
                         ) : (
                             <Button
+                                key="submit-step-btn"
                                 type="submit"
                                 variant={"default"}
                                 className=""
