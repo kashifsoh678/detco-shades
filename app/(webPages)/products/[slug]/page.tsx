@@ -112,20 +112,19 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                         {/* Benefits Grid */}
                         {benefits.length > 0 && (
                             <div>
-                                <h2 className="text-3xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-                                    Key Benefits
-                                </h2>
-
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <h3 className="text-2xl font-bold text-gray-900 mb-6">Key Features</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {benefits.map((benefit, idx) => (
-                                        <div key={idx} className="flex items-center gap-3">
-                                            <div className="w-2 h-2 rounded-full bg-primary shrink-0" />
-                                            <span className="text-lg font-medium text-gray-900">{benefit.title}</span>
+                                        <div key={idx} className="flex  gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                                            <CheckCircle2 className="text-primary shrink-0 mt-[2px]" size={20} />
+                                            <span className="capitalize font-medium text-gray-800">{benefit.title}</span>
                                         </div>
                                     ))}
                                 </div>
                             </div>
+
                         )}
+
 
 
                         {/* FAQ Section */}

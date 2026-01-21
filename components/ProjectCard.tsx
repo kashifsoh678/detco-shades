@@ -22,7 +22,7 @@ export default function ProjectCard({ title, service, location, thumbnail, index
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="group flex flex-col bg-white rounded-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
+            className="group flex flex-col bg-white rounded-3xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
         >
             {/* Image - Hover View Icon */}
             <div className="aspect-4/2 w-full overflow-hidden relative">

@@ -112,9 +112,9 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                             <h3 className="text-2xl font-bold text-gray-900 mb-6">Key Features</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {service.features.map((feature, idx) => (
-                                    <div key={idx} className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
-                                        <CheckCircle2 className="text-primary shrink-0" size={20} />
-                                        <span className="font-medium text-gray-800">{feature}</span>
+                                    <div key={idx} className="flex  gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                                        <CheckCircle2 className="text-primary shrink-0 mt-[2px]" size={20} />
+                                        <span className="capitalize font-medium text-gray-800">{feature}</span>
                                     </div>
                                 ))}
                             </div>
