@@ -26,11 +26,10 @@ const projectSchema = z.object({
     thumbnailId: z.string().min(1, "Thumbnail is required"),
     thumbnailUrl: z.string().optional(),
     description: z.string().min(1, "Description is required"),
-    imageIds: z
-        .array(z.string())
-        .min(1, "At least one gallery image is required")
-        .max(5, "Maximum 5 gallery images are allowed"),
-    imageUrls: z.array(z.string()).optional(),
+    gallery: z.array(z.object({
+        imageId: z.string().min(1, "Image is required"),
+        url: z.string().optional()
+    })).min(1, "At least one gallery image is required").max(5, "Maximum 5 gallery images are allowed"),
     isActive: z.boolean(),
 });
 
@@ -71,8 +70,10 @@ const ProjectForm = ({
             ? {
                 ...initialData,
                 thumbnailUrl: initialData.thumbnail?.url,
-                imageIds: initialData.images?.map(img => img.imageId) || [],
-                imageUrls: initialData.images?.map(img => img.image.url) || [],
+                gallery: initialData.images?.map(img => ({
+                    imageId: img.imageId,
+                    url: img.image.url
+                })) || [{ imageId: "", url: "" }],
                 serviceId: initialData.serviceId || "",
                 thumbnailId: initialData.thumbnailId as any,
             }
@@ -83,7 +84,7 @@ const ProjectForm = ({
                 serviceId: "",
                 thumbnailId: "",
                 description: "",
-                imageIds: [""],
+                gallery: [{ imageId: "", url: "" }],
                 isActive: true,
             },
     });
@@ -104,7 +105,7 @@ const ProjectForm = ({
         remove: removeImage,
     } = useFieldArray({
         control,
-        name: "imageIds" as never,
+        name: "gallery",
     });
 
     const title = watch("title");
@@ -117,7 +118,6 @@ const ProjectForm = ({
 
     const thumbnailUrl = watch("thumbnailUrl");
     const thumbnailId = watch("thumbnailId");
-    const imageUrls = watch("imageUrls") || [];
 
     const validateStep = async (step: number) => {
         if (step === 0) {
@@ -127,7 +127,7 @@ const ProjectForm = ({
             return await trigger(["description"]);
         }
         if (step === 2) {
-            return await trigger(["imageIds"]);
+            return await trigger(["gallery"]);
         }
         return true;
     };
@@ -169,7 +169,13 @@ const ProjectForm = ({
             </div>
 
             <form
-                onSubmit={handleSubmit((data) => onSubmit(data as any))}
+                onSubmit={handleSubmit((data) => {
+                    const { gallery, ...rest } = data;
+                    onSubmit({
+                        ...rest,
+                        imageIds: gallery.map(item => item.imageId)
+                    } as any);
+                })}
                 onKeyDown={(e) => {
                     if (e.key === "Enter") {
                         if (e.target instanceof HTMLInputElement) {
@@ -266,8 +272,8 @@ const ProjectForm = ({
                                     <span className="text-[10px] text-gray-400 font-medium bg-gray-50 px-2 py-1 rounded-full border">
                                         Allowed: JPG, PNG, WEBP | Max size: 5MB.
                                     </span>
-                                    <span className="text-[10px] text-gray-400 font-medium bg-gray-50 px-2 py-1 rounded-full border">
-                                        Max: {galleryFields.length} / 5
+                                    <span className="text-[10px] text-primary font-medium  px-2 py-1 rounded-full ">
+                                        <span className="text-gray-400">Limit :</span> {galleryFields.length} / 5
                                     </span>
                                 </div>
 
@@ -281,38 +287,31 @@ const ProjectForm = ({
                                                     variant="ghost"
                                                     size="icon"
                                                     onClick={() => {
-                                                        const currentUrls = [...imageUrls];
-                                                        currentUrls.splice(index, 1);
-                                                        setValue("imageUrls", currentUrls);
                                                         removeImage(index);
                                                     }}
-                                                    className={`right-0 mb-1 h-6 w-6 text-red-500 hover:text-red-600 hover:bg-red-50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer ${imageUrls[index] && "hidden"}`}
+                                                    className={`right-0 mb-1 h-6 w-6 text-red-500 hover:text-red-600 hover:bg-red-50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer ${watch(`gallery.${index}.url`) && "hidden"}`}
                                                     disabled={galleryFields.length === 1}
                                                 >
                                                     <Trash2 size={12} />
                                                 </Button>
                                             </div>
                                             <ImageUpload
-                                                value={imageUrls[index]}
-                                                mediaId={watch(`imageIds.${index}` as any) || undefined}
+                                                value={watch(`gallery.${index}.url`)}
+                                                mediaId={watch(`gallery.${index}.imageId`)}
                                                 folder="projects/gallery"
                                                 label=""
                                                 showsuggestion={false}
                                                 onChange={(id, url) => {
-                                                    setValue(`imageIds.${index}` as any, id);
-                                                    const currentUrls = [...imageUrls];
-                                                    currentUrls[index] = url;
-                                                    setValue("imageUrls", currentUrls);
+                                                    setValue(`gallery.${index}.imageId`, id, { shouldValidate: true });
+                                                    setValue(`gallery.${index}.url`, url);
                                                 }}
                                                 onRemove={() => {
-                                                    setValue(`imageIds.${index}` as any, "");
-                                                    const currentUrls = [...imageUrls];
-                                                    currentUrls[index] = "";
-                                                    setValue("imageUrls", currentUrls);
+                                                    setValue(`gallery.${index}.imageId`, "");
+                                                    setValue(`gallery.${index}.url`, "");
                                                 }}
                                                 onLoadingChange={onLoadingChange}
                                             />
-                                            {(errors.imageIds as any)?.[index] && (
+                                            {errors.gallery?.[index]?.imageId && (
                                                 <p className="text-[10px] text-red-500 mt-1">Image is required</p>
                                             )}
                                         </div>
@@ -320,9 +319,9 @@ const ProjectForm = ({
 
 
                                 </div>
-                                {errors.imageIds && (
+                                {errors.gallery && !Array.isArray(errors.gallery) && (
                                     <p className="text-sm text-red-500 font-medium animate-shake">
-                                        {(errors.imageIds as any).message}
+                                        {(errors.gallery as any).message}
                                     </p>
                                 )}
 
@@ -330,7 +329,7 @@ const ProjectForm = ({
                                     {galleryFields.length < 5 && (
                                         <button
                                             type="button"
-                                            onClick={() => appendImage("")}
+                                            onClick={() => appendImage({ imageId: "", url: "" })}
                                             className="w-full cursor-pointer flex items-center justify-center gap-3 h-[60px] border-2 border-dashed border-gray-200 rounded-xl bg-gray-50/50 text-gray-400 hover:border-primary hover:bg-primary/5 hover:text-primary transition-all duration-300 group"
                                         >
                                             <div className="w-6 h-6 rounded-full bg-white border flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">

@@ -4,6 +4,8 @@ import { useServices } from '@/hooks/use-services';
 import * as LucideIcons from 'lucide-react';
 import { ArrowRight, HelpCircle } from 'lucide-react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+
 
 export default function ServicesPage() {
     const { servicesQuery } = useServices();
@@ -55,34 +57,44 @@ export default function ServicesPage() {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {services?.map((service) => {
+                        {services?.map((service, servIndx) => {
                             const Icon = (LucideIcons as any)[service.iconName] || HelpCircle;
                             return (
-                                <Link
+                                <motion.div
                                     key={service.id}
-                                    href={`/services/${service.slug}`}
-                                    className="group bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.5, delay: servIndx * 0.1 }}
+                                    className="group flex flex-col bg-white rounded-3xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
                                 >
-                                    <div className="absolute top-0 right-0 w-32 h-32 bg-teal-50 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110" />
+                                    <Link
+                                        key={service.id}
+                                        href={`/services/${service.slug}`}
+                                        className="group bg-white p-8  relative overflow-hidden"
+                                    >
+                                        <div className="absolute top-0 right-0 w-32 h-32 bg-teal-50 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110" />
 
-                                    <div className="relative z-10">
-                                        <div className="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
-                                            <Icon size={28} strokeWidth={1.5} />
+                                        <div className="relative z-10">
+                                            <div className="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                                                <Icon size={28} strokeWidth={1.5} />
+                                            </div>
+
+                                            <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors capitalize">
+                                                {service.title}
+                                            </h3>
+                                            <p className="text-gray-500 leading-relaxed mb-8 line-clamp-3 capitalize">
+                                                {service.shortDescription}
+                                            </p>
+
+                                            <div className="flex items-center text-primary font-bold text-sm tracking-wide group-hover:gap-2 transition-all">
+                                                LEARN MORE
+                                                <ArrowRight size={16} className="ml-2 group-hover:ml-0" />
+                                            </div>
                                         </div>
+                                    </Link>
+                                </motion.div>
 
-                                        <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors capitalize">
-                                            {service.title}
-                                        </h3>
-                                        <p className="text-gray-500 leading-relaxed mb-8 line-clamp-3 capitalize">
-                                            {service.shortDescription}
-                                        </p>
-
-                                        <div className="flex items-center text-primary font-bold text-sm tracking-wide group-hover:gap-2 transition-all">
-                                            LEARN MORE
-                                            <ArrowRight size={16} className="ml-2 group-hover:ml-0" />
-                                        </div>
-                                    </div>
-                                </Link>
                             );
                         })}
                     </div>
