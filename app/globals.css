@@ -32,7 +32,7 @@ body {
 
 /* Base styles for content rendered from Quill/Rich Text */
 .quill-content {
-  @apply space-y-2 text-justify break-words;
+  @apply space-y-2 text-justify;
   overflow-wrap: anywhere;
   word-break: break-word;
 }

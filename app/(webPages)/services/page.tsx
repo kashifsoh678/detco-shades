@@ -1,26 +1,28 @@
-import React from 'react';
-import Link from 'next/link';
-import { ArrowRight, HelpCircle } from 'lucide-react';
+"use client";
+import { Service } from '@/db/schema';
+import { useServices } from '@/hooks/use-services';
 import * as LucideIcons from 'lucide-react';
-import { db } from '@/db';
-import { services } from '@/db/schema';
-import { eq, desc } from 'drizzle-orm';
-import Image from 'next/image';
+import { ArrowRight, HelpCircle } from 'lucide-react';
+import Link from 'next/link';
 
-export default async function ServicesPage() {
-    const servicesData = await db.query.services.findMany({
-        where: eq(services.isActive, true),
-        with: {
-            coverImage: true,
-        },
-        orderBy: [desc(services.order)],
-    });
+export default function ServicesPage() {
+    const { servicesQuery } = useServices();
+    const { data: servicesData, isLoading } = servicesQuery;
+    const services: Service[] = servicesData?.data || [];
+
+    // const servicesData = await db.query.services.findMany({
+    //     where: eq(services.isActive, true),
+    //     with: {
+    //         coverImage: true,
+    //     },
+    //     orderBy: [desc(services.order)],
+    // });
 
     return (
-        <main className="min-h-screen bg-white">
+        <main className="min-h-screen bg-white ">
             {/* Hero Section */}
-            <div className="relative py-16 md:py-24 bg-primary overflow-hidden">
-                <div className="absolute inset-0 bg-primary opacity-10" />
+            <div className="relative py-16 md:py-24 lg:py-28 bg-primary overflow-hidden">
+                <div className="absolute inset-0 bg-[url('https://placehold.co/1920x600/0f766e/ffffff?text=Our+Products')] opacity-10 bg-cover bg-center" />
                 <div className="container mx-auto px-4 text-center relative z-10">
                     <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
                         Our Services
@@ -30,16 +32,30 @@ export default async function ServicesPage() {
                     </p>
                 </div>
             </div>
-
             {/* Services Grid */}
-            <div className="container mx-auto px-4 py-20">
-                {servicesData.length === 0 ? (
-                    <div className="text-center py-20">
-                        <p className="text-gray-500">Our services will be updated soon. Stay tuned!</p>
+            <div className="container mx-auto px-4 -mt-10 relative z-20 pb-24">
+                {isLoading ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                        {[...Array(3)].map((_, i) => (
+                            <div
+                                key={i}
+                                className="h-[250px] bg-gray-50 animate-pulse rounded-[2.5rem] border border-gray-100"
+                            />
+                        ))}
+                    </div>
+                ) : services.length === 0 ? (
+                    <div className="bg-white border border-gray-100 rounded-[3rem] p-24 shadow-xl flex flex-col items-center justify-center text-center">
+                        <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center text-gray-300 mb-8 border shadow-inner">
+                            <LucideIcons.Layers size={48} />
+                        </div>
+                        <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-4 uppercase tracking-tight">Services under construction</h3>
+                        <p className="text-gray-500 max-w-sm text-lg leading-relaxed">
+                            Our services will be updated soon. Stay tuned!
+                        </p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {servicesData.map((service) => {
+                        {services?.map((service) => {
                             const Icon = (LucideIcons as any)[service.iconName] || HelpCircle;
                             return (
                                 <Link
@@ -54,10 +70,10 @@ export default async function ServicesPage() {
                                             <Icon size={28} strokeWidth={1.5} />
                                         </div>
 
-                                        <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
+                                        <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors capitalize">
                                             {service.title}
                                         </h3>
-                                        <p className="text-gray-500 leading-relaxed mb-8 line-clamp-3">
+                                        <p className="text-gray-500 leading-relaxed mb-8 line-clamp-3 capitalize">
                                             {service.shortDescription}
                                         </p>
 
@@ -71,6 +87,7 @@ export default async function ServicesPage() {
                         })}
                     </div>
                 )}
+
             </div>
 
             {/* CTA Section */}

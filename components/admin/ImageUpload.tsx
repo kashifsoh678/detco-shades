@@ -16,6 +16,7 @@ interface ImageUploadProps {
     className?: string;
     label?: string;
     onLoadingChange?: (loading: boolean) => void;
+    showsuggestion?: boolean;
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
@@ -26,7 +27,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     folder,
     className,
     label = "Upload Image",
-    onLoadingChange
+    onLoadingChange,
+    showsuggestion = true
 }) => {
     const [isUploading, setIsUploading] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null)
@@ -97,7 +99,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
             <div className="flex items-center gap-4">
                 {value ? (
-                    <div className="relative w-full h-60 rounded-xl overflow-hidden group border border-gray-200">
+                    <div className="relative w-full h-40 rounded-xl overflow-hidden group border border-gray-200 ">
                         <Image
                             src={value}
                             alt="Uploaded image"
@@ -109,9 +111,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                                 type="button"
                                 onClick={handleRemove}
                                 disabled={isUploading}
-                                className="p-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors disabled:opacity-50"
+                                className="p-1 cursor-pointer bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors disabled:opacity-50"
                             >
-                                {isUploading ? <Loader2 className="animate-spin" size={20} /> : <X size={20} />}
+                                {isUploading ? <Loader2 className="animate-spin" size={14} /> : <X size={14} />}
                             </button>
                         </div>
                     </div>
@@ -119,15 +121,15 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     <div
                         onClick={() => !isUploading && fileInputRef.current?.click()}
                         className={cn(
-                            "w-full h-60 rounded-xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-primary hover:bg-primary/5 transition-all text-gray-500",
+                            "w-full h-40 rounded-xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-primary hover:bg-primary/5 transition-all text-gray-500",
                             isUploading && "opacity-50 cursor-not-allowed"
                         )}
                     >
                         {isUploading ? (
-                            <Loader2 className="animate-spin text-primary" size={32} />
+                            <Loader2 className="animate-spin text-primary" size={28} />
                         ) : (
                             <>
-                                <UploadCloud size={32} />
+                                <UploadCloud size={28} />
                                 <span className="text-xs font-medium px-2 text-center">Click to upload</span>
                             </>
                         )}
@@ -142,7 +144,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     className="hidden"
                 />
             </div>
-            <p className="text-[10px] text-gray-400">Supported formats: JPG, PNG, WEBP. Max size: 5MB.</p>
+            {showsuggestion &&
+                <p className="text-[10px] text-gray-400">Allowed : JPG, PNG, WEBP | Max size: 5MB.</p>}
         </div>
     )
 }
