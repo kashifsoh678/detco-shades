@@ -7,6 +7,7 @@ import * as z from 'zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import ImageUpload from './ImageUpload'
+import ActiveToggle from './ActiveToggle'
 import { Client } from '@/types/clients'
 
 const clientSchema = z.object({
@@ -37,6 +38,7 @@ const ClientForm: React.FC<ClientFormProps> = ({
     React.useEffect(() => {
         onLoadingChange?.(isLoading || isImageUploading)
     }, [isLoading, isImageUploading, onLoadingChange])
+
     const {
         register,
         handleSubmit,
@@ -61,6 +63,7 @@ const ClientForm: React.FC<ClientFormProps> = ({
     })
 
     const imageUrl = watch("imageUrl")
+    const isActive = watch("isActive")
 
     const handleFormSubmit = (data: ClientFormValues) => {
         onSubmit(data)
@@ -70,77 +73,53 @@ const ClientForm: React.FC<ClientFormProps> = ({
         <form onSubmit={handleSubmit(handleFormSubmit as any)} className="space-y-6">
             <div className="grid grid-cols-1 gap-6">
                 <div className="space-y-2">
-                    <label className="text-sm font-semibold text-gray-700">Client Name</label>
+                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wider">Client Name</label>
                     <Input
                         {...register("name")}
-                        placeholder="Enter client/brand name"
+                        placeholder="e.g. Acme Corp"
                         disabled={isLoading}
-                        className={errors.name ? "border-red-500" : ""}
+                        error={errors.name?.message}
                     />
-                    {errors.name && (
-                        <p className="text-xs text-red-500">{errors.name.message}</p>
+                </div>
+
+                <div className="space-y-2">
+                    <ImageUpload
+                        label="Brand Logo"
+                        value={imageUrl}
+                        mediaId={watch("imageId")}
+                        folder="clients"
+                        onLoadingChange={setIsImageUploading}
+                        onChange={(id, url) => {
+                            setValue("imageId", id)
+                            setValue("imageUrl", url)
+                        }}
+                        onRemove={() => {
+                            setValue("imageId", "")
+                            setValue("imageUrl", "")
+                        }}
+                    />
+                    {errors.imageId && (
+                        <p className="text-[12px] text-red-500 font-medium pl-1 animate-in fade-in slide-in-from-top-1">{errors.imageId.message}</p>
                     )}
                 </div>
 
-                <ImageUpload
-                    label="Client Logo"
-                    value={imageUrl}
-                    mediaId={watch("imageId")}
-                    folder="clients"
-                    onLoadingChange={setIsImageUploading}
-                    onChange={(id, url) => {
-                        setValue("imageId", id)
-                        setValue("imageUrl", url)
-                    }}
-                    onRemove={() => {
-                        setValue("imageId", "")
-                        setValue("imageUrl", "")
-                    }}
-                />
-                {errors.imageId && (
-                    <p className="text-xs text-red-500">{errors.imageId.message}</p>
-                )}
-
-                <div className="grid grid-cols-2 gap-4">
-                    {/* <div className="space-y-2">
-                        <label className="text-sm font-semibold text-gray-700">Display Order</label>
-                        <Input
-                            type="number"
-                            {...register("order", { valueAsNumber: true })}
-                            disabled={true}
-                            className="bg-gray-50 cursor-not-allowed"
-                        />
-                    </div> */}
-
-                    <div className="flex items-center gap-2">
-                        <input
-                            type="checkbox"
-                            id="isActive"
-                            {...register("isActive")}
-                            disabled={isLoading}
-                            className="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"
-                        />
-                        <label htmlFor="isActive" className="text-sm font-semibold text-gray-700 cursor-pointer">
-                            Active
-                        </label>
-                    </div>
+                <div className="pt-2">
+                    <ActiveToggle
+                        value={isActive}
+                        onChange={(val) => setValue("isActive", val)}
+                        label="Client Status"
+                        description="Toggle visibility in the client showcase"
+                    />
                 </div>
             </div>
 
-            <div className="flex justify-end gap-3 border-t pt-4  border-gray-100 ">
+            <div className="flex justify-end gap-3 border-t pt-8 mt-4 border-gray-100">
                 <Button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full sm:w-auto"
+                    className=""
                 >
-                    {isLoading ? (
-                        <div className="flex items-center gap-2">
-                            <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                            Saving...
-                        </div>
-                    ) : (
-                        initialData ? 'Update Client' : 'Add Client'
-                    )}
+                    {isLoading ? "Saving Changes..." : (initialData ? 'Update Client' : 'Add Client')}
                 </Button>
             </div>
         </form>

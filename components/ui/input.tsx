@@ -20,7 +20,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     ref={ref}
                     {...props}
                 />
-                {error && <p className="text-[10px] text-red-500 font-bold pl-1 animate-in fade-in slide-in-from-top-1">{error}</p>}
+                {error && <p className="text-[12px] text-red-500 font-medium pl-1 animate-in fade-in slide-in-from-top-1">{error}</p>}
             </div>
         )
     }

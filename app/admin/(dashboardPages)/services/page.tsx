@@ -259,6 +259,7 @@ const ServicesPage = () => {
                 title="Service"
                 type={modalType}
                 className="max-w-4xl"
+
             >
                 <ServiceForm
                     initialData={selectedService}

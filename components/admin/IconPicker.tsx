@@ -38,7 +38,7 @@ const IconPicker = ({ value, onChange, className }: IconPickerProps) => {
     const SelectedIcon = (LucideIcons as any)[value] || LucideIcons.HelpCircle;
 
     return (
-        <Popover open={isOpen} onOpenChange={setIsOpen}>
+        <Popover open={isOpen} onOpenChange={setIsOpen} >
             <PopoverTrigger asChild>
                 <Button
                     variant="outline"
@@ -48,7 +48,7 @@ const IconPicker = ({ value, onChange, className }: IconPickerProps) => {
                     <span className="truncate">{value || "Select an icon"}</span>
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-64 p-2 shadow-xl" align="start">
+            <PopoverContent className="w-64 p-2 shadow-xl border bg-primary-foreground" align="start">
                 <div className="space-y-2">
                     <div className="relative">
                         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />

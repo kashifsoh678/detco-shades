@@ -93,7 +93,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
     return (
         <div className={cn("space-y-4 w-full", className)}>
-            {label && <label className="text-sm font-semibold text-gray-700">{label}</label>}
+            {label && <label className="text-xs font-semibold text-gray-700 uppercase tracking-wider">{label}</label>}
 
             <div className="flex items-center gap-4">
                 {value ? (

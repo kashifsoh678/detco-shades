@@ -48,7 +48,7 @@ const QuillEditor = ({
 
     return (
         <div className={`space-y-1 ${className}`}>
-            <div className="bg-white rounded-md border border-gray-200 overflow-hidden shadow-sm">
+            <div className="bg-white rounded-md  border-gray-200 overflow-hidden ">
                 <ReactQuill
                     theme="snow"
                     value={value}
@@ -65,7 +65,7 @@ const QuillEditor = ({
                     modules={modules}
                     formats={formats}
                     placeholder={placeholder}
-                    className="min-h-[200px]"
+                    className=" h-full "
                 />
             </div>
             {maxLength && (
