@@ -47,8 +47,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             return
         }
 
-        if (file.size > 5 * 1024 * 1024) {
-            toast.error("File size must be less than 5MB")
+        if (file.size > 10 * 1024 * 1024) {
+            toast.error("File size must be less than 10MB")
             return
         }
 
@@ -145,7 +145,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 />
             </div>
             {showsuggestion &&
-                <p className="text-[10px] text-gray-400">Allowed : JPG, PNG, WEBP | Max size: 5MB.</p>}
+                <p className="text-[10px] text-gray-400">Allowed : JPG, PNG, WEBP | Max size: 10MB.</p>}
         </div>
     )
 }
