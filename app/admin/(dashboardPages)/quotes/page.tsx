@@ -1,30 +1,24 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import ConfirmModal from "@/components/ui/ConfirmModal";
+import { Input } from "@/components/ui/input";
 import axiosInstance from "@/lib/axios";
+import { cn } from "@/lib/utils";
 import {
+    AlertCircle,
+    Briefcase,
+    Building2,
+    Calendar,
     Loader2,
     Mail,
-    Phone,
-    Building2,
-    AlertCircle,
-    Search,
     MessageSquareQuote,
+    Phone,
+    Search,
     Trash2,
-    Clock,
-    CheckCircle2,
-    User,
-    Calendar,
-    Briefcase
+    User
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import ConfirmModal from "@/components/ui/ConfirmModal";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
 
 interface Quote {
     id: string;
