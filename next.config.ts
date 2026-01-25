@@ -17,6 +17,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "www.transparenttextures.com",
       },
+      {
+        protocol: "https",
+        hostname: "sternbergclinic.com.au",
+      },
     ],
   },
 };
