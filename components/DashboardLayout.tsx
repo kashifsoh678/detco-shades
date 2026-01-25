@@ -21,7 +21,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                     onMenuClick={() => setIsSidebarOpen(true)}
                 />
 
-                <main className="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto">
+                <main className="flex-1 p-2 md:p-4 lg:p-6  overflow-y-auto">
                     {children}
                 </main>
             </div>

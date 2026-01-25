@@ -72,9 +72,9 @@ export default function FeaturedProjects() {
                             key={project.id}
                             id={project.id}
                             title={project.title}
-                            category={project.category}
+                            service={project.category}
                             location={project.location}
-                            image={project.image}
+                            thumbnail={project.image}
                             index={index}
                         />
                     ))}

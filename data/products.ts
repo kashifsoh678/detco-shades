@@ -1,4 +1,25 @@
-import { Share2, Shield, Sun, Wind, PenTool, CheckCircle2, Building2, Home, School, Plane, Car, Users, Umbrella, Layers, Square, Columns, Circle, Route, Settings, ParkingCircle } from "lucide-react";
+import {
+  Share2,
+  Shield,
+  Sun,
+  Wind,
+  PenTool,
+  CheckCircle2,
+  Building2,
+  Home,
+  School,
+  Plane,
+  Car,
+  Users,
+  Umbrella,
+  Layers,
+  Square,
+  Columns,
+  Circle,
+  Route,
+  Settings,
+  ParkingCircle,
+} from "lucide-react";
 
 export interface ProductData {
   id: string; // The slug
@@ -8,6 +29,7 @@ export interface ProductData {
   shortDescription: string; // For cards
   mainDescription: string; // First 100 words keyword optimized
   images: { src: string; alt: string }[];
+  advantages: [{ title: string; description: string }];
   applications: { title: string; icon: any }[];
   specifications: { label: string; value: string }[];
   benefits: { title: string; description: string; icon: any }[];
@@ -55,6 +77,7 @@ Trust Detco, the leading **shade manufacturer**, for engineering excellence and 
         alt: "Close up of HDPE high density polyethylene fabric mesh",
       },
     ],
+    advantages: [{ title: "", description: "" }],
     applications: [
       { title: "Commercial Car Parks", icon: Share2 },
       { title: "Shopping Malls", icon: Share2 },
@@ -123,7 +146,8 @@ Trust Detco, the leading **shade manufacturer**, for engineering excellence and 
   },
   "pvc-car-parking-shades": {
     id: "pvc-car-parking-shades",
-    metaTitle: "PVC Car Parking Shades | Waterproof Shade Solutions Saudi Arabia | Detco",
+    metaTitle:
+      "PVC Car Parking Shades | Waterproof Shade Solutions Saudi Arabia | Detco",
     metaDescription:
       "Premium PVC car parking shades with 100% waterproof protection. Ideal for all-weather coverage in Saudi Arabia. UV resistant, fire-retardant, and engineered for durability.",
     name: "PVC Car Parking Shades",
@@ -155,6 +179,7 @@ Perfect for premium commercial developments, hospitals, luxury residential compo
         alt: "Commercial PVC shade installation by Detco",
       },
     ],
+    advantages: [{ title: "", description: "" }],
     applications: [
       { title: "Luxury Residential", icon: Home },
       { title: "Premium Commercial", icon: Building2 },
@@ -173,28 +198,33 @@ Perfect for premium commercial developments, hospitals, luxury residential compo
     benefits: [
       {
         title: "Complete Waterproof",
-        description: "Fully sealed membrane prevents any water penetration, protecting vehicles and surfaces below.",
+        description:
+          "Fully sealed membrane prevents any water penetration, protecting vehicles and surfaces below.",
         icon: Umbrella,
       },
       {
         title: "All-Weather Protection",
-        description: "Resistant to UV rays, rain, wind, dust storms, and extreme temperature fluctuations.",
+        description:
+          "Resistant to UV rays, rain, wind, dust storms, and extreme temperature fluctuations.",
         icon: Shield,
       },
       {
         title: "Self-Cleaning Surface",
-        description: "PVDF coating prevents dirt accumulation and makes maintenance effortless.",
+        description:
+          "PVDF coating prevents dirt accumulation and makes maintenance effortless.",
         icon: Sun,
       },
       {
         title: "Premium Aesthetics",
-        description: "Smooth surface finish and wide color selection enhance architectural appeal.",
+        description:
+          "Smooth surface finish and wide color selection enhance architectural appeal.",
         icon: PenTool,
       },
     ],
     faq: [
       {
-        question: "What's the difference between HDPE and PVC car parking shades?",
+        question:
+          "What's the difference between HDPE and PVC car parking shades?",
         answer:
           "HDPE is breathable and ideal for airflow, while PVC is fully waterproof. PVC is better for complete weather protection, while HDPE is more cost-effective for basic shade needs.",
       },
@@ -212,7 +242,8 @@ Perfect for premium commercial developments, hospitals, luxury residential compo
   },
   "tensile-structures": {
     id: "tensile-structures",
-    metaTitle: "Tensile Membrane Structures | Architectural Shade Solutions | Detco",
+    metaTitle:
+      "Tensile Membrane Structures | Architectural Shade Solutions | Detco",
     metaDescription:
       "Custom-engineered tensile membrane structures for architectural shade solutions in Saudi Arabia. PVDF, ETFE, and PTFE fabric structures designed for large spans and iconic designs.",
     name: "Tensile Membrane Structures",
@@ -241,6 +272,7 @@ Ideal for sports facilities, shopping malls, airport terminals, public plazas, a
         alt: "Iconic architectural tensile structure design",
       },
     ],
+    advantages: [{ title: "", description: "" }],
     applications: [
       { title: "Stadiums & Arenas", icon: Building2 },
       { title: "Shopping Malls", icon: Building2 },
@@ -257,22 +289,26 @@ Ideal for sports facilities, shopping malls, airport terminals, public plazas, a
     benefits: [
       {
         title: "Large Span Design",
-        description: "Cover vast areas without intermediate supports, creating open, flexible spaces.",
+        description:
+          "Cover vast areas without intermediate supports, creating open, flexible spaces.",
         icon: Layers,
       },
       {
         title: "Iconic Aesthetics",
-        description: "Unique architectural forms that become landmark features of your development.",
+        description:
+          "Unique architectural forms that become landmark features of your development.",
         icon: PenTool,
       },
       {
         title: "Natural Daylighting",
-        description: "Translucent membranes allow natural light while providing shade and weather protection.",
+        description:
+          "Translucent membranes allow natural light while providing shade and weather protection.",
         icon: Sun,
       },
       {
         title: "Lightweight Construction",
-        description: "Reduced structural requirements compared to traditional roofing systems.",
+        description:
+          "Reduced structural requirements compared to traditional roofing systems.",
         icon: Shield,
       },
     ],
@@ -289,7 +325,7 @@ Ideal for sports facilities, shopping malls, airport terminals, public plazas, a
       },
     ],
   },
-  "sails": {
+  sails: {
     id: "sails",
     metaTitle: "Shade Sails | Modern Shade Solutions Saudi Arabia | Detco",
     metaDescription:
@@ -314,6 +350,7 @@ Available in **triangular, rectangular, or square configurations**, our shade sa
         alt: "Triangular shade sails installation",
       },
     ],
+    advantages: [{ title: "", description: "" }],
     applications: [
       { title: "Residential Gardens", icon: Home },
       { title: "Playgrounds", icon: School },
@@ -329,17 +366,20 @@ Available in **triangular, rectangular, or square configurations**, our shade sa
     benefits: [
       {
         title: "Quick Installation",
-        description: "Simple tensioned system allows for fast setup with minimal construction work.",
+        description:
+          "Simple tensioned system allows for fast setup with minimal construction work.",
         icon: Settings,
       },
       {
         title: "Versatile Design",
-        description: "Mix and match shapes and colors to create unique shading patterns.",
+        description:
+          "Mix and match shapes and colors to create unique shading patterns.",
         icon: PenTool,
       },
       {
         title: "Cost Effective",
-        description: "Affordable shading solution perfect for residential and small commercial projects.",
+        description:
+          "Affordable shading solution perfect for residential and small commercial projects.",
         icon: Shield,
       },
     ],
@@ -378,6 +418,7 @@ Perfect for areas requiring extensive coverage where traditional single-level so
         alt: "Layered multi-level shade sail installation",
       },
     ],
+    advantages: [{ title: "", description: "" }],
     applications: [
       { title: "Shopping Malls", icon: Building2 },
       { title: "Public Plazas", icon: Building2 },
@@ -391,12 +432,14 @@ Perfect for areas requiring extensive coverage where traditional single-level so
     benefits: [
       {
         title: "Superior Coverage",
-        description: "Multiple layers ensure comprehensive shading throughout the day as sun angle changes.",
+        description:
+          "Multiple layers ensure comprehensive shading throughout the day as sun angle changes.",
         icon: Layers,
       },
       {
         title: "Architectural Statement",
-        description: "Creates iconic, eye-catching installations that define your space.",
+        description:
+          "Creates iconic, eye-catching installations that define your space.",
         icon: PenTool,
       },
     ],
@@ -426,6 +469,7 @@ The cantilever structure eliminates the need for center posts, allowing for more
         alt: "Single cantilever car parking shade structure",
       },
     ],
+    advantages: [{ title: "", description: "" }],
     applications: [
       { title: "Boundary Installations", icon: Building2 },
       { title: "Residential Compounds", icon: Home },
@@ -439,12 +483,14 @@ The cantilever structure eliminates the need for center posts, allowing for more
     benefits: [
       {
         title: "Maximum Space",
-        description: "No center posts means more usable parking area and easier vehicle access.",
+        description:
+          "No center posts means more usable parking area and easier vehicle access.",
         icon: Columns,
       },
       {
         title: "Boundary Solution",
-        description: "Perfect for installations along walls or property boundaries where space is limited.",
+        description:
+          "Perfect for installations along walls or property boundaries where space is limited.",
         icon: Shield,
       },
     ],
@@ -452,7 +498,8 @@ The cantilever structure eliminates the need for center posts, allowing for more
   },
   "t-cantilever": {
     id: "t-cantilever",
-    metaTitle: "T-Cantilever Parking Shades | Double-Sided Cantilever Design | Detco",
+    metaTitle:
+      "T-Cantilever Parking Shades | Double-Sided Cantilever Design | Detco",
     metaDescription:
       "T-cantilever parking shade structures with central support and dual-sided canopy extension. Efficient design for center-line parking arrangements.",
     name: "T-Cantilever",
@@ -474,6 +521,7 @@ This structure type maximizes coverage per support post, reducing material costs
         alt: "T-cantilever parking shade structure",
       },
     ],
+    advantages: [{ title: "", description: "" }],
     applications: [
       { title: "Large Parking Lots", icon: Car },
       { title: "Commercial Developments", icon: Building2 },
@@ -486,7 +534,8 @@ This structure type maximizes coverage per support post, reducing material costs
     benefits: [
       {
         title: "Efficient Design",
-        description: "One support structure shades two parking rows, reducing installation costs.",
+        description:
+          "One support structure shades two parking rows, reducing installation costs.",
         icon: Columns,
       },
     ],
@@ -516,6 +565,7 @@ This proven design offers excellent stability, straightforward installation, and
         alt: "Square and rectangular parking shade structures",
       },
     ],
+    advantages: [{ title: "", description: "" }],
     applications: [
       { title: "Commercial Parking", icon: Car },
       { title: "Institutional Facilities", icon: School },
@@ -528,7 +578,8 @@ This proven design offers excellent stability, straightforward installation, and
     benefits: [
       {
         title: "Proven Design",
-        description: "Traditional, reliable structure with decades of proven performance.",
+        description:
+          "Traditional, reliable structure with decades of proven performance.",
         icon: Square,
       },
     ],
@@ -536,7 +587,8 @@ This proven design offers excellent stability, straightforward installation, and
   },
   "single-post": {
     id: "single-post",
-    metaTitle: "Single Post Parking Shades | Umbrella-Style Shade Solutions | Detco",
+    metaTitle:
+      "Single Post Parking Shades | Umbrella-Style Shade Solutions | Detco",
     metaDescription:
       "Single post umbrella-style parking shade structures. Compact design ideal for individual parking spaces or scattered installations.",
     name: "Single Post",
@@ -558,6 +610,7 @@ Ideal for VIP parking areas, residential driveways, or locations requiring flexi
         alt: "Single post umbrella-style parking shade",
       },
     ],
+    advantages: [{ title: "", description: "" }],
     applications: [
       { title: "VIP Parking", icon: Car },
       { title: "Residential Driveways", icon: Home },
@@ -570,7 +623,8 @@ Ideal for VIP parking areas, residential driveways, or locations requiring flexi
     benefits: [
       {
         title: "Individual Coverage",
-        description: "Perfect for shading single parking spaces with minimal footprint.",
+        description:
+          "Perfect for shading single parking spaces with minimal footprint.",
         icon: Circle,
       },
     ],
@@ -600,6 +654,7 @@ Available in various configurations—simple linear canopies, curved paths, or i
         alt: "Walkway shade structure for pedestrian pathways",
       },
     ],
+    advantages: [{ title: "", description: "" }],
     applications: [
       { title: "Commercial Complexes", icon: Building2 },
       { title: "Educational Facilities", icon: School },
@@ -613,7 +668,8 @@ Available in various configurations—simple linear canopies, curved paths, or i
     benefits: [
       {
         title: "Comfortable Pathways",
-        description: "Protects pedestrians from harsh sun, making outdoor movement pleasant.",
+        description:
+          "Protects pedestrians from harsh sun, making outdoor movement pleasant.",
         icon: Route,
       },
     ],
@@ -621,7 +677,8 @@ Available in various configurations—simple linear canopies, curved paths, or i
   },
   "mega-spans": {
     id: "mega-spans",
-    metaTitle: "Mega Span Parking Shades | Large-Scale Shade Structures | Detco",
+    metaTitle:
+      "Mega Span Parking Shades | Large-Scale Shade Structures | Detco",
     metaDescription:
       "Mega span parking shade structures covering large areas with minimal support posts. Ideal for stadiums, airports, and large commercial parking facilities.",
     name: "Mega Spans",
@@ -644,6 +701,7 @@ By minimizing support structures, mega spans maximize usable space while reducin
         alt: "Mega span parking shade structure covering large area",
       },
     ],
+    advantages: [{ title: "", description: "" }],
     applications: [
       { title: "Stadiums & Arenas", icon: Building2 },
       { title: "Airports", icon: Plane },
@@ -658,12 +716,14 @@ By minimizing support structures, mega spans maximize usable space while reducin
     benefits: [
       {
         title: "Massive Coverage",
-        description: "Cover vast parking or public areas with a single, elegant structure.",
+        description:
+          "Cover vast parking or public areas with a single, elegant structure.",
         icon: Layers,
       },
       {
         title: "Minimal Obstruction",
-        description: "Fewer support posts create more open, visually appealing spaces.",
+        description:
+          "Fewer support posts create more open, visually appealing spaces.",
         icon: Shield,
       },
     ],
@@ -671,7 +731,8 @@ By minimizing support structures, mega spans maximize usable space while reducin
   },
   "double-cantilever": {
     id: "double-cantilever",
-    metaTitle: "Double Cantilever Parking Shades | Dual-Sided Cantilever Design | Detco",
+    metaTitle:
+      "Double Cantilever Parking Shades | Dual-Sided Cantilever Design | Detco",
     metaDescription:
       "Double cantilever parking shade structures with extended spans on both sides. Maximum coverage per support post for efficient parking layouts.",
     name: "Double Cantilever",
@@ -693,6 +754,7 @@ The extended cantilever arms allow for wider coverage than standard T-cantilever
         alt: "Double cantilever parking shade structure",
       },
     ],
+    advantages: [{ title: "", description: "" }],
     applications: [
       { title: "Large Parking Facilities", icon: Car },
       { title: "Commercial Developments", icon: Building2 },
@@ -704,7 +766,8 @@ The extended cantilever arms allow for wider coverage than standard T-cantilever
     benefits: [
       {
         title: "Maximum Coverage",
-        description: "Extended arms provide wider shading area per support structure.",
+        description:
+          "Extended arms provide wider shading area per support structure.",
         icon: Columns,
       },
     ],
@@ -735,6 +798,7 @@ Equipped with weather sensors and remote control options, these awnings automati
         alt: "Automatic retractable awning installation",
       },
     ],
+    advantages: [{ title: "", description: "" }],
     applications: [
       { title: "Restaurants & Cafes", icon: Building2 },
       { title: "Residential Patios", icon: Home },
@@ -748,7 +812,8 @@ Equipped with weather sensors and remote control options, these awnings automati
     benefits: [
       {
         title: "Flexible Control",
-        description: "Extend or retract shade on demand for optimal comfort and weather response.",
+        description:
+          "Extend or retract shade on demand for optimal comfort and weather response.",
         icon: Settings,
       },
       {
@@ -784,6 +849,7 @@ Made from high-grade recycled rubber, our wheel stoppers are weather-resistant, 
         alt: "Rubber wheel stoppers installed in parking spaces",
       },
     ],
+    advantages: [{ title: "", description: "" }],
     applications: [
       { title: "All Parking Facilities", icon: ParkingCircle },
       { title: "Commercial Parking", icon: Car },
@@ -798,12 +864,14 @@ Made from high-grade recycled rubber, our wheel stoppers are weather-resistant, 
     benefits: [
       {
         title: "Structure Protection",
-        description: "Prevents vehicles from impacting shade structure posts and foundations.",
+        description:
+          "Prevents vehicles from impacting shade structure posts and foundations.",
         icon: Shield,
       },
       {
         title: "Durable & Weatherproof",
-        description: "Resistant to UV, extreme temperatures, and vehicle impacts.",
+        description:
+          "Resistant to UV, extreme temperatures, and vehicle impacts.",
         icon: CheckCircle2,
       },
     ],
@@ -842,6 +910,7 @@ Our marking services complement our shade structures, providing a complete parki
         alt: "Professional car parking line marking installation",
       },
     ],
+    advantages: [{ title: "", description: "" }],
     applications: [
       { title: "All Parking Facilities", icon: ParkingCircle },
       { title: "Commercial Developments", icon: Building2 },
@@ -855,18 +924,21 @@ Our marking services complement our shade structures, providing a complete parki
     benefits: [
       {
         title: "Organization",
-        description: "Clear markings maximize parking capacity and improve traffic flow.",
+        description:
+          "Clear markings maximize parking capacity and improve traffic flow.",
         icon: CheckCircle2,
       },
       {
         title: "Compliance",
-        description: "Ensures parking facilities meet local regulations and standards.",
+        description:
+          "Ensures parking facilities meet local regulations and standards.",
         icon: Shield,
       },
     ],
     faq: [
       {
-        question: "What's the difference between thermoplastic and paint marking?",
+        question:
+          "What's the difference between thermoplastic and paint marking?",
         answer:
           "Thermoplastic marking is more durable (3-5 years) and ideal for high-traffic areas, while paint is more cost-effective but requires more frequent maintenance.",
       },

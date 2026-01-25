@@ -1,17 +1,16 @@
-export interface Role {
-  ADMIN: "ADMIN";
-}
+export type UserRole = "admin" | "user";
 
 export interface User {
   id: string;
   email: string;
   name: string;
-  role: Role;
+  role: string | UserRole;
+  isActive?: boolean;
 }
 
 export interface AuthResponse {
   user: User;
-  token: string;
+  message?: string;
 }
 
 export interface AuthState {

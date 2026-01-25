@@ -10,6 +10,7 @@ import {
     Package,
     Briefcase,
     Users,
+    MessageSquareQuote,
     X
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -25,6 +26,7 @@ const sidebarLinks = [
     { name: 'Products', href: '/admin/products', icon: Package },
     { name: 'Services', href: '/admin/services', icon: Briefcase },
     { name: 'Clients', href: '/admin/clients', icon: Users },
+    { name: 'Quotes', href: '/admin/quotes', icon: MessageSquareQuote },
 ]
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {

@@ -1,21 +1,32 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2, ArrowLeft } from 'lucide-react';
-import { servicesData } from '@/data/services';
+import { ArrowRight, CheckCircle2, ArrowLeft, HelpCircle } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
 import HeroRFQForm from '@/components/HeroRFQForm';
+import { db } from '@/db';
+import { services } from '@/db/schema';
+import { eq } from 'drizzle-orm';
+import Image from 'next/image';
 
-// 1. Generate Static Params for SSG
+// 1. Generate Static Params for SSG (Optional, but good for performance)
 export async function generateStaticParams() {
-    return servicesData.map((service) => ({
-        slug: service.id,
+    const allServices = await db.query.services.findMany({
+        where: eq(services.isActive, true),
+        columns: { slug: true }
+    });
+    return allServices.map((service) => ({
+        slug: service.slug,
     }));
 }
 
 // 2. Metadata
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const service = servicesData.find((s) => s.id === slug);
+
+    const service = await db.query.services.findFirst({
+        where: eq(services.slug, slug),
+    });
 
     if (!service) {
         return { title: 'Service Not Found' };
@@ -29,17 +40,34 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const service = servicesData.find((s) => s.id === slug);
+    const service = await db.query.services.findFirst({
+        where: eq(services.slug, slug),
+        with: {
+            coverImage: true,
+        }
+    });
 
     if (!service) {
         notFound();
     }
 
+    const Icon = (LucideIcons as any)[service.iconName] || HelpCircle;
+
     return (
         <main className="min-h-screen bg-white">
             {/* --- HERO SECTION --- */}
             <div className="relative min-h-[400px] flex items-center bg-primary overflow-hidden py-20">
-                <div className="absolute inset-0 bg-[url('https://placehold.co/1920x600/0f766e/ffffff?text=Service+Details')] opacity-10 bg-cover bg-center" />
+                {service.coverImage?.url ? (
+                    <Image
+                        src={service.coverImage.url}
+                        alt={service.title}
+                        fill
+                        className="object-cover opacity-20"
+                        priority
+                    />
+                ) : (
+                    <div className="absolute inset-0 bg-primary opacity-10" />
+                )}
 
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-4xl">
@@ -50,7 +78,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
 
                         <div className="flex items-center gap-4 mb-6">
                             <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-white backdrop-blur-sm border border-white/20">
-                                <service.icon size={32} strokeWidth={1.5} />
+                                <Icon size={32} strokeWidth={1.5} />
                             </div>
                             <h1 className="text-4xl md:text-5xl font-bold text-white shadow-sm">
                                 {service.title}
@@ -70,12 +98,13 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                     {/* --- LEFT COLUMN: Content --- */}
                     <div className="lg:col-span-8 space-y-12">
 
-                        {/* Overview */}
-                        <div className="prose prose-lg prose-headings:font-bold prose-headings:text-gray-900 text-gray-600 max-w-none">
-                            <h2 className="text-3xl font-bold text-gray-900">Service Overview</h2>
-                            <p className="leading-relaxed">
-                                {service.fullDescription}
-                            </p>
+                        {/* Overview / Details from Quill */}
+                        <div className="prose prose-lg prose-headings:font-bold prose-headings:text-gray-900 text-gray-600 max-w-none prose-primary">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-6">Overview</h2>
+                            <div
+                                className="quill-content leading-relaxed   "
+                                dangerouslySetInnerHTML={{ __html: service.details }}
+                            />
                         </div>
 
                         {/* Key Features Grid */}
@@ -83,20 +112,20 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                             <h3 className="text-2xl font-bold text-gray-900 mb-6">Key Features</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {service.features.map((feature, idx) => (
-                                    <div key={idx} className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
-                                        <CheckCircle2 className="text-primary shrink-0" size={20} />
-                                        <span className="font-medium text-gray-800">{feature}</span>
+                                    <div key={idx} className="flex  gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                                        <CheckCircle2 className="text-primary shrink-0 mt-[2px]" size={20} />
+                                        <span className="capitalize font-medium text-gray-800">{feature}</span>
                                     </div>
                                 ))}
                             </div>
                         </div>
 
                         {/* Process Steps */}
-                        {service.processStep && service.processStep.length > 0 && (
+                        {service.processSteps && service.processSteps.length > 0 && (
                             <div>
                                 <h3 className="text-2xl font-bold text-gray-900 mb-8">Our Process</h3>
-                                <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent">
-                                    {service.processStep.map((step, idx) => (
+                                <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-linear-to-b before:from-transparent before:via-gray-200 before:to-transparent">
+                                    {service.processSteps.map((step, idx) => (
                                         <div key={idx} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
 
                                             <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-teal-50 text-primary shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">

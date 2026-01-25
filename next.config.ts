@@ -11,7 +11,15 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+      {
+        protocol: "https",
         hostname: "www.transparenttextures.com",
+      },
+      {
+        protocol: "https",
+        hostname: "sternbergclinic.com.au",
       },
     ],
   },

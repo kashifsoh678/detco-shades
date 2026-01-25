@@ -31,8 +31,36 @@ export async function decrypt(input: string): Promise<any> {
   return payload;
 }
 
-export async function getSession() {
-  // Helper to be used in Server Components if needed
-  // In strict "frontend" context, we might not use this immediately,
-  // but it's good practice for the "Next.js Security" stack.
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
+
+export async function verifyAdmin() {
+  const cookieStore = await cookies();
+  const session = cookieStore.get("session")?.value;
+
+  if (!session) {
+    return {
+      authenticated: false,
+      response: NextResponse.json({ message: "Unauthorized" }, { status: 401 }),
+    };
+  }
+
+  try {
+    const payload = await decrypt(session);
+    if (payload.user.role !== "admin") {
+      return {
+        authenticated: false,
+        response: NextResponse.json({ message: "Forbidden" }, { status: 403 }),
+      };
+    }
+    return { authenticated: true, user: payload.user };
+  } catch (error) {
+    return {
+      authenticated: false,
+      response: NextResponse.json(
+        { message: "Invalid Session" },
+        { status: 401 },
+      ),
+    };
+  }
 }

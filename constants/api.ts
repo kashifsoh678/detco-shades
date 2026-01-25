@@ -1,13 +1,9 @@
-export const API_CONFIG = {
-  BASE_URL: process.env.NEXT_PUBLIC_API_URL || "/api",
-  TIMEOUT: 10000,
-};
+export const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
+export const PLACEHOLDER_IMAGE =
+  "https://sternbergclinic.com.au/wp-content/uploads/2020/03/placeholder.png";
 
-export const API_ENDPOINTS = {
-  AUTH: {
-    LOGIN: "/auth/login",
-    LOGOUT: "/auth/logout",
-    ME: "/auth/me",
-  },
-  // Add other endpoints here
+export const API_CONFIG = {
+  BASE_URL: API_BASE_URL,
+  TIMEOUT: 20000,
 };
