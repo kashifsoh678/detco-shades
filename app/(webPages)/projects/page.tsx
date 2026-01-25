@@ -22,7 +22,7 @@ export default function ProjectsPage() {
     };
 
     return (
-        <main className="min-h-screen bg-white pb-24">
+        <main className="bg-white pb-24 border">
             {/* Header */}
             <div className="relative py-16 md:py-24 lg:py-28 bg-primary overflow-hidden">
                 <div className="absolute inset-0 bg-[url('https://placehold.co/1920x600/0f766e/ffffff?text=Our+Products')] opacity-10 bg-cover bg-center" />
@@ -52,7 +52,7 @@ export default function ProjectsPage() {
                             <Layers size={48} />
                         </div>
                         <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-4 uppercase tracking-tight">Gallery under construction</h3>
-                        <p className="text-gray-500 max-w-sm text-lg leading-relaxed">
+                        <p className="text-gray-500 max-w-lg text-lg leading-relaxed">
                             We are currently updating our project portfolio. Please check back later or contact us for recent works.
                         </p>
                     </div>

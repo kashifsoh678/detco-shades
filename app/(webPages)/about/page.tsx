@@ -13,16 +13,10 @@ export default function AboutPage() {
             <div className="relative py-16 md:py-24 bg-primary overflow-hidden">
                 <div className="absolute inset-0 bg-[url('https://placehold.co/1920x600/0f766e/ffffff?text=About+Us')] opacity-10 bg-cover bg-center" />
                 <div className="container mx-auto px-4 text-center relative z-10">
-                    <h1
-
-                        className="text-3xl md:text-5xl font-bold text-white mb-4"
-                    >
+                    <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
                         About Detco
                     </h1>
-                    <p
-
-                        className="text-teal-100 text-base md:text-xl max-w-2xl mx-auto"
-                    >
+                    <p className="text-teal-100 text-base md:text-xl max-w-2xl mx-auto">
                         Pioneers in Tensile Structures & Sun Control Solutions in Saudi Arabia
                     </p>
                 </div>
