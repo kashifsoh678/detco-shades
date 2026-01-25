@@ -101,7 +101,7 @@ const ProjectsPage = () => {
                         Showcase your completed works and engineering excellence.
                     </p>
                 </div>
-                <Button onClick={handleAdd} className="w-full md:w-auto gap-2 rounded-xl h-11 shadow-lg shadow-primary/20">
+                <Button onClick={handleAdd} className="w-full md:w-auto gap-2">
                     <Plus size={18} />
                     Add New Project
                 </Button>

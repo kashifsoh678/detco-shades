@@ -16,6 +16,23 @@ interface ProductGalleryProps {
     items: MediaItem[];
 }
 
+import { PLACEHOLDER_IMAGE } from "@/constants/api";
+
+const SafeImage = ({ src, alt, className, fill, priority }: { src: string, alt: string, className?: string, fill?: boolean, priority?: boolean }) => {
+    const [imgSrc, setImgSrc] = useState(src);
+
+    return (
+        <Image
+            src={imgSrc}
+            alt={alt}
+            fill={fill}
+            className={className}
+            priority={priority}
+            onError={() => setImgSrc(PLACEHOLDER_IMAGE)}
+        />
+    );
+};
+
 const ProductGallery: React.FC<ProductGalleryProps> = ({ items }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const activeItem = items[activeIndex];
@@ -35,17 +52,26 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ items }) => {
                 {activeItem.type === "video" ? (
                     <video
                         src={activeItem.url}
-                        poster={activeItem.poster}
+                        // poster={activeItem.poster}
                         controls
                         className="w-full h-full object-contain"
-                        autoPlay={false}
+                        autoPlay={true}
+                        muted
+                        playsInline
+                        disablePictureInPicture
+                        disableRemotePlayback
+                        controlsList="nodownload"
+                        preload="none"
+                        loop
+
                     />
                 ) : (
-                    <Image
+                    <SafeImage
+                        key={activeItem.url} // Re-mount on url change to reset error state
                         src={activeItem.url}
                         alt={activeItem.alt || "Product image"}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-700"
+                        className="object-contain group-hover:scale-105 transition-transform duration-700"
                         priority={activeIndex === 0}
                     />
                 )}
@@ -74,11 +100,11 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ items }) => {
                                     </div>
                                     {/* Optional: Use a poster image if available for the thumbnail too */}
                                     {item.poster && (
-                                        <Image src={item.poster} alt="Video thumbnail" fill className="object-cover opacity-60" />
+                                        <SafeImage src={item.poster} alt="Video thumbnail" fill className="object-cover opacity-60" />
                                     )}
                                 </div>
                             ) : (
-                                <Image
+                                <SafeImage
                                     src={item.url}
                                     alt={item.alt || "Thumbnail"}
                                     fill

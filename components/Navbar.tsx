@@ -100,7 +100,7 @@ export default function Navbar() {
                                 alt="DETCO - Al-Dorman Est."
                                 width={260}
                                 height={100}
-                                className="h-28 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                                className="h-18 lg:h-28 xl:h-34 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                                 priority
                                 unoptimized
                             />

@@ -67,7 +67,8 @@ const STEPS = [
     { id: "basic", title: "General Info", icon: Info },
     { id: "content", title: "Description", icon: BookOpen },
     { id: "applications", title: "Applications", icon: Tag },
-    { id: "specs", title: "Specs & Benefits", icon: Settings2 },
+    { id: "specs", title: "Specifications", icon: Settings2 },
+    { id: "benefits", title: "Benefits", icon: Settings2 },
     { id: "faqs", title: "FAQ Support", icon: MessageSquareQuote },
     { id: "media", title: "Visual Assets", icon: ImageIcon },
 ];
@@ -198,9 +199,10 @@ const ProductForm = ({
         if (step === 0) return await trigger(["title", "thumbnailId"]);
         if (step === 1) return await trigger(["shortDescription", "description"]);
         if (step === 2) return await trigger(["applications"]);
-        if (step === 3) return await trigger(["specs", "benefits"]);
-        if (step === 4) return await trigger(["faqs"]);
-        if (step === 5) return await trigger(["gallery", "videoId"]);
+        if (step === 3) return await trigger(["specs"]);
+        if (step === 4) return await trigger(["benefits"]);
+        if (step === 5) return await trigger(["faqs"]);
+        if (step === 6) return await trigger(["gallery", "videoId"]);
         return true;
     };
 
@@ -274,6 +276,16 @@ const ProductForm = ({
                         {/* Step 1: Basic Information */}
                         {currentStep === 0 && (
                             <div className="grid grid-cols-1 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wider">Product Title</label>
+                                    <Input
+                                        {...register("title")}
+                                        placeholder="e.g. Ultra Resistant Shade Cloth"
+                                        className="h-10 border-gray-200"
+                                        error={errors.title?.message}
+                                        disabled={isLoading}
+                                    />
+                                </div>
                                 <ImageUpload
                                     value={thumbnailUrl}
                                     label="Listing Thumbnail"
@@ -292,31 +304,6 @@ const ProductForm = ({
                                 />
                                 {errors.thumbnailId && <p className="text-xs text-red-500 font-medium mt-1">{errors.thumbnailId.message}</p>}
 
-                                <div className="space-y-4">
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-semibold text-gray-700 uppercase tracking-wider">Product Title</label>
-                                        <Input
-                                            {...register("title")}
-                                            placeholder="e.g. Ultra Resistant Shade Cloth"
-                                            className="h-10 border-gray-200"
-                                            error={errors.title?.message}
-                                            disabled={isLoading}
-                                        />
-                                    </div>
-
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <ActiveToggle
-                                            label="Featured Product"
-                                            value={watch("isFeatured")}
-                                            onChange={(val) => setValue("isFeatured", val)}
-                                        />
-                                        <ActiveToggle
-                                            label="Visible on Store"
-                                            value={watch("isActive")}
-                                            onChange={(val) => setValue("isActive", val)}
-                                        />
-                                    </div>
-                                </div>
 
                                 <ImageUpload
                                     label="Cover Image (Optional Banner)"
@@ -333,6 +320,18 @@ const ProductForm = ({
                                     }}
                                     onLoadingChange={onLoadingChange}
                                 />
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                    <ActiveToggle
+                                        label="Featured Product"
+                                        value={watch("isFeatured")}
+                                        onChange={(val) => setValue("isFeatured", val)}
+                                    />
+                                    <ActiveToggle
+                                        label="Visible on Store"
+                                        value={watch("isActive")}
+                                        onChange={(val) => setValue("isActive", val)}
+                                    />
+                                </div>
                             </div>
                         )}
 
@@ -372,7 +371,7 @@ const ProductForm = ({
                                     <div className="flex gap-2">
                                         <Input
                                             value={applicationInput}
-                                            onChange={(e) => setApplicationInput(e.target.value)}
+                                            onChange={(e) => setApplicationInput(e.target.value.toLowerCase())}
                                             onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addApplication())}
                                             placeholder="e.g. Shopping Malls, Car Parks..."
                                             className="h-10 border-gray-200"
@@ -393,18 +392,22 @@ const ProductForm = ({
 
                                     <div className="flex flex-wrap gap-2 mt-2">
                                         {applications.length === 0 && (
-                                            <div className="w-full py-10 text-center text-gray-400 border-2 border-dashed border-gray-100 rounded-xl text-xs">
+                                            <div className="w-full py-5 text-center text-gray-400 border-2 border-dashed border-gray-100 rounded-xl text-xs">
                                                 No tags added yet
                                             </div>
                                         )}
                                         {applications.map((app, i) => (
-                                            <div key={i} className="flex items-center gap-2 bg-gray-50 text-gray-700 border border-gray-200 px-3 py-1.5 rounded-lg text-xs font-medium group transition-all hover:border-primary/20">
-                                                <Tag size={12} className="text-primary" />
-                                                {app}
+                                            <div key={i} className="w-full flex items-center justify-between gap-2 bg-gray-50 text-gray-700 border border-gray-200 px-3 py-2 rounded-lg text-xs font-medium group transition-all hover:border-primary/20">
+                                                <span className="flex items-center gap-2">
+                                                    <Tag size={14} className="text-primary" />
+                                                    <p className="capitalize text-md">
+                                                        {app}
+                                                    </p>
+                                                </span>
                                                 <button
                                                     type="button"
                                                     onClick={() => removeApplication(i)}
-                                                    className="hover:text-red-500 text-gray-400 opacity-60 group-hover:opacity-100 transition-opacity"
+                                                    className="hover:text-red-500 cursor-pointer text-gray-400 opacity-60 group-hover:opacity-100 transition-opacity"
                                                 >
                                                     <X size={14} />
                                                 </button>
@@ -417,82 +420,85 @@ const ProductForm = ({
 
                         {/* Step 4: Specs & Benefits */}
                         {currentStep === 3 && (
-                            <div className="grid grid-cols-1 gap-8">
-                                <div className="space-y-4">
-                                    <div className="flex items-center justify-between">
-                                        <label className="text-xs font-semibold text-gray-700 uppercase tracking-wider">Technical Specifications</label>
-                                        <span className="text-[10px] text-gray-400 font-medium">{specFields.length}/8</span>
-                                    </div>
+                            <div className="space-y-4">
+                                <div className="flex items-center justify-between">
+                                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wider">Technical Specifications</label>
+                                    <span className="text-[10px] text-gray-400 font-medium">{specFields.length}/8</span>
+                                </div>
 
-                                    <div className="space-y-3 flex-1 overflow-y-auto pr-2 custom-scrollbar max-h-[300px]">
-                                        {specFields.map((field, index) => (
-                                            <div key={field.id} className="p-3 bg-gray-50/50 rounded-xl flex gap-3 pr-10 relative group border-b border-gray-100">
-                                                <button type="button" onClick={() => removeSpec(index)} className="absolute top-3 right-3 text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"><Trash2 size={16} /></button>
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
-                                                    <Input {...register(`specs.${index}.title`)} placeholder="Parameter" className="h-9 text-xs bg-white border-gray-200" />
-                                                    <Input {...register(`specs.${index}.description`)} placeholder="Value" className="h-9 text-xs bg-white border-gray-200" />
-                                                </div>
+                                <div className="space-y-3 flex-1 overflow-y-auto pr-2 custom-scrollbar max-h-[400px]">
+                                    {specFields.map((field, index) => (
+                                        <div key={field.id} className="p-3 bg-gray-50/50 rounded-xl flex gap-3 pr-10 relative group border-b border-gray-100">
+                                            <button type="button" onClick={() => removeSpec(index)} className="cursor-pointer absolute top-3 right-3 text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"><Trash2 size={16} /></button>
+                                            <div className="grid grid-cols-1 gap-3 w-full">
+                                                <Input {...register(`specs.${index}.title`)} placeholder="Parameter" className="h-9 text-xs bg-white border-gray-200" />
+                                                <Textarea rows={2} maxLength={300}  {...register(`specs.${index}.description`)} placeholder="Value" className="h-9 text-xs bg-white border-gray-200" />
                                             </div>
-                                        ))}
-                                    </div>
+                                        </div>
+                                    ))}
+                                </div>
 
-                                    {specFields.length < 8 && (
+                                {specFields.length < 8 && (
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => appendSpec({ title: "", description: "" })}
+                                        className="w-full border-dashed border-2 py-4 text-gray-800 hover:text-primary transition-all mt-4 shadow-none"
+                                    >
+                                        <Plus size={18} className="mr-2" /> Add New Specification
+                                    </Button>
+                                )}
+                                {errors.specs && <p className="text-xs text-red-500 font-medium">{errors.specs.message || (errors.specs as any).root?.message}</p>}
+                            </div>
+
+                        )}
+
+                        {currentStep === 4 && (
+                            <div className="space-y-4 border-t pt-8">
+                                <div className="flex items-center justify-between">
+                                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wider">Product Benefits</label>
+                                    <span className="text-[10px] text-gray-400 font-medium">{benefitFields.length}/8</span>
+                                </div>
+
+                                <div className="grid grid-cols-1 gap-3 ">
+                                    {benefitFields.map((field, index) => (
+                                        <div key={field.id} className="relative group">
+                                            <Input
+                                                {...register(`benefits.${index}.title`)}
+                                                placeholder="Benefit description..."
+                                                className="h-10 pl-3 pr-10 text-xs rounded-lg border-gray-200 bg-gray-50/50 focus:bg-white transition-all"
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => removeBenefit(index)}
+                                                className="absolute inset-y-0 right-3 flex items-center text-gray-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"
+                                            >
+                                                <Trash2 size={16} />
+                                            </button>
+                                        </div>
+                                    ))}
+
+                                    {benefitFields.length < 8 && (
                                         <Button
                                             type="button"
                                             variant="outline"
                                             size="sm"
-                                            onClick={() => appendSpec({ title: "", description: "" })}
-                                            className="w-full border-dashed border-2 py-4 text-gray-500 hover:text-primary transition-all mt-4 shadow-none"
+
+                                            onClick={() => appendBenefit({ title: "" })}
+                                            className="w-full border-dashed border-2 py-4 text-gray-500 hover:text-primary transition-all mt-1 shadow-none"
                                         >
-                                            <Plus size={18} className="mr-2" /> Add New Specification
+                                            <Plus size={18} className="mr-2" /> Add New Benefit
                                         </Button>
                                     )}
-                                    {errors.specs && <p className="text-xs text-red-500 font-medium">{errors.specs.message || (errors.specs as any).root?.message}</p>}
                                 </div>
-
-                                <div className="space-y-4 border-t pt-8">
-                                    <div className="flex items-center justify-between">
-                                        <label className="text-xs font-semibold text-gray-700 uppercase tracking-wider">Product Benefits</label>
-                                        <span className="text-[10px] text-gray-400 font-medium">{benefitFields.length}/8</span>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                        {benefitFields.map((field, index) => (
-                                            <div key={field.id} className="relative group">
-                                                <Input
-                                                    {...register(`benefits.${index}.title`)}
-                                                    placeholder="Benefit description..."
-                                                    className="h-10 pl-3 pr-10 text-xs rounded-lg border-gray-200 bg-gray-50/50 focus:bg-white transition-all"
-                                                />
-                                                <button
-                                                    type="button"
-                                                    onClick={() => removeBenefit(index)}
-                                                    className="absolute inset-y-0 right-3 flex items-center text-gray-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"
-                                                >
-                                                    <Trash2 size={16} />
-                                                </button>
-                                            </div>
-                                        ))}
-
-                                        {benefitFields.length < 8 && (
-                                            <Button
-                                                type="button"
-                                                variant="outline"
-                                                size="sm"
-                                                onClick={() => appendBenefit({ title: "" })}
-                                                className="w-full border-dashed border-2 py-4 text-gray-500 hover:text-primary transition-all mt-1 shadow-none"
-                                            >
-                                                <Plus size={18} className="mr-2" /> Add New Benefit
-                                            </Button>
-                                        )}
-                                    </div>
-                                    {errors.benefits && <p className="text-xs text-red-500 font-medium">{errors.benefits.message || (errors.benefits as any).root?.message}</p>}
-                                </div>
+                                {errors.benefits && <p className="text-xs text-red-500 font-medium">{errors.benefits.message || (errors.benefits as any).root?.message}</p>}
                             </div>
                         )}
 
-                        {/* Step 5: FAQs */}
-                        {currentStep === 4 && (
+
+                        {/* Step 6: FAQs */}
+                        {currentStep === 5 && (
                             <div className="grid grid-cols-1 gap-6">
                                 <div className="flex items-center justify-between mb-2">
                                     <label className="text-xs font-semibold text-gray-700 uppercase tracking-wider">Support FAQ (Max 5)</label>
@@ -533,8 +539,8 @@ const ProductForm = ({
                             </div>
                         )}
 
-                        {/* Step 6: Visual Assets (Gallery & Video) */}
-                        {currentStep === 5 && (
+                        {/* Step 7: Visual Assets (Gallery & Video) */}
+                        {currentStep === 6 && (
                             <div className="grid grid-cols-1 gap-10">
                                 <div className="space-y-6">
                                     <div className="flex items-center justify-between">

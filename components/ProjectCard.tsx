@@ -1,9 +1,10 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Eye, Layers } from 'lucide-react';
+import { MapPin, Eye } from 'lucide-react';
 import Image from 'next/image';
+import { PLACEHOLDER_IMAGE } from '@/constants/api';
 
 interface ProjectCardProps {
     id: string;
@@ -16,6 +17,8 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ title, service, location, thumbnail, index = 0, onQuickView }: ProjectCardProps) {
+    const [imgSrc, setImgSrc] = useState(thumbnail || PLACEHOLDER_IMAGE);
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -25,12 +28,17 @@ export default function ProjectCard({ title, service, location, thumbnail, index
             className="group flex flex-col bg-white rounded-3xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
         >
             {/* Image - Hover View Icon */}
-            <div className="aspect-4/2 w-full overflow-hidden relative">
-                <div
-                    className="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                    style={{ backgroundImage: `url('${thumbnail}')` }}
+            <div className="aspect-4/2 w-full overflow-hidden relative bg-gray-100">
+                <Image
+                    src={imgSrc}
+                    alt={title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    onError={() => setImgSrc(PLACEHOLDER_IMAGE)}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100 z-10">
                     <div onClick={onQuickView} className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary shadow-lg transform scale-50 group-hover:scale-100 transition-transform duration-300 cursor-pointer">
                         <Eye className="w-6 h-6" />
                     </div>

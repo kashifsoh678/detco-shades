@@ -10,6 +10,7 @@ import {
 import { media } from "@/db/schema/media";
 import { eq, inArray } from "drizzle-orm";
 import { verifyAdmin } from "@/lib/auth";
+import { deleteFromCloudinary } from "@/lib/cloudinary";
 
 /**
  * GET /api/products/[id]
@@ -233,15 +234,22 @@ export async function DELETE(
 
     const { id } = await params;
 
+    let publicIdsToDelete: string[] = [];
+
     await db.transaction(async (tx) => {
       const product = await tx.query.products.findFirst({
         where: eq(products.id, id),
-        with: { images: true },
+        with: {
+          thumbnail: true,
+          coverImage: true,
+          video: true,
+          images: { with: { image: true } },
+        },
       });
 
       if (!product) throw new Error("Product not found");
 
-      // Mark associated media as detached (optional, depends on cleanup strategy)
+      // Gather DB IDs
       const mediaIds = [
         product.thumbnailId,
         product.coverImageId,
@@ -249,15 +257,29 @@ export async function DELETE(
         ...product.images.map((img) => img.imageId),
       ].filter(Boolean) as string[];
 
+      // Gather Public IDs
+      publicIdsToDelete = [
+        product.thumbnail?.publicId,
+        product.coverImage?.publicId,
+        product.video?.publicId,
+        ...product.images.map((img) => img.image?.publicId),
+      ].filter(Boolean) as string[];
+
+      // 1. Delete media records from DB
       if (mediaIds.length > 0) {
-        await tx
-          .update(media)
-          .set({ status: "detached" as any })
-          .where(inArray(media.id, mediaIds));
+        await tx.delete(media).where(inArray(media.id, mediaIds));
       }
 
+      // 2. Delete product
       await tx.delete(products).where(eq(products.id, id));
     });
+
+    // 3. Cloudinary Cleanup
+    if (publicIdsToDelete.length > 0) {
+      Promise.allSettled(
+        publicIdsToDelete.map((pid) => deleteFromCloudinary(pid)),
+      ).catch((err) => console.error("Cloudinary Cleanup Error:", err));
+    }
 
     return NextResponse.json({ message: "Product deleted successfully" });
   } catch (error: any) {

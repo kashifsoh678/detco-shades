@@ -4,6 +4,7 @@ import { projects, projectImages } from "@/db/schema/projects";
 import { media } from "@/db/schema/media";
 import { eq, inArray, sql } from "drizzle-orm";
 import { verifyAdmin } from "@/lib/auth";
+import { deleteFromCloudinary } from "@/lib/cloudinary";
 
 /**
  * GET /api/projects/[id]
@@ -164,29 +165,45 @@ export async function DELETE(
 
     const { id } = await params;
 
+    let publicIdsToDelete: string[] = [];
+
     await db.transaction(async (tx) => {
       const project = await tx.query.projects.findFirst({
         where: eq(projects.id, id),
-        with: { images: true },
+        with: {
+          thumbnail: true,
+          images: { with: { image: true } },
+        },
       });
 
       if (!project) throw new Error("Project not found");
 
-      // Media status will be handled by a cleanup job or we can manually set to 'detached' here
+      // Gather IDs
       const mediaIds = [
         project.thumbnailId,
         ...project.images.map((img) => img.imageId),
-      ].filter(Boolean);
+      ].filter(Boolean) as string[];
 
+      publicIdsToDelete = [
+        project.thumbnail?.publicId,
+        ...project.images.map((img) => img.image?.publicId),
+      ].filter(Boolean) as string[];
+
+      // 1. Delete media records from DB
       if (mediaIds.length > 0) {
-        await tx
-          .update(media)
-          .set({ status: "detached" as any })
-          .where(inArray(media.id, mediaIds as string[]));
+        await tx.delete(media).where(inArray(media.id, mediaIds));
       }
 
+      // 2. Delete project
       await tx.delete(projects).where(eq(projects.id, id));
     });
+
+    // 3. Cloudinary Cleanup
+    if (publicIdsToDelete.length > 0) {
+      Promise.allSettled(
+        publicIdsToDelete.map((pid) => deleteFromCloudinary(pid)),
+      ).catch((err) => console.error("Cloudinary Cleanup Error:", err));
+    }
 
     return NextResponse.json({ message: "Project deleted successfully" });
   } catch (error: any) {
