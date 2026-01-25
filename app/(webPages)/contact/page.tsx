@@ -1,9 +1,60 @@
 "use client";
 
 import React from 'react';
-import { Phone, Mail, MapPin, Clock, MessageSquare, Send, Globe } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, MessageSquare, Send, Loader2 } from 'lucide-react';
+import { useServices, Service } from '@/hooks/use-services';
+import { useQuotes } from '@/hooks/use-quotes';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+
+const contactSchema = z.object({
+    name: z.string().min(2, "Full name is required"),
+    companyName: z.string().min(2, "Company name is required"),
+    email: z.string().email("Invalid email address"),
+    phone: z.string().min(7, "Valid phone number is required"),
+    serviceId: z.string().min(1, "Please select a service"),
+    projectDetails: z.string().min(10, "Project details must be at least 10 characters"),
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
 
 export default function ContactPage() {
+    const { servicesQuery } = useServices();
+    const { submitQuoteMutation } = useQuotes();
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors }
+    } = useForm<ContactFormData>({
+        resolver: zodResolver(contactSchema),
+        defaultValues: {
+            name: '',
+            companyName: '',
+            email: '',
+            phone: '',
+            serviceId: '',
+            projectDetails: ''
+        }
+    });
+
+    const services = servicesQuery.data?.data || [];
+
+    const onSubmit = async (data: ContactFormData) => {
+        await submitQuoteMutation.mutateAsync({
+            ...data,
+            type: 'contact-cta'
+        }, {
+            onSuccess: () => {
+                reset();
+            }
+        });
+    };
+
+    const isLoading = submitQuoteMutation.isPending;
+
     return (
         <main className="min-h-screen bg-gray-50">
 
@@ -105,47 +156,96 @@ export default function ContactPage() {
                             <h2 className="text-3xl font-bold text-gray-900 mb-2">Request a Quote</h2>
                             <p className="text-gray-500 mb-8">Fill out the form below and our engineering team will respond within 24 hours.</p>
 
-                            <form className="space-y-6">
+                            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
                                         <label htmlFor="name" className="text-sm font-bold text-gray-700">Full Name <span className="text-red-500">*</span></label>
-                                        <input type="text" id="name" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-gray-400" placeholder="John Doe" required />
+                                        <input
+                                            type="text"
+                                            id="name"
+                                            {...register("name")}
+                                            className={`w-full px-4 py-3 bg-gray-50 border ${errors.name ? 'border-red-500' : 'border-gray-200'} rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-gray-400`}
+                                            placeholder="John Doe"
+                                        />
+                                        {errors.name && <p className="text-xs text-red-500 font-medium">{errors.name.message}</p>}
                                     </div>
                                     <div className="space-y-2">
-                                        <label htmlFor="company" className="text-sm font-bold text-gray-700">Company Name</label>
-                                        <input type="text" id="company" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-gray-400" placeholder="Your Company Ltd." />
+                                        <label htmlFor="companyName" className="text-sm font-bold text-gray-700">Company Name <span className="text-red-500">*</span></label>
+                                        <input
+                                            type="text"
+                                            id="companyName"
+                                            {...register("companyName")}
+                                            className={`w-full px-4 py-3 bg-gray-50 border ${errors.companyName ? 'border-red-500' : 'border-gray-200'} rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-gray-400`}
+                                            placeholder="Your Company Ltd."
+                                        />
+                                        {errors.companyName && <p className="text-xs text-red-500 font-medium">{errors.companyName.message}</p>}
                                     </div>
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
                                         <label htmlFor="email" className="text-sm font-bold text-gray-700">Email Address <span className="text-red-500">*</span></label>
-                                        <input type="email" id="email" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-gray-400" placeholder="john@company.com" required />
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            {...register("email")}
+                                            className={`w-full px-4 py-3 bg-gray-50 border ${errors.email ? 'border-red-500' : 'border-gray-200'} rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-gray-400`}
+                                            placeholder="john@company.com"
+                                        />
+                                        {errors.email && <p className="text-xs text-red-500 font-medium">{errors.email.message}</p>}
                                     </div>
                                     <div className="space-y-2">
                                         <label htmlFor="phone" className="text-sm font-bold text-gray-700">Phone Number <span className="text-red-500">*</span></label>
-                                        <input type="tel" id="phone" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-gray-400" placeholder="+966 50 000 0000" required />
+                                        <input
+                                            type="tel"
+                                            id="phone"
+                                            {...register("phone")}
+                                            className={`w-full px-4 py-3 bg-gray-50 border ${errors.phone ? 'border-red-500' : 'border-gray-200'} rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-gray-400`}
+                                            placeholder="+966 50 000 0000"
+                                        />
+                                        {errors.phone && <p className="text-xs text-red-500 font-medium">{errors.phone.message}</p>}
                                     </div>
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label htmlFor="service" className="text-sm font-bold text-gray-700">Interested Service</label>
-                                    <select id="service" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-gray-600">
-                                        <option>Car Parking Shades</option>
-                                        <option>Tensile Structures</option>
-                                        <option>Swimming Pool Shades</option>
-                                        <option>Other Inquiry</option>
+                                    <label htmlFor="serviceId" className="text-sm font-bold text-gray-700">Interested Service <span className="text-red-500">*</span></label>
+                                    <select
+                                        id="serviceId"
+                                        {...register("serviceId")}
+                                        className={`w-full px-4 py-3 bg-gray-50 border ${errors.serviceId ? 'border-red-500' : 'border-gray-200'} rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-gray-600`}
+                                    >
+                                        <option value="">Select a Service</option>
+                                        {services.map((service: Service) => (
+                                            <option key={service.id} value={service.id}>{service.title}</option>
+                                        ))}
                                     </select>
+                                    {errors.serviceId && <p className="text-xs text-red-500 font-medium">{errors.serviceId.message}</p>}
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label htmlFor="message" className="text-sm font-bold text-gray-700">Project Details <span className="text-red-500">*</span></label>
-                                    <textarea id="message" rows={5} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-gray-400" placeholder="Please describe your project requirements, location, and estimated size..." required></textarea>
+                                    <label htmlFor="projectDetails" className="text-sm font-bold text-gray-700">Project Details <span className="text-red-500">*</span></label>
+                                    <textarea
+                                        id="projectDetails"
+                                        rows={5}
+                                        {...register("projectDetails")}
+                                        className={`w-full px-4 py-3 bg-gray-50 border ${errors.projectDetails ? 'border-red-500' : 'border-gray-200'} rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-gray-400`}
+                                        placeholder="Please describe your project requirements, location, and estimated size..."
+                                    />
+                                    {errors.projectDetails && <p className="text-xs text-red-500 font-medium">{errors.projectDetails.message}</p>}
                                 </div>
 
-                                <button type="submit" className="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-teal-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 group">
-                                    SUBMIT REQUEST
-                                    <Send size={18} className="group-hover:translate-x-1 transition-transform" />
+                                <button type="submit" disabled={isLoading} className="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-teal-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed">
+                                    {isLoading ? (
+                                        <>
+                                            <Loader2 size={18} className="animate-spin" />
+                                            SUBMITTING...
+                                        </>
+                                    ) : (
+                                        <>
+                                            SUBMIT REQUEST
+                                            <Send size={18} className="group-hover:translate-x-1 transition-transform" />
+                                        </>
+                                    )}
                                 </button>
                             </form>
                         </div>

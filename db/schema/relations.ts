@@ -10,6 +10,7 @@ import {
   productBenefits,
   productFaqs,
 } from "./products";
+import { quotes } from "./quotes";
 
 export const clientsRelations = relations(clients, ({ one }) => ({
   image: one(media, {
@@ -24,6 +25,14 @@ export const servicesRelations = relations(services, ({ one, many }) => ({
     references: [media.id],
   }),
   projects: many(projects),
+  quotes: many(quotes),
+}));
+
+export const quotesRelations = relations(quotes, ({ one }) => ({
+  service: one(services, {
+    fields: [quotes.serviceId],
+    references: [services.id],
+  }),
 }));
 
 export const projectsRelations = relations(projects, ({ one, many }) => ({
