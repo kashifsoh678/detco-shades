@@ -98,7 +98,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         galleryItems.push({
             type: 'video',
             url: videoUrl,
-            poster: product.coverImage?.url || product.thumbnail?.url, // Use cover or thumbnail as poster
+            // Removed fallback to product images as poster to avoid confusion
+            // ProductGallery now auto-detects thumbnails for YouTube/Cloudinary
         });
     }
 

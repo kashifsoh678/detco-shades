@@ -19,14 +19,15 @@ interface ProductGalleryProps {
 import { PLACEHOLDER_IMAGE } from "@/constants/api";
 
 // Helper function to detect video platform and get embed URL
-const getVideoEmbedInfo = (url: string): { platform: 'youtube' | 'vimeo' | 'direct', embedUrl: string } => {
+const getVideoEmbedInfo = (url: string): { platform: 'youtube' | 'vimeo' | 'direct', embedUrl: string, thumbnailUrl?: string } => {
     // YouTube detection
     const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
     const youtubeMatch = url.match(youtubeRegex);
     if (youtubeMatch) {
         return {
             platform: 'youtube',
-            embedUrl: `https://www.youtube.com/embed/${youtubeMatch[1]}?autoplay=0&rel=0`
+            embedUrl: `https://www.youtube.com/embed/${youtubeMatch[1]}?autoplay=0&rel=0`,
+            thumbnailUrl: `https://img.youtube.com/vi/${youtubeMatch[1]}/maxresdefault.jpg`
         };
     }
 
@@ -37,6 +38,16 @@ const getVideoEmbedInfo = (url: string): { platform: 'youtube' | 'vimeo' | 'dire
         return {
             platform: 'vimeo',
             embedUrl: `https://player.vimeo.com/video/${vimeoMatch[1]}`
+        };
+    }
+
+    // Cloudinary detection (simple extension swap)
+    if (url.includes('cloudinary.com') && url.includes('/video/upload/')) {
+        const thumbUrl = url.replace(/\.[^/.]+$/, ".jpg");
+        return {
+            platform: 'direct',
+            embedUrl: url,
+            thumbnailUrl: thumbUrl
         };
     }
 
@@ -148,10 +159,15 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ items }) => {
                                             <Play size={16} className="text-white fill-white" />
                                         </div>
                                     </div>
-                                    {/* Optional: Use a poster image if available for the thumbnail too */}
-                                    {item.poster && (
-                                        <SafeImage src={item.poster} alt="Video thumbnail" fill className="object-cover opacity-60" />
-                                    )}
+                                    {/* Priority: Detect Thumbnail > Item Poster */}
+                                    {(() => {
+                                        const videoInfo = getVideoEmbedInfo(item.url);
+                                        const displayThumb = videoInfo.thumbnailUrl || item.poster;
+                                        if (displayThumb) {
+                                            return <SafeImage src={displayThumb} alt="Video thumbnail" fill className="object-cover opacity-60" />;
+                                        }
+                                        return null;
+                                    })()}
                                 </div>
                             ) : (
                                 <SafeImage
@@ -160,7 +176,8 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ items }) => {
                                     fill
                                     className="object-cover"
                                 />
-                            )}
+                            )
+                            }
                         </button>
                     ))}
                 </div>
