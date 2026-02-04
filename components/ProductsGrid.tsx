@@ -76,7 +76,7 @@ export default function ProductsGrid({ showHeader = false, products }: ProductsG
     if (!products || products.length === 0) return null;
 
     return (
-        <section className="py-24 bg-white transition-colors mb-16">
+        <section className="py-24 bg-gray-50 transition-colors mb-16">
             <div className="container mx-auto px-4">
 
                 {/* Standardized Header - Conditional Rendering */}
