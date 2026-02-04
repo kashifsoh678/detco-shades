@@ -30,7 +30,7 @@ const serviceSchema = z.object({
     features: z
         .array(z.string().trim().min(1, "Feature name cannot be empty"))
         .min(1, "At least one feature is required")
-        .max(10, "Maximum 10 features are allowed"),
+        .max(8, "Maximum 8 features are allowed"),
     processSteps: z
         .array(
             z.object({
@@ -39,7 +39,7 @@ const serviceSchema = z.object({
             })
         )
         .min(1, "At least one process step is required")
-        .max(10, "Maximum 10 process steps are allowed"),
+        .max(8, "Maximum 8 process steps are allowed"),
     isActive: z.boolean(),
 });
 
@@ -306,10 +306,10 @@ const ServiceForm = ({
                                         variant="outline"
                                         size="sm"
                                         onClick={() => appendFeature("")}
-                                        disabled={featureFields.length >= 10}
-                                        className="w-full border-dashed border-2 py-4 text-gray-500 hover:text-primary transition-all  mt-4"
+                                        disabled={featureFields.length >= 8}
+                                        className="w-full border-dashed border-2 py-4 text-gray-500 hover:text-primary transition-all  mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
-                                        <Plus size={18} className="mr-2" /> Add New Feature
+                                        <Plus size={18} className="mr-2" /> {featureFields.length >= 8 ? "Max Features Reached" : "Add New Feature"}
                                     </Button>
                                     {errors.features && (
                                         <p className="text-[12px] text-red-500 font-medium pl-1 animate-in fade-in slide-in-from-top-1 mt-2">
@@ -365,9 +365,10 @@ const ServiceForm = ({
                                     variant="secondary"
                                     size="sm"
                                     onClick={() => appendStep({ title: "", description: "" })}
-                                    className="w-full border-dashed border-2 py-4 text-gray-500 hover:text-primary transition-all  mt-4"
+                                    disabled={stepFields.length >= 8}
+                                    className="w-full border-dashed border-2 py-4 text-gray-500 hover:text-primary transition-all  mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    <Plus size={16} className="mr-2" /> New Phase
+                                    <Plus size={16} className="mr-2" /> {stepFields.length >= 8 ? "Max Steps Reached" : "New Phase"}
                                 </Button>
                             </div>
                         )}
