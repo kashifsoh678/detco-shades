@@ -11,7 +11,8 @@ import ClientsTicker from "@/components/ClientsTicker";
 import { db } from "@/db";
 import { products as productSchema } from "@/db/schema/products";
 import { projects as projectSchema } from "@/db/schema/projects";
-import { eq, and, desc } from "drizzle-orm";
+import { clients as clientSchema } from "@/db/schema/clients";
+import { eq, and, desc, asc } from "drizzle-orm";
 
 export default async function Home() {
   // Fetch first 9 featured and active products
@@ -47,6 +48,20 @@ export default async function Home() {
     limit: 3,
   });
 
+  // Fetch active clients for ticker
+  const activeClients = await db.query.clients.findMany({
+    where: eq(clientSchema.isActive, true),
+    with: {
+      image: true,
+    },
+    orderBy: [asc(clientSchema.order), desc(clientSchema.createdAt)],
+  });
+
+  const formattedClients = activeClients.map((c) => ({
+    name: c.name,
+    logo: c.image?.url || "",
+  }));
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Hero />
@@ -57,7 +72,7 @@ export default async function Home() {
       <FeaturedProjects projects={latestProjects} />
       <ServiceCoverage />
       <Testimonials />
-      <ClientsTicker />
+      <ClientsTicker clients={formattedClients} />
       <FinalCTA />
     </main>
   );

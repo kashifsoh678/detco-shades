@@ -4,23 +4,21 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-const clients = [
-    { name: "Aramco", logo: "https://placehold.co/150x60/transparent/006666?text=Aramco" },
-    { name: "SABIC", logo: "https://placehold.co/150x60/transparent/006666?text=SABIC" },
-    { name: "Ministry of Health", logo: "https://placehold.co/150x60/transparent/006666?text=MOH" },
-    { name: "Riyadh Metro", logo: "https://placehold.co/150x60/transparent/006666?text=Riyadh+Metro" },
-    { name: "King Saud University", logo: "https://placehold.co/150x60/transparent/006666?text=KSU" },
-    { name: "Al Marai", logo: "https://placehold.co/150x60/transparent/006666?text=Al+Marai" },
-    { name: "STC", logo: "https://placehold.co/150x60/transparent/006666?text=STC" },
-    { name: "SEC", logo: "https://placehold.co/150x60/transparent/006666?text=SEC" },
-    { name: "Bin Laden Group", logo: "https://placehold.co/150x60/transparent/006666?text=Bin+Laden" },
-    { name: "Red Sea Global", logo: "https://placehold.co/150x60/transparent/006666?text=Red+Sea" },
-];
+interface Client {
+    name: string;
+    logo: string;
+}
 
-// Duplicate list for seamless loop
-const allClients = [...clients, ...clients, ...clients];
+interface ClientsTickerProps {
+    clients: Client[];
+}
 
-export default function ClientsTicker() {
+export default function ClientsTicker({ clients }: ClientsTickerProps) {
+    if (!clients || clients.length === 0) return null;
+
+    // Duplicate list for seamless loop - ensuring enough items for a continuous animation
+    const allClients = [...clients, ...clients, ...clients, ...clients];
+
     return (
         <section className="py-16 bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800 overflow-hidden">
             <div className="container mx-auto px-4 mb-10 text-center">
@@ -36,12 +34,12 @@ export default function ClientsTicker() {
             >
                 <motion.div
                     className="flex gap-12 md:gap-24 items-center whitespace-nowrap"
-                    animate={{ x: [0, -1000] }}
+                    animate={{ x: [0, -2000] }}
                     transition={{
                         x: {
                             repeat: Infinity,
                             repeatType: "loop",
-                            duration: 40,
+                            duration: 60,
                             ease: "linear",
                         },
                     }}
@@ -51,14 +49,19 @@ export default function ClientsTicker() {
                             key={`${client.name}-${index}`}
                             className="relative w-[120px] h-[50px] md:w-[150px] md:h-[60px] shrink-0 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer"
                         >
-                            <Image
-                                src={client.logo}
-                                alt={client.name}
-                                fill
-                                sizes="(max-width: 768px) 120px, 150px"
-                                className="object-contain"
-                                unoptimized // Using remote placehold.co images
-                            />
+                            {client.logo ? (
+                                <Image
+                                    src={client.logo}
+                                    alt={client.name}
+                                    fill
+                                    sizes="(max-width: 768px) 120px, 150px"
+                                    className="object-contain"
+                                />
+                            ) : (
+                                <div className="w-full h-full flex items-center justify-center text-gray-300 font-bold text-xs border border-dashed border-gray-200 rounded">
+                                    {client.name}
+                                </div>
+                            )}
                         </div>
                     ))}
                 </motion.div>

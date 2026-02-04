@@ -151,7 +151,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                             <div className="bg-gray-900 rounded-3xl p-1 shadow-2xl relative overflow-hidden">
                                 <div className="absolute inset-0 bg-primary/20 backdrop-blur-sm z-0" />
                                 <div className="relative z-10">
-                                    <HeroRFQForm />
+                                    <HeroRFQForm serviceId={service.id} />
                                 </div>
                             </div>
 
