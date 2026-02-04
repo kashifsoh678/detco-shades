@@ -112,6 +112,7 @@ export async function POST(request: Request) {
       thumbnailId,
       coverImageId,
       videoId,
+      videoUrl,
       isActive,
       order,
       imageIds, // Array of media IDs for gallery
@@ -152,7 +153,8 @@ export async function POST(request: Request) {
           isFeatured: isFeatured ?? false,
           thumbnailId,
           coverImageId,
-          videoId,
+          videoId: videoId === "" ? null : videoId,
+          videoUrl,
           isActive: isActive ?? true,
           order: order ?? 0,
         })

@@ -92,11 +92,14 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
     // 2. Video (Append at the end or beginning based on preference, user said "add a video url in the list of images")
     // Let's add it at the end
-    if (product.video?.url) {
+    // Support both uploaded videos (product.video?.url) and manual URLs (product.videoUrl)
+    const videoUrl = product.videoUrl || product.video?.url;
+    if (videoUrl) {
         galleryItems.push({
             type: 'video',
-            url: product.video.url,
-            poster: product.coverImage?.url || product.thumbnail?.url, // Use cover or thumbnail as poster
+            url: videoUrl,
+            // Removed fallback to product images as poster to avoid confusion
+            // ProductGallery now auto-detects thumbnails for YouTube/Cloudinary
         });
     }
 

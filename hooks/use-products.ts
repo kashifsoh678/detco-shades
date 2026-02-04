@@ -13,6 +13,7 @@ export interface Product {
   thumbnailId: string | null;
   coverImageId: string | null;
   videoId: string | null;
+  videoUrl: string | null;
   isActive: boolean;
   order: number;
   createdAt: string;

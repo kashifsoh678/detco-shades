@@ -1,27 +1,18 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, Variants } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { PLACEHOLDER_IMAGE } from "@/constants/api";
 
-const products = [
-    { id: 1, slug: 'hdpe-car-parking-shades', name: 'HDPE Car Parking Shades', image: 'https://placehold.co/600x400/e0e0e0/006666?text=HDPE+Shades' },
-    { id: 2, slug: 'pvc-car-parking-shades', name: 'PVC Car Parking Shades', image: 'https://placehold.co/600x400/e0e0e0/006666?text=PVC+Shades' },
-    { id: 3, slug: 'tensile-structures', name: 'Tensile Structures', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Tensile+Structures' },
-    { id: 4, slug: 'sails', name: 'Sails', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Sails' },
-    { id: 5, slug: 'multi-level-sails', name: 'Multi Level Sails', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Multi+Level+Sails' },
-    { id: 6, slug: 'single-cantilever', name: 'Single Cantilever', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Single+Cantilever' },
-    { id: 7, slug: 't-cantilever', name: 'T-Cantilever', image: 'https://placehold.co/600x400/e0e0e0/006666?text=T-Cantilever' },
-    { id: 8, slug: 'square-rectangles', name: 'Square & Rectangles', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Square+Rectangles' },
-    { id: 9, slug: 'single-post', name: 'Single Post', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Single+Post' },
-    { id: 10, slug: 'walk-shade', name: 'Walk Shade', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Walk+Shade' },
-    { id: 11, slug: 'mega-spans', name: 'Mega Spans', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Mega+Spans' },
-    { id: 12, slug: 'double-cantilever', name: 'Double Cantilever', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Double+Cantilever' },
-    { id: 13, slug: 'automatic-awnings', name: 'Automatic Awnings', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Automatic+Awnings' },
-    { id: 14, slug: 'rubber-wheel-stoppers', name: 'Rubber Wheel Stoppers', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Wheel+Stoppers' },
-    { id: 15, slug: 'car-parking-marking', name: 'Car Parking Marking', image: 'https://placehold.co/600x400/e0e0e0/006666?text=Car+Parking+Marking' },
-];
+interface Product {
+    id: string;
+    title: string;
+    slug: string;
+    thumbnailUrl?: string;
+}
 
 const container: Variants = {
     hidden: { opacity: 0 },
@@ -48,9 +39,42 @@ const item: Variants = {
 
 interface ProductsGridProps {
     showHeader?: boolean;
+    products: Product[];
 }
 
-export default function ProductsGrid({ showHeader = false }: ProductsGridProps) {
+const ProductCardItem = ({ product }: { product: Product }) => {
+    const [imgSrc, setImgSrc] = useState(product.thumbnailUrl || PLACEHOLDER_IMAGE);
+
+    return (
+        <Link
+            href={`/products/${product.slug}`}
+            className="group block relative overflow-hidden rounded-xl bg-white shadow-lg hover:shadow-2xl transition-all duration-300"
+        >
+            {/* Image Container */}
+            <div className="relative h-64 w-full overflow-hidden bg-gray-100">
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors z-10 duration-500" />
+
+                <Image
+                    src={imgSrc}
+                    alt={product.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    onError={() => setImgSrc(PLACEHOLDER_IMAGE)}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+            </div>
+
+            {/* Original Label Design (Teal Bar) */}
+            <div className="bg-primary text-white text-center py-4 px-2 relative z-20">
+                <h3 className="text-sm font-bold uppercase tracking-wider">{product.title}</h3>
+            </div>
+        </Link>
+    );
+};
+
+export default function ProductsGrid({ showHeader = false, products }: ProductsGridProps) {
+    if (!products || products.length === 0) return null;
+
     return (
         <section className="py-24 bg-white transition-colors mb-16">
             <div className="container mx-auto px-4">
@@ -96,32 +120,19 @@ export default function ProductsGrid({ showHeader = false }: ProductsGridProps) 
                 >
                     {products.map((product) => (
                         <motion.div key={product.id} variants={item}>
-                            <Link
-                                href={`/products/${product.slug}`}
-                                className="group block relative overflow-hidden rounded-xl bg-white shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100"
-                            >
-                                {/* Image Container */}
-                                <div className="relative h-64 w-full overflow-hidden">
-                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors z-10 duration-500" />
-                                    <div
-                                        className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-700 ease-out"
-                                        style={{ backgroundImage: `url('${product.image}')` }}
-                                    ></div>
-                                </div>
-
-                                {/* Original Label Design (Teal Bar) */}
-                                <div className="bg-primary text-white text-center py-4 px-2 relative z-20">
-                                    <h3 className="text-sm font-bold uppercase tracking-wider">{product.name}</h3>
-                                </div>
-                            </Link>
+                            <ProductCardItem product={product} />
                         </motion.div>
                     ))}
                 </motion.div>
 
-                <div className="mt-12 text-center md:hidden">
-                    <Link href="/products" className="inline-flex items-center gap-2 text-primary font-bold hover:text-teal-700 transition-colors">
+                {/* View All Button at the bottom for all screens when many products */}
+                <div className="mt-16 text-center">
+                    <Link
+                        href="/products"
+                        className="inline-flex items-center gap-3 bg-primary text-white font-bold py-4 px-10 rounded-full shadow-lg hover:shadow-2xl hover:bg-teal-700 transition-all transform hover:-translate-y-1 group"
+                    >
                         VIEW ALL PRODUCTS
-                        <ArrowRight className="w-5 h-5" />
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </div>
             </div>

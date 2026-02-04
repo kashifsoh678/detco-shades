@@ -16,7 +16,6 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import QuillEditor from "@/components/ui/QuillEditor";
 import ImageUpload from "./ImageUpload";
-import VideoUpload from "./VideoUpload";
 import ActiveToggle from "./ActiveToggle";
 import { Product, ProductCreate } from "@/hooks/use-products";
 import { cn } from "@/lib/utils";
@@ -35,8 +34,8 @@ const productSchema = z.object({
     thumbnailUrl: z.string().optional(),
     coverImageId: z.string().nullable().optional(),
     coverImageUrl: z.string().optional(),
-    videoId: z.string().min(1, "Product video is required"),
-    videoUrl: z.string().optional(),
+    videoId: z.string().optional(),
+    videoUrl: z.string().url("Please enter a valid URL").optional().or(z.literal("")),
     gallery: z.array(z.object({
         imageId: z.string().min(1, "Image is required"),
         url: z.string().optional()
@@ -102,6 +101,7 @@ const ProductForm = ({
             order: 0,
             thumbnailId: "",
             videoId: "",
+            videoUrl: "",
             gallery: [{ imageId: "", url: "" }],
             specs: [],
             benefits: [],
@@ -126,7 +126,7 @@ const ProductForm = ({
                 ...initialData,
                 thumbnailUrl: initialData.thumbnail?.url,
                 coverImageUrl: initialData.coverImage?.url,
-                videoUrl: initialData.video?.url,
+                videoUrl: initialData.videoUrl || initialData.video?.url || "",
                 gallery: initialData.images?.map(img => ({
                     imageId: img.imageId,
                     url: img.image?.url
@@ -140,6 +140,11 @@ const ProductForm = ({
                 applications: initialData.applications || [],
                 order: initialData.order || 0
             });
+
+            // Video URL handling
+            if (initialData.videoUrl || initialData.video?.url) {
+                setValue("videoUrl", initialData.videoUrl || initialData.video?.url || "");
+            }
         }
     }, [initialData, reset]);
 
@@ -202,7 +207,7 @@ const ProductForm = ({
         if (step === 3) return await trigger(["specs"]);
         if (step === 4) return await trigger(["benefits"]);
         if (step === 5) return await trigger(["faqs"]);
-        if (step === 6) return await trigger(["gallery", "videoId"]);
+        if (step === 6) return await trigger(["gallery"]);
         return true;
     };
 
@@ -601,26 +606,20 @@ const ProductForm = ({
                                 </div>
 
                                 <div className="space-y-4 border-t pt-8">
-                                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wider block">Product Video (Required)</label>
-                                    <VideoUpload
-                                        label=""
-                                        value={videoUrl}
-                                        mediaId={videoId || undefined}
-                                        folder="products/videos"
-                                        onChange={(id, url) => {
-                                            setValue("videoId", id, { shouldValidate: true });
-                                            setValue("videoUrl", url);
-                                        }}
-                                        onRemove={() => {
-                                            setValue("videoId", "", { shouldValidate: true });
-                                            setValue("videoUrl", undefined);
-                                        }}
-                                        onLoadingChange={onLoadingChange}
-                                        showsuggestion={true}
-                                    />
-                                    {errors.videoId && (
-                                        <p className="text-xs text-red-500 font-medium mt-1">{errors.videoId.message}</p>
-                                    )}
+                                    <div className="flex items-center justify-between mb-2">
+                                        <label className="text-xs font-semibold text-gray-700 uppercase tracking-wider block">Product Video (Optional)</label>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <Input
+                                            {...register("videoUrl")}
+                                            placeholder="https://example.com/video.mp4 or YouTube/Vimeo URL"
+                                            className="h-11 border-gray-200"
+                                            error={errors.videoUrl?.message}
+                                            disabled={isLoading}
+                                        />
+                                        <p className="text-[10px] text-gray-400">Paste a direct video URL, YouTube link, or Vimeo link</p>
+                                    </div>
                                 </div>
                             </div>
                         )}

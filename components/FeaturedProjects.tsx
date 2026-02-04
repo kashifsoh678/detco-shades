@@ -1,39 +1,28 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import ProjectCard from './ProjectCard';
+import ProjectQuickView from './ProjectQuickView';
+import { Project } from '@/hooks/use-projects';
 
-const projects = [
-    {
-        id: 'riyadh-metro',
-        title: "Riyadh Metro Stations",
-        category: "Tensile Structures",
-        location: "Riyadh, KSA",
-        image: "https://placehold.co/800x600/006666/FFFFFF?text=Riyadh+Metro",
-        description: "Innovative PTFE tensile fabric structures for passenger terminals."
-    },
-    {
-        id: 'ksu-stadium',
-        title: "King Saud University",
-        category: "Stadium Shading",
-        location: "Riyadh, KSA",
-        image: "https://placehold.co/800x600/006666/FFFFFF?text=KSU+Stadium",
-        description: "Massive cantilever shades designed for stadium seating."
-    },
-    {
-        id: 'diplomatic-quarter',
-        title: "Diplomatic Quarter",
-        category: "Walkway & Park Shades",
-        location: "Riyadh, KSA",
-        image: "https://placehold.co/800x600/006666/FFFFFF?text=Diplomatic+Quarter",
-        description: "Aesthetically pleasing geometric shade structures."
-    }
-];
+interface FeaturedProjectsProps {
+    projects: Project[];
+}
 
-export default function FeaturedProjects() {
+export default function FeaturedProjects({ projects }: FeaturedProjectsProps) {
+    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+    const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
+
+    if (!projects || projects.length === 0) return null;
+
+    const handleQuickView = (project: Project) => {
+        setSelectedProject(project);
+        setIsQuickViewOpen(true);
+    };
+
     return (
         <section className="py-24 bg-white">
             <div className="container mx-auto px-4">
@@ -72,10 +61,11 @@ export default function FeaturedProjects() {
                             key={project.id}
                             id={project.id}
                             title={project.title}
-                            service={project.category}
+                            service={project.service?.title || "Project"}
                             location={project.location}
-                            thumbnail={project.image}
+                            thumbnail={project.thumbnail?.url || ""}
                             index={index}
+                            onQuickView={() => handleQuickView(project)}
                         />
                     ))}
                 </div>
@@ -87,6 +77,13 @@ export default function FeaturedProjects() {
                     </Link>
                 </div>
             </div>
+
+            {/* Project Quick View Modal */}
+            <ProjectQuickView
+                project={selectedProject}
+                isOpen={isQuickViewOpen}
+                onClose={() => setIsQuickViewOpen(false)}
+            />
         </section>
     );
 }

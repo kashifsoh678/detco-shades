@@ -18,6 +18,46 @@ interface ProductGalleryProps {
 
 import { PLACEHOLDER_IMAGE } from "@/constants/api";
 
+// Helper function to detect video platform and get embed URL
+const getVideoEmbedInfo = (url: string): { platform: 'youtube' | 'vimeo' | 'direct', embedUrl: string, thumbnailUrl?: string } => {
+    // YouTube detection
+    const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+    const youtubeMatch = url.match(youtubeRegex);
+    if (youtubeMatch) {
+        return {
+            platform: 'youtube',
+            embedUrl: `https://www.youtube.com/embed/${youtubeMatch[1]}?autoplay=0&rel=0`,
+            thumbnailUrl: `https://img.youtube.com/vi/${youtubeMatch[1]}/maxresdefault.jpg`
+        };
+    }
+
+    // Vimeo detection
+    const vimeoRegex = /vimeo\.com\/(?:.*\/)?(\d+)/;
+    const vimeoMatch = url.match(vimeoRegex);
+    if (vimeoMatch) {
+        return {
+            platform: 'vimeo',
+            embedUrl: `https://player.vimeo.com/video/${vimeoMatch[1]}`
+        };
+    }
+
+    // Cloudinary detection (simple extension swap)
+    if (url.includes('cloudinary.com') && url.includes('/video/upload/')) {
+        const thumbUrl = url.replace(/\.[^/.]+$/, ".jpg");
+        return {
+            platform: 'direct',
+            embedUrl: url,
+            thumbnailUrl: thumbUrl
+        };
+    }
+
+    // Direct video file
+    return {
+        platform: 'direct',
+        embedUrl: url
+    };
+};
+
 const SafeImage = ({ src, alt, className, fill, priority }: { src: string, alt: string, className?: string, fill?: boolean, priority?: boolean }) => {
     const [imgSrc, setImgSrc] = useState(src);
 
@@ -50,21 +90,42 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ items }) => {
             {/* Main Media Viewer */}
             <div className="relative h-[300px] sm:h-[500px] w-full rounded-3xl overflow-hidden shadow-2xl group border border-gray-100 bg-black">
                 {activeItem.type === "video" ? (
-                    <video
-                        src={activeItem.url}
-                        // poster={activeItem.poster}
-                        controls
-                        className="w-full h-full object-contain"
-                        autoPlay={true}
-                        muted
-                        playsInline
-                        disablePictureInPicture
-                        disableRemotePlayback
-                        controlsList="nodownload"
-                        preload="none"
-                        loop
+                    (() => {
+                        const videoInfo = getVideoEmbedInfo(activeItem.url);
 
-                    />
+                        if (videoInfo.platform === 'youtube' || videoInfo.platform === 'vimeo') {
+                            return (
+                                <iframe
+                                    key={videoInfo.embedUrl}
+                                    src={videoInfo.embedUrl}
+                                    className="w-full h-full"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    title="Product video"
+                                />
+                            );
+                        }
+
+                        // Direct video file
+                        return (
+                            <video
+                                key={videoInfo.embedUrl}
+                                src={videoInfo.embedUrl}
+                                controls
+                                className="w-full h-full object-contain"
+                                autoPlay
+                                muted
+                                playsInline
+                                disablePictureInPicture
+                                disableRemotePlayback
+                                controlsList="nodownload"
+                                preload="auto"
+                                loop
+                            >
+                                Your browser does not support the video tag.
+                            </video>
+                        );
+                    })()
                 ) : (
                     <SafeImage
                         key={activeItem.url} // Re-mount on url change to reset error state
@@ -98,10 +159,15 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ items }) => {
                                             <Play size={16} className="text-white fill-white" />
                                         </div>
                                     </div>
-                                    {/* Optional: Use a poster image if available for the thumbnail too */}
-                                    {item.poster && (
-                                        <SafeImage src={item.poster} alt="Video thumbnail" fill className="object-cover opacity-60" />
-                                    )}
+                                    {/* Priority: Detect Thumbnail > Item Poster */}
+                                    {(() => {
+                                        const videoInfo = getVideoEmbedInfo(item.url);
+                                        const displayThumb = videoInfo.thumbnailUrl || item.poster;
+                                        if (displayThumb) {
+                                            return <SafeImage src={displayThumb} alt="Video thumbnail" fill className="object-cover opacity-60" />;
+                                        }
+                                        return null;
+                                    })()}
                                 </div>
                             ) : (
                                 <SafeImage
@@ -110,7 +176,8 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ items }) => {
                                     fill
                                     className="object-cover"
                                 />
-                            )}
+                            )
+                            }
                         </button>
                     ))}
                 </div>
