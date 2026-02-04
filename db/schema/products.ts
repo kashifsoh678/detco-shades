@@ -30,6 +30,7 @@ export const products = pgTable(
     videoId: uuid("video_id").references(() => media.id, {
       onDelete: "set null",
     }),
+    videoUrl: text("video_url"),
 
     isActive: boolean("is_active").default(true).notNull(),
     order: integer("order").default(0).notNull(),

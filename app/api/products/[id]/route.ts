@@ -86,6 +86,7 @@ export async function PATCH(
       thumbnailId,
       coverImageId,
       videoId,
+      videoUrl,
       isActive,
       order,
       imageIds, // Array of media IDs for gallery
@@ -131,6 +132,7 @@ export async function PATCH(
           thumbnailId: thumbnailId === "" ? null : thumbnailId,
           coverImageId: coverImageId === "" ? null : coverImageId,
           videoId: videoId === "" ? null : videoId,
+          videoUrl: videoUrl === "" ? null : videoUrl,
           isActive,
           order,
           updatedAt: new Date(),
