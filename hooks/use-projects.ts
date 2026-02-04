@@ -11,17 +11,17 @@ export interface Project {
   thumbnailId: string | null;
   description: string;
   isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | Date;
+  updatedAt: string | Date;
   thumbnail?: {
     url: string;
     publicId: string;
-  };
+  } | null;
   service?: {
     id: string;
     title: string;
     slug: string;
-  };
+  } | null;
   images?: {
     id: string;
     projectId: string;
