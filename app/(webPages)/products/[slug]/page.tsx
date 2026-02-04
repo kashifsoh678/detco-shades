@@ -147,12 +147,41 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                         <ProductGallery items={galleryItems} />
 
                         {/* PROSE DESCRIPTION */}
-                        <div className="prose prose-lg prose-headings:font-bold prose-headings:text-gray-900 prose-p:text-gray-600 prose-li:text-gray-600 prose-strong:text-primary max-w-none">
+                        {/* <div className="prose prose-lg prose-headings:font-bold prose-headings:text-gray-900 prose-p:text-gray-600 prose-li:text-gray-600 prose-strong:text-primary max-w-none">
                             <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
                                 Product Overview
                             </h2>
                             <div dangerouslySetInnerHTML={{ __html: product.description }} />
-                        </div>
+                        </div> */}
+                        {/* PROSE DESCRIPTION */}
+                        <section className="max-w-none">
+                            {/* Section heading (outside prose) */}
+                            <h2 className="mb-6 text-4xl md:text-5xl font-bold text-gray-900">
+                                Product Overview
+                            </h2>
+
+                            {/* Quill rendered content */}
+                            <div
+                                className="
+                                    quill-content
+                                    prose
+                                    prose-lg
+                                    prose-gray
+                                    max-w-none
+                                    prose-headings:font-semibold
+                                    prose-headings:text-gray-900
+                                    prose-p:text-gray-600
+                                    prose-li:text-gray-600
+                                    prose-strong:text-primary
+                                    prose-a:text-primary
+                                    prose-a:underline
+                                    dark:prose-invert
+                                    dark:prose-headings:text-gray-100
+                                    "
+                                dangerouslySetInnerHTML={{ __html: product.description }}
+                            />
+                        </section>
+
 
                         {/* KEY ADVANTAGES (Specs) - Moved from Sidebar */}
                         {product.specs && product.specs.length > 0 && (
@@ -163,7 +192,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                                         <li key={idx} className="flex gap-3 items-start last:border-0 last:pb-0">
                                             <div className="flex items-center gap-2">
                                                 <div className="w-1.5 h-1.5 rounded-full bg-gray-300  shrink-0" />
-                                                <span className="font-bold text-primary mr-1 capitalize ">{spec.title}</span>
+                                                <span className="font-bold text-primary mr-1 capitalize ">{spec.title} :</span>
                                             </div>
                                             <p className="text-gray-600 leading-relaxed">
                                                 {spec.description}
@@ -238,7 +267,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                                     <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Recommended For</h3>
                                     <div className="flex flex-wrap gap-2">
                                         {product.applications.map((app, idx) => (
-                                            <span key={idx} className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white text-gray-700 text-xs font-bold rounded-lg border border-gray-200 shadow-sm">
+                                            <span key={idx} className="inline-flex capitalize items-center gap-1.5 px-3 py-1.5 bg-white text-gray-700 text-xs font-bold rounded-lg border border-gray-200 shadow-sm">
                                                 <CheckCircle2 size={12} className="text-primary" />
                                                 {app}
                                             </span>

@@ -140,13 +140,13 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ items }) => {
 
             {/* Thumbnails */}
             {items.length > 1 && (
-                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-3">
+                <div className="flex gap-3 overflow-x-auto pb-2 custom-scrollbar snap-x">
                     {items.map((item, idx) => (
                         <button
                             key={idx}
                             onClick={() => setActiveIndex(idx)}
                             className={cn(
-                                "relative aspect-square rounded-xl overflow-hidden cursor-pointer transition-all border-2",
+                                "relative aspect-square w-20 sm:w-24 shrink-0 rounded-xl overflow-hidden cursor-pointer transition-all border-2 snap-start",
                                 activeIndex === idx
                                     ? "border-primary ring-2 ring-primary/20 ring-offset-2 scale-95"
                                     : "border-transparent opacity-70 hover:opacity-100 hover:scale-105"

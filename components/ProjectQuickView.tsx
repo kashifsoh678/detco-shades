@@ -104,13 +104,13 @@ const ProjectQuickView = ({ project, isOpen, onClose }: ProjectQuickViewProps) =
                                     </button>
 
                                     {/* Thumbnail Navigation Indicators */}
-                                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+                                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 max-w-[80%] overflow-x-auto no-scrollbar pb-1">
                                         {images.map((_, idx) => (
                                             <button
                                                 key={idx}
                                                 onClick={() => setCurrentImageIndex(idx)}
                                                 className={cn(
-                                                    "h-1 transition-all duration-300 rounded-full",
+                                                    "h-1 transition-all duration-300 rounded-full shrink-0",
                                                     idx === currentImageIndex ? "w-8 bg-white" : "w-2 bg-white/40"
                                                 )}
                                             />
