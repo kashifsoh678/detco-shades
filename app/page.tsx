@@ -17,7 +17,7 @@ import { eq, and, desc, asc } from "drizzle-orm";
 export default async function Home() {
   // Fetch first 9 featured and active products
   const featuredProducts = await db.query.products.findMany({
-    where: and(eq(productSchema.isActive, true), eq(productSchema.isFeatured, true)),
+    where: eq(productSchema.isActive, true),
     with: {
       thumbnail: true,
     },
