@@ -53,11 +53,10 @@ function Counter({ value, suffix }: { value: number, suffix: string }) {
 
 export default function Stats() {
     return (
-        <section className="relative py-24 bg-gray-900 overflow-hidden">
+        <section className="relative py-48 bg-gray-900 overflow-hidden">
             {/* Parallax Background */}
             <div
-                className="absolute inset-0 z-0 bg-fixed bg-cover bg-center"
-                style={{ backgroundImage: "url('https://placehold.co/1920x600/111827/006666?text=Industrial+Excellence')" }}
+                className="absolute inset-0 z-0 bg-fixed bg-no-repeat bg-cover bg-center bg-[url('/images/home_screen_bg.webp')]"
             >
                 <div className="absolute inset-0 bg-black/80 backdrop-blur-[2px]"></div>
             </div>

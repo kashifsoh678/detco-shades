@@ -39,12 +39,12 @@ export default function Hero() {
                 <motion.div
                     initial={{ scale: 1 }}
                     animate={{ scale: 1.1 }}
-                    transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
-                    className="w-full h-full bg-[url('https://placehold.co/1920x1080/0f172a/006666?text=Engineering+Excellence')] bg-cover bg-center opacity-60"
+                    transition={{ duration: 8, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
+                    className="w-full h-full bg-[url('/images/home_banner.webp')] bg-cover bg-center opacity-60"
                 />
 
                 {/* Dramatic Gradient Overlay */}
-                <div className="absolute inset-0 bg-linear-to-r from-black/90 via-black/60 to-black/40" />
+                <div className="absolute inset-0 bg-linear-to-r from-black/60 via-black/40 to-black/20" />
             </div>
 
             {/* Content Container */}
@@ -60,8 +60,8 @@ export default function Hero() {
                             transition={{ duration: 0.6, delay: 0.2 }}
                             className="flex items-center gap-3 mb-6"
                         >
-                            <div className="h-0.5 w-12 bg-primary"></div>
-                            <span className="text-primary font-bold tracking-widest uppercase text-sm md:text-base">
+                            <div className="h-0.5 w-12 bg-white"></div>
+                            <span className="text-white font-bold tracking-widest uppercase text-sm md:text-base">
                                 Smart Shade Engineering Solutions
                             </span>
                         </motion.div>
@@ -74,7 +74,7 @@ export default function Hero() {
                             className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight"
                         >
                             Premium Shade & <br className="hidden md:block" />
-                            <span className="text-transparent bg-clip-text bg-linear-to-r from-teal-400 to-teal-200">
+                            <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-primary">
                                 Canopy Solutions
                             </span>
                         </motion.h1>
@@ -100,9 +100,9 @@ export default function Hero() {
                         >
                             <Link href="/products">
                                 <motion.button
-                                    whileHover={{ scale: 1.02, backgroundColor: "#0f766e" }}
+                                    whileHover={{ scale: 1.02, backgroundColor: "var(--color-foreground)" }}
                                     whileTap={{ scale: 0.98 }}
-                                    className="px-8 py-4 bg-primary text-white font-bold rounded-sm shadow-lg shadow-teal-900/20 transition-all w-full sm:w-auto text-sm tracking-wide"
+                                    className="px-8 py-4 bg-primary text-white cursor-pointer font-bold rounded-sm shadow-lg shadow-primary/20 transition-all w-full sm:w-auto text-sm tracking-wide"
                                 >
                                     EXPLORE COLLECTION
                                 </motion.button>
@@ -111,7 +111,7 @@ export default function Hero() {
                                 <motion.button
                                     whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,0.1)" }}
                                     whileTap={{ scale: 0.98 }}
-                                    className="px-8 py-4 bg-transparent text-white border border-white/30 backdrop-blur-sm font-bold rounded-sm hover:border-white transition-all w-full sm:w-auto text-sm tracking-wide"
+                                    className="px-8 py-4 bg-transparent text-white border cursor-pointer border-white/30 backdrop-blur-sm font-bold rounded-sm hover:border-white transition-all w-full sm:w-auto text-sm tracking-wide"
                                 >
                                     GET A CONSULTATION
                                 </motion.button>

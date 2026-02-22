@@ -79,7 +79,8 @@ export default function HeroRFQForm({ serviceId }: HeroRFQFormProps) {
                                 type="text"
                                 {...register("name")}
                                 placeholder="Name"
-                                className={`w-full px-4 py-3 bg-white/10 border ${errors.name ? 'border-red-500' : 'border-white/10'} rounded-xl text-white placeholder:text-teal-100/60 focus:outline-none focus:ring-2 focus:ring-teal-400/50 focus:bg-white/20 transition-all text-sm backdrop-blur-sm`}
+                                maxLength={18}
+                                className={`w-full px-4 py-3 bg-white/10 border ${errors.name ? 'border-red-500' : 'border-white/10'} rounded-xl text-white placeholder:text-gray-100/60 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white/20 transition-all text-sm backdrop-blur-sm`}
                             />
                             {errors.name && <p className="text-[10px] text-red-400 mt-1 ml-1">{errors.name.message}</p>}
                         </div>
@@ -88,7 +89,8 @@ export default function HeroRFQForm({ serviceId }: HeroRFQFormProps) {
                                 type="tel"
                                 {...register("phone")}
                                 placeholder="Phone"
-                                className={`w-full px-4 py-3 bg-white/10 border ${errors.phone ? 'border-red-500' : 'border-white/10'} rounded-xl text-white placeholder:text-teal-100/60 focus:outline-none focus:ring-2 focus:ring-teal-400/50 focus:bg-white/20 transition-all text-sm backdrop-blur-sm`}
+                                maxLength={12}
+                                className={`w-full px-4 py-3 bg-white/10 border ${errors.phone ? 'border-red-500' : 'border-white/10'} rounded-xl text-white placeholder:text-gray-100/60 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white/20 transition-all text-sm backdrop-blur-sm`}
                             />
                             {errors.phone && <p className="text-[10px] text-red-400 mt-1 ml-1">{errors.phone.message}</p>}
                         </div>
@@ -99,7 +101,7 @@ export default function HeroRFQForm({ serviceId }: HeroRFQFormProps) {
                             type="email"
                             {...register("email")}
                             placeholder="Email Address"
-                            className={`w-full px-4 py-3 bg-white/10 border ${errors.email ? 'border-red-500' : 'border-white/10'} rounded-xl text-white placeholder:text-teal-100/60 focus:outline-none focus:ring-2 focus:ring-teal-400/50 focus:bg-white/20 transition-all text-sm backdrop-blur-sm`}
+                            className={`w-full px-4 py-3 bg-white/10 border ${errors.email ? 'border-red-500' : 'border-white/10'} rounded-xl text-white placeholder:text-gray-100/60 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white/20 transition-all text-sm backdrop-blur-sm`}
                         />
                         {errors.email && <p className="text-[10px] text-red-400 mt-1 ml-1">{errors.email.message}</p>}
                     </div>
@@ -107,7 +109,7 @@ export default function HeroRFQForm({ serviceId }: HeroRFQFormProps) {
                     <div className="relative group/input">
                         <select
                             {...register("serviceId")}
-                            className={`w-full px-4 py-3 bg-white/10 border ${errors.serviceId ? 'border-red-500' : 'border-white/10'} rounded-xl text-white placeholder:text-teal-100/60 focus:outline-none focus:ring-2 focus:ring-teal-400/50 focus:bg-white/20 transition-all text-sm backdrop-blur-sm [&>option]:text-gray-900 appearance-none cursor-pointer`}
+                            className={`w-full px-4 py-3 bg-white/10 border ${errors.serviceId ? 'border-red-500' : 'border-white/10'} rounded-xl text-white placeholder:text-gray-100/60 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white/20 transition-all text-sm backdrop-blur-sm [&>option]:text-gray-900 appearance-none cursor-pointer`}
                         >
                             <option value="" className="text-gray-400">Select Project Type</option>
                             {services.map((service: Service) => (
@@ -125,7 +127,7 @@ export default function HeroRFQForm({ serviceId }: HeroRFQFormProps) {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full bg-linear-to-r from-teal-500 to-teal-600 hover:from-teal-400 hover:to-teal-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-teal-900/30 hover:shadow-teal-500/20 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 group border border-white/10 disabled:opacity-70 disabled:cursor-not-allowed"
+                        className="w-full bg-linear-to-r from-primary to-primary hover:from-primary hover:to-primary text-white font-bold py-4 rounded-xl shadow-lg shadow-teal-900/30 hover:shadow-teal-500/20 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 group border border-white/10 disabled:opacity-70 disabled:cursor-not-allowed"
                     >
                         {isLoading ? (
                             <>
