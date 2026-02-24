@@ -4,11 +4,12 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-  --primary: #006666;
+  --foreground: #586b93;
+  /* --primary: #006666; */
+  --primary: #4e6890;
   --primary-foreground: #ffffff;
   --secondary: #f5f5f5;
-  --secondary-foreground: #171717;
+  --secondary-foreground: #6f80a1;
 }
 
 @theme inline {

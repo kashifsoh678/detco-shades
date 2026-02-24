@@ -7,6 +7,7 @@ import ProjectQuickView from '@/components/ProjectQuickView';
 import { useProjects, Project } from '@/hooks/use-projects';
 import { Layers } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import PageBanner from '@/components/web/PageBanner';
 
 export default function ProjectsPage() {
     const { projectsQuery } = useProjects();
@@ -24,17 +25,7 @@ export default function ProjectsPage() {
     return (
         <main className="bg-white pb-24 border">
             {/* Header */}
-            <div className="relative py-16 md:py-24 lg:py-28 bg-primary overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://placehold.co/1920x600/0f766e/ffffff?text=Our+Products')] opacity-10 bg-cover bg-center" />
-                <div className="container mx-auto px-4 text-center relative z-10">
-                    <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
-                        Our Projects
-                    </h1>
-                    <p className="text-teal-100 text-base md:text-xl max-w-2xl mx-auto">
-                        Engineering excellence across Saudi Arabia. Discover our architectural sunshade solutions.
-                    </p>
-                </div>
-            </div>
+            <PageBanner title="Our Projects" subtitle="Engineering excellence across Saudi Arabia. Discover our architectural sunshade solutions." />
 
             <div className="container mx-auto px-4 -mt-10 relative z-20">
                 {isLoading ? (

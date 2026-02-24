@@ -47,17 +47,17 @@ export default function WhyChooseUs({ className = "", columns = 3 }: WhyChooseUs
                     className={`
                         group relative bg-white p-8 rounded-2xl border border-gray-100 
                         shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]
-                        hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:-translate-y-1 hover:border-teal-500/30
+                        hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:-translate-y-1 hover:border-primary/10
                         transition-all duration-300 overflow-hidden
                         ${(columns === 2 && index === 2) ? 'md:col-span-2' : ''}
                     `}
                 >
                     {/* Hover Gradient Background */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-teal-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-linear-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                     <div className="relative z-10">
-                        <div className="w-16 h-16 bg-gradient-to-br from-teal-50 to-teal-100 rounded-2xl flex items-center justify-center mb-6 text-primary group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 shadow-inner">
-                            <feature.icon size={32} strokeWidth={1.5} />
+                        <div className="w-16 h-16 bg-linear-to-br from-primary/90 to-primary/30 rounded-2xl flex items-center justify-center mb-6 text-primary group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 shadow-inner">
+                            <feature.icon size={32} color='white' strokeWidth={1.5} />
                         </div>
                         <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
                             {feature.title}

@@ -4,6 +4,7 @@ import { db } from '@/db';
 import { products } from '@/db/schema/products';
 import { eq, desc } from 'drizzle-orm';
 import ProductList from '@/components/web/ProductList';
+import PageBanner from '@/components/web/PageBanner';
 
 export const revalidate = 0; // Ensure fresh data on every request (or set to 60 for ISR)
 
@@ -29,17 +30,7 @@ export default async function ProductsPage() {
     return (
         <main className="min-h-screen bg-white">
             {/* Hero Section */}
-            <div className="relative py-16 md:py-24 lg:py-28 bg-primary overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://placehold.co/1920x600/0f766e/ffffff?text=Our+Products')] opacity-10 bg-cover bg-center" />
-                <div className="container mx-auto px-4 text-center relative z-10">
-                    <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
-                        Our Products
-                    </h1>
-                    <p className="text-teal-100 text-base md:text-xl max-w-2xl mx-auto">
-                        Explore our comprehensive range of premium shading solutions engineered for durability.
-                    </p>
-                </div>
-            </div>
+            <PageBanner title="Our Products" subtitle="Explore our comprehensive range of premium shading solutions engineered for durability." />
 
             {/* Products Grid */}
             <div className="container mx-auto px-4 -mt-10 relative z-20 pb-24">

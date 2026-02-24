@@ -7,6 +7,7 @@ import { useQuotes } from '@/hooks/use-quotes';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import PageBanner from '@/components/web/PageBanner';
 
 const contactSchema = z.object({
     name: z.string().min(2, "Full name is required"),
@@ -59,16 +60,8 @@ export default function ContactPage() {
         <main className="min-h-screen bg-gray-50">
 
             {/* --- HERO SECTION --- */}
-            <div className="relative h-[300px] flex items-center justify-center bg-primary overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://placehold.co/1920x600/0f766e/ffffff?text=Contact+Us+Background')] opacity-10 bg-cover bg-center" />
-                <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
-                <div className="container mx-auto px-4 relative z-10 text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 shadow-sm">Contact Us</h1>
-                    <p className="text-xl text-teal-100 max-w-2xl mx-auto">
-                        Get in touch with our engineering team for inquiries, quotes, and project consultations.
-                    </p>
-                </div>
-            </div>
+            <PageBanner title="Contact Us" subtitle="Get in touch with our engineering team for inquiries, quotes, and project consultations." />
+
 
             <div className="container mx-auto px-4 py-16  relative z-20">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

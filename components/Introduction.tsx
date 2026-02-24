@@ -36,9 +36,9 @@ export default function Introduction() {
 
                             <Link href="/about">
                                 <motion.button
-                                    whileHover={{ scale: 1.02, backgroundColor: "#0f766e" }}
+                                    whileHover={{ scale: 1.02, backgroundColor: "var(--color-foreground)" }}
                                     whileTap={{ scale: 0.98 }}
-                                    className="px-8 py-4 bg-primary text-white font-bold rounded-sm shadow-lg shadow-teal-900/20 transition-all w-full sm:w-auto text-sm tracking-wide"
+                                    className="px-8 py-4 bg-primary cursor-pointer text-white font-bold rounded-sm shadow-lg shadow-teal-900/20 transition-all w-full sm:w-auto text-sm tracking-wide"
                                 >
                                     READ MORE
                                 </motion.button>
