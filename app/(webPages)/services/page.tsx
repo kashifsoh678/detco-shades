@@ -5,6 +5,7 @@ import * as LucideIcons from 'lucide-react';
 import { ArrowRight, HelpCircle } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import PageBanner from '@/components/web/PageBanner';
 
 
 export default function ServicesPage() {
@@ -23,17 +24,8 @@ export default function ServicesPage() {
     return (
         <main className="min-h-screen bg-white ">
             {/* Hero Section */}
-            <div className="relative py-16 md:py-24 lg:py-28 bg-primary overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://placehold.co/1920x600/0f766e/ffffff?text=Our+Products')] opacity-10 bg-cover bg-center" />
-                <div className="container mx-auto px-4 text-center relative z-10">
-                    <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
-                        Our Services
-                    </h1>
-                    <p className="text-teal-100 text-base md:text-xl max-w-2xl mx-auto">
-                        End-to-end tensile structure solutions from concept to completion.
-                    </p>
-                </div>
-            </div>
+            <PageBanner title="Our Services" subtitle="End-to-end tensile structure solutions from concept to completion." />
+
             {/* Services Grid */}
             <div className="container mx-auto px-4 -mt-10 relative z-20 pb-24">
                 {isLoading ? (
