@@ -48,7 +48,7 @@ export default function FeaturedProjects({ projects }: FeaturedProjectsProps) {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="hidden md:block"
                     >
-                        <Link href="/projects" className="group flex items-center gap-2 text-primary font-bold hover:text-teal-700 transition-colors">
+                        <Link href="/projects" className="group flex items-center gap-2 text-primary font-bold hover:text-primary transition-colors">
                             VIEW ALL PROJECTS
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </Link>
@@ -71,7 +71,7 @@ export default function FeaturedProjects({ projects }: FeaturedProjectsProps) {
                 </div>
 
                 <div className="mt-12 text-center md:hidden">
-                    <Link href="/projects" className="inline-flex items-center gap-2 text-primary font-bold hover:text-teal-700 transition-colors">
+                    <Link href="/projects" className="inline-flex items-center gap-2 text-primary font-bold hover:text-primary transition-colors">
                         VIEW ALL PROJECTS
                         <ArrowRight className="w-5 h-5" />
                     </Link>

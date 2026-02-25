@@ -103,7 +103,7 @@ export default function ProductsGrid({ showHeader = false, products }: ProductsG
                             transition={{ duration: 0.6, delay: 0.2 }}
                             className="hidden md:block"
                         >
-                            <Link href="/products" className="group flex items-center gap-2 text-primary font-bold hover:text-teal-700 transition-colors">
+                            <Link href="/products" className="group flex items-center gap-2 text-primary font-bold hover:text-primary transition-colors">
                                 VIEW ALL PRODUCTS
                                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </Link>
@@ -129,7 +129,7 @@ export default function ProductsGrid({ showHeader = false, products }: ProductsG
                 <div className="mt-16 text-center">
                     <Link
                         href="/products"
-                        className="inline-flex items-center gap-3 bg-primary text-white font-bold py-4 px-10 rounded-full shadow-lg hover:shadow-2xl hover:bg-teal-700 transition-all transform hover:-translate-y-1 group"
+                        className="inline-flex items-center gap-3 bg-primary text-white font-bold py-4 px-10 rounded-full shadow-lg hover:shadow-2xl hover:bg-primary transition-all transform hover:-translate-y-1 group"
                     >
                         VIEW ALL PRODUCTS
                         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

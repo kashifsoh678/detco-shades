@@ -127,7 +127,7 @@ export default function HeroRFQForm({ serviceId }: HeroRFQFormProps) {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full bg-linear-to-r from-primary to-primary hover:from-primary hover:to-primary text-white font-bold py-4 rounded-xl shadow-lg shadow-teal-900/30 hover:shadow-teal-500/20 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 group border border-white/10 disabled:opacity-70 disabled:cursor-not-allowed"
+                        className="w-full bg-linear-to-r cursor-pointer from-primary to-primary hover:from-primary hover:to-primary text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/30 hover:shadow-white/20 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 group border border-white/10 disabled:opacity-70 disabled:cursor-not-allowed"
                     >
                         {isLoading ? (
                             <>
@@ -142,8 +142,8 @@ export default function HeroRFQForm({ serviceId }: HeroRFQFormProps) {
                         )}
                     </button>
 
-                    <div className="flex items-center justify-center gap-2 text-[10px] text-teal-100/60 uppercase tracking-widest font-medium pt-2">
-                        <span>🔒 Secure & Confidential</span>
+                    <div className="flex items-center justify-center gap-2 text-[10px] text-white/60 uppercase tracking-widest font-medium pt-2">
+                        <span>Secure & Confidential</span>
                     </div>
                 </form>
             </div>
