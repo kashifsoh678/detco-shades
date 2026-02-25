@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Ruler, Sparkles } from 'lucide-react';
+import { ShieldCheck, Ruler, Sparkles, Clock, MapPin, Users } from 'lucide-react';
 
 const features = [
     {
@@ -19,7 +19,22 @@ const features = [
         icon: Sparkles,
         title: "Premium Materials",
         description: "Utilizing high-grade PVC, PVDF, and HDPE fabrics for long-lasting aesthetics and performance."
-    }
+    },
+    // {
+    //     icon: Clock,
+    //     title: "Timely Execution",
+    //     description: "Committed to delivering projects on schedule without compromising on quality or safety standards."
+    // },
+    // {
+    //     icon: MapPin,
+    //     title: "Nationwide Presence",
+    //     description: "Serving all regions across the Kingdom of Saudi Arabia with dedicated installation teams."
+    // },
+    // {
+    //     icon: Users,
+    //     title: "Expert Team",
+    //     description: "A highly skilled workforce specializing in turn-key projects, masonry, and advanced metal/iron works."
+    // }
 ];
 
 interface WhyChooseUsProps {

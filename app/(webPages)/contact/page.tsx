@@ -82,18 +82,17 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Phone</p>
-                                        <p className="font-medium text-gray-900">+966 55 961 1821</p>
-                                        <p className="text-gray-500 text-sm">+966 50 830 4644</p>
+                                        <p className="font-medium text-gray-900">+966 55 018 1214</p>
                                     </div>
                                 </div>
 
                                 <div className="flex items-start gap-4 group">
-                                    <div className="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-green-600 group-hover:bg-green-600 group-hover:text-white transition-colors shrink-0">
+                                    <div className="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">
                                         <MessageSquare size={20} />
                                     </div>
                                     <div>
                                         <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">WhatsApp</p>
-                                        <a href="https://wa.me/966559611821" target="_blank" rel="noopener noreferrer" className="font-medium text-gray-900 hover:text-green-600 transition-colors">
+                                        <a href="https://wa.me/966559611821" target="_blank" rel="noopener noreferrer" className="font-medium text-gray-900 hover:text-primary transition-colors">
                                             Chat with Support
                                         </a>
                                     </div>
@@ -105,8 +104,7 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Email</p>
-                                        <a href="mailto:info@detco.sa" className="font-medium text-gray-900 hover:text-primary transition-colors">info@detco.sa</a>
-                                        <p className="text-gray-500 text-sm">rfq@detco.sa</p>
+                                        <a href="mailto:detcoshade@gmail.com" className="font-medium text-gray-900 hover:text-primary transition-colors">detcoshade@gmail.com</a>
                                     </div>
                                 </div>
                             </div>
@@ -115,8 +113,8 @@ export default function ContactPage() {
                         {/* Working Hours & Locations */}
                         <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
                             <div className="space-y-6">
-                                <div className="flex items-start gap-4">
-                                    <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center text-primary shrink-0">
+                                <div className="flex items-start gap-4 group">
+                                    <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">
                                         <Clock size={20} />
                                     </div>
                                     <div>
@@ -126,13 +124,15 @@ export default function ContactPage() {
                                     </div>
                                 </div>
 
-                                <div className="flex items-start gap-4">
-                                    <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center text-primary shrink-0">
+                                <div className="flex items-start gap-4 group">
+                                    <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">
                                         <MapPin size={20} />
                                     </div>
                                     <div>
-                                        <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Office Locations</p>
-                                        <p className="font-medium text-gray-900">Jeddah (HQ)</p>
+                                        <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Office Location</p>
+                                        <a href="https://maps.app.goo.gl/D5jBvgn8dpGoDjsV8" target="_blank" rel="noopener noreferrer" className="font-medium text-gray-900 hover:text-primary transition-colors cursor-pointer">
+                                            As Saadah, Riyadh (HQ)
+                                        </a>
                                         <p className="text-gray-500 text-sm mt-1">
                                             Serving: Riyadh, Dammam, Mecca, Medina, & All Saudi Regions
                                         </p>
@@ -227,7 +227,7 @@ export default function ContactPage() {
                                     {errors.projectDetails && <p className="text-xs text-red-500 font-medium">{errors.projectDetails.message}</p>}
                                 </div>
 
-                                <button type="submit" disabled={isLoading} className="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-teal-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed">
+                                <button type="submit" disabled={isLoading} className="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-primary/80 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed">
                                     {isLoading ? (
                                         <>
                                             <Loader2 size={18} className="animate-spin" />

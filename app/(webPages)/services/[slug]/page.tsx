@@ -71,24 +71,22 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
 
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-4xl">
-                        <Link href="/services" className="inline-flex items-center text-teal-200 hover:text-white mb-6 transition-colors text-sm font-bold uppercase tracking-wide gap-2">
-                            <ArrowLeft size={16} />
-                            Back to Services
-                        </Link>
-
-                        <div className="flex items-center gap-4 mb-6">
-                            <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-white backdrop-blur-sm border border-white/20">
-                                <Icon size={32} strokeWidth={1.5} />
-                            </div>
-                            <h1 className="text-4xl md:text-5xl font-bold text-white shadow-sm">
-                                {service.title}
-                            </h1>
+                        <div className="flex items-center flex-wrap gap-2 text-sm text-teal-200 mb-6 font-medium tracking-wide uppercase">
+                            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+                            <span>/</span>
+                            <Link href="/services" className="hover:text-white transition-colors">Services</Link>
+                            <span>/</span>
+                            <span className="text-white border-b border-teal-400">{service.title}</span>
                         </div>
-
-                        <p className="text-xl text-teal-50 max-w-2xl font-light leading-relaxed">
+                        {/* H1: Primary Keyword Target */}
+                        <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 shadow-sm leading-tight">
+                            {service.title}
+                        </h1>
+                        <p className="text-xl text-teal-50 max-w-2xl font-light capitalize">
                             {service.shortDescription}
                         </p>
                     </div>
+
                 </div>
             </div>
 

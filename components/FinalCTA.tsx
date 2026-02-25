@@ -39,7 +39,7 @@ export default function FinalCTA() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className="text-lg md:text-xl text-teal-100 mb-10 max-w-2xl mx-auto"
+                    className="text-lg md:text-xl text-gray-100 mb-10 max-w-2xl mx-auto"
                 >
                     Get a custom quote for your tensile structure or shading project today.
                     Our experts are ready to bring your vision to life.

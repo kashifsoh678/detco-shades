@@ -40,7 +40,7 @@ export default function QualityStandards() {
                             Quality & Safety Standards
                         </h2>
                         <p className="text-base md:text-lg text-gray-600 mb-8 leading-relaxed">
-                            At Detco, quality isn't just a buzzword—it's the foundation of everything we build. We engineer structures that stand the test of time and nature.
+                            At Detco, quality isn't just a buzzword, it's the foundation of everything we build. We engineer structures that stand the test of time and nature.
                         </p>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -53,7 +53,7 @@ export default function QualityStandards() {
                                     transition={{ duration: 0.4, delay: index * 0.1 }}
                                     className="flex items-start gap-4"
                                 >
-                                    <div className="p-2 bg-green-50 text-green-600 rounded-lg shrink-0">
+                                    <div className="p-2 bg-primary/10 text-primary rounded-lg shrink-0">
                                         <item.icon size={24} />
                                     </div>
                                     <div>
@@ -66,8 +66,8 @@ export default function QualityStandards() {
                     </div>
                     <div className="lg:w-1/2 w-full">
                         <div className="relative h-[500px] w-full bg-gray-100 rounded-2xl overflow-hidden shadow-2xl">
-                            <div className="absolute inset-0 bg-[url('https://placehold.co/800x1000/e0e0e0/006666?text=Quality+Control')] bg-cover bg-center" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex items-end p-8">
+                            <div className="absolute inset-0 bg-[url('/images/quality_control.webp')] bg-cover bg-center opacity-90" />
+                            <div className="absolute inset-0 bg-linear-to-t from-primary/80 to-transparent flex items-end p-8">
                                 <div className="text-white">
                                     <p className="font-bold text-2xl mb-2">Engineered for Durability</p>
                                     <p className="opacity-90">Every connection, weld, and stitch is inspected.</p>

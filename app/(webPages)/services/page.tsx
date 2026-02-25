@@ -103,7 +103,7 @@ export default function ServicesPage() {
                     </p>
                     <Link
                         href="/contact"
-                        className="inline-flex items-center justify-center bg-primary text-white font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-xl hover:bg-teal-700 transition-all transform hover:-translate-y-1"
+                        className="inline-flex items-center justify-center bg-primary text-white font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-xl hover:bg-primary transition-all transform hover:-translate-y-1"
                     >
                         Request Consultation
                     </Link>

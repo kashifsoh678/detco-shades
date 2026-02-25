@@ -56,15 +56,15 @@ export default function Footer() {
                         <div className="space-y-4 text-gray-400">
                             <p className="flex items-start gap-3">
                                 <span className="text-primary mt-1">📍</span>
-                                <span>HQ, Jeddah, Saudi Arabia<br />Service Regions: Riyadh, Dammam, Khobar, Jubail, Yanbu, Tabuk</span>
+                                <span>HQ, As Saadah, Riyadh<br />Service Regions: Riyadh, Dammam, Khobar, Jubail, Yanbu, Tabuk</span>
                             </p>
                             <p className="flex items-center gap-3">
                                 <span className="text-primary">📞</span>
-                                <a href="tel:+966559611821" className="hover:text-primary transition-colors">+966 55 961 1821</a>
+                                <a href="tel:+966559611821" className="hover:text-primary transition-colors">+966 55 018 1214</a>
                             </p>
                             <p className="flex items-center gap-3">
                                 <span className="text-primary">✉️</span>
-                                <a href="mailto:info@detco.sa" className="hover:text-primary transition-colors">info@detco.sa</a>
+                                <a href="mailto:detcoshade@gmail.com" className="hover:text-primary transition-colors">detcoshade@gmail.com</a>
                             </p>
                         </div>
                     </div>
