@@ -8,7 +8,7 @@ const PageBanner = ({ title, subtitle }: { title: string; subtitle: string }) =>
                 <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
                     {title}
                 </h1>
-                <p className="text-teal-100 text-base md:text-xl max-w-2xl mx-auto">
+                <p className="text-white text-base md:text-xl max-w-2xl mx-auto">
                     {subtitle}
                 </p>
             </div>

@@ -26,12 +26,11 @@ export default function Introduction() {
                                 Why <span className="text-primary">DetcoShades?</span>
                             </h2>
                             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                                Detco Systems Co. specializes in providing high-quality sun shades tailored to meet diverse outdoor needs in Saudi Arabia.
-                                These shades offer exceptional sun protection and enhance the aesthetic value of spaces, making them ideal for both residential and commercial applications.
+                                DETCO is one of the national leading companies in the kingdom of Saudi Arabia and it considered to be one of the important companies in the development and construction process in the Kingdom.
+                                Especially in construction and technical work fields of shades, covers and stretched Membranes, masonry works, turn on key projects in addition to all metal& iron works...
                             </p>
                             <p className="text-gray-600 leading-relaxed mb-8">
-                                With durable materials and innovative designs, our sun shades are perfect for car parks, swimming pools, and playgrounds.
-                                Trust Detco Systems Co. to deliver reliable and stylish shading solutions.
+
                             </p>
 
                             <Link href="/about">

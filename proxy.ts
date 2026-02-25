@@ -6,7 +6,7 @@ import { decrypt } from "@/lib/auth";
 // note: for multi-instance production, consider Redis/Upstash
 const rateLimitMap = new Map<string, { count: number; lastRequest: number }>();
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // Use Vercel's ip property if available, otherwise fallback to headers
   const forwarded = request.headers.get("x-forwarded-for");
   const ip = forwarded
