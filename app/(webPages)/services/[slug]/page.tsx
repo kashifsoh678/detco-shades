@@ -156,8 +156,11 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                             <div className="mt-8 bg-teal-50 rounded-3xl p-8 border border-white shadow-sm text-center">
                                 <h3 className="font-bold text-gray-900 mb-2">Need direct assistance?</h3>
                                 <p className="text-gray-600 text-sm mb-6">Our engineers are available 24/7 for consultation.</p>
-                                <a href="tel:+966500000000" className="inline-flex items-center justify-center w-full py-3 bg-white text-primary font-bold rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100">
-                                    Call +966 50 000 0000
+                                <a href="tel:+966590391128" className="inline-flex items-center justify-center w-full py-3 bg-white text-primary font-bold rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100">
+                                    Call +966590391128
+                                </a>
+                                <a href="tel:+966530275784" className="inline-flex items-center justify-center w-full py-3 bg-white text-primary font-bold rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100">
+                                    Call +966530275784
                                 </a>
                             </div>
                         </div>

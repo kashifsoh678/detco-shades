@@ -60,7 +60,7 @@ export default function Footer() {
                             </p>
                             <p className="flex items-center gap-3">
                                 <span className="text-primary">📞</span>
-                                <a href="tel:+966559611821" className="hover:text-primary transition-colors">+966 55 018 1214</a>
+                                <a href="tel:+966590391128" className="hover:text-primary transition-colors">+966590391128</a> | <a href="tel:+966530275784" className="hover:text-primary transition-colors">+966530275784</a>
                             </p>
                             <p className="flex items-center gap-3">
                                 <span className="text-primary">✉️</span>

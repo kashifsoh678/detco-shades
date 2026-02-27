@@ -14,8 +14,11 @@ export default function TopBar() {
                     <span>High Quality Sun Shades in Saudi Arabia</span>
                 </div>
                 <div className="flex items-center gap-6">
-                    <a href="tel:+966559611821" className="hover:text-primary transition-colors flex items-center gap-1">
-                        <span>+966 55 018 1214</span>
+                    <a href="tel:+966590391128" className="hover:text-primary transition-colors flex items-center gap-1">
+                        <span>+966590391128</span>
+                    </a>
+                    <a href="tel:+966530275784" className="hover:text-primary transition-colors flex items-center gap-1">
+                        <span>+966530275784</span>
                     </a>
                     {/* Social icons could go here */}
                 </div>

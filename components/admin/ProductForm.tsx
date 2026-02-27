@@ -24,8 +24,8 @@ import { toast } from "sonner";
 const productSchema = z.object({
     title: z.string().trim().min(1, "Title is required").max(100),
     slug: z.string().trim().min(1, "Slug is required").max(100),
-    shortDescription: z.string().trim().min(1, "Short description is required").max(300),
-    description: z.string().min(1, "Description is required"),
+    shortDescription: z.string().trim().min(1, "Short description is required").max(500),
+    description: z.string().min(1, "Description is required").max(10000),
     applications: z.array(z.string().min(1, "Application tag cannot be empty")).min(1, "At least one application is required").max(8, "Maximum 8 applications allowed"),
     isFeatured: z.boolean().default(false),
     isActive: z.boolean().default(true),
@@ -115,6 +115,7 @@ const ProductForm = ({
         control,
         watch,
         setValue,
+        getValues,
         trigger,
         reset,
         formState: { errors },
@@ -351,6 +352,7 @@ const ProductForm = ({
                                         className="min-h-[100px] resize-none border-gray-200"
                                         error={errors.shortDescription?.message}
                                         disabled={isLoading}
+                                        maxLength={500}
                                     />
                                 </div>
 
@@ -556,7 +558,7 @@ const ProductForm = ({
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                         {galleryFields.map((field, index) => (
                                             <div key={field.id} className="relative group animate-in zoom-in-95 duration-200">
-                                                <div className="absolute top-2 right-2 z-10">
+                                                {watch(`gallery.${index}.url`) === "" && <div className="absolute top-2 right-2 z-10">
                                                     <Button
                                                         type="button"
                                                         variant="ghost"
@@ -567,7 +569,8 @@ const ProductForm = ({
                                                     >
                                                         <Trash2 size={12} />
                                                     </Button>
-                                                </div>
+                                                </div>}
+
                                                 <ImageUpload
                                                     value={watch(`gallery.${index}.url`)}
                                                     mediaId={watch(`gallery.${index}.imageId`)}

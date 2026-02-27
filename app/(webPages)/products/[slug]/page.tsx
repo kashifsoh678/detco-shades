@@ -8,6 +8,7 @@ import { products, productImages, productSpecs, productBenefits, productFaqs } f
 import { eq, desc } from 'drizzle-orm';
 import ProductGallery from '@/components/web/ProductGallery';
 import ProductFAQ from '@/components/ProductFAQ';
+import DetailPageHeroBanner from '@/components/web/DetailPageHeroBanner';
 
 // 1. Dynamic Metadata Generation for SEO
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -109,33 +110,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         <main className="min-h-screen bg-white">
 
             {/* --- HERO SECTION --- */}
-            <div className="relative min-h-[400px] flex items-center bg-primary overflow-hidden py-20">
-                {/* Hero Background with Cover Image if available */}
-                <div
-                    className="absolute inset-0 opacity-20 bg-cover bg-center"
-                    style={{ backgroundImage: `url('${heroImage}')` }}
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
-
-                <div className="container mx-auto px-4 relative z-10">
-                    <div className="max-w-4xl">
-                        <div className="flex items-center flex-wrap gap-2 text-sm text-teal-200 mb-6 font-medium tracking-wide uppercase">
-                            <Link href="/" className="hover:text-white transition-colors">Home</Link>
-                            <span>/</span>
-                            <Link href="/products" className="hover:text-white transition-colors">Products</Link>
-                            <span>/</span>
-                            <span className="text-white border-b border-teal-400">{product.title}</span>
-                        </div>
-                        {/* H1: Primary Keyword Target */}
-                        <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 shadow-sm leading-tight">
-                            {product.title}
-                        </h1>
-                        <p className="text-xl text-teal-50 max-w-2xl font-light capitalize">
-                            {product.shortDescription}
-                        </p>
-                    </div>
-                </div>
-            </div>
+            <DetailPageHeroBanner heroImage={heroImage} parentRoute="products" data={product} />
 
             <div className="container mx-auto px-4 py-16 md:py-24">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
@@ -146,13 +121,6 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                         {/* Image Gallery */}
                         <ProductGallery items={galleryItems} />
 
-                        {/* PROSE DESCRIPTION */}
-                        {/* <div className="prose prose-lg prose-headings:font-bold prose-headings:text-gray-900 prose-p:text-gray-600 prose-li:text-gray-600 prose-strong:text-primary max-w-none">
-                            <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
-                                Product Overview
-                            </h2>
-                            <div dangerouslySetInnerHTML={{ __html: product.description }} />
-                        </div> */}
                         {/* PROSE DESCRIPTION */}
                         <section className="max-w-none">
                             {/* Section heading (outside prose) */}
@@ -187,14 +155,14 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                         {product.specs && product.specs.length > 0 && (
                             <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
                                 <h3 className="text-2xl font-bold text-gray-900 mb-6">Key Advantages</h3>
-                                <ul className="space-y-4">
+                                <ul className="space-y-2 ">
                                     {product.specs.map((spec, idx) => (
-                                        <li key={idx} className="flex gap-3 items-start last:border-0 last:pb-0">
+                                        <li key={idx} className="flex flex-col gap-2   last:border-0 last:pb-0">
                                             <div className="flex items-center gap-2">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-gray-300  shrink-0" />
-                                                <span className="font-bold text-primary mr-1 capitalize ">{spec.title} :</span>
+                                                <div className="w-1.5 h-1.5 rounded-full bg-primary   shrink-0" />
+                                                <span className="font-bold text-primary mr-1 capitalize whitespace-nowrap text-lg ">{spec.title} :</span>
                                             </div>
-                                            <p className="text-gray-600 leading-relaxed">
+                                            <p className="text-gray-600 leading-relaxed text-md font-medium pl-4">
                                                 {spec.description}
                                             </p>
                                         </li>
@@ -205,12 +173,12 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
                         {/* KEY BENEFITS (Benefits) - Redesigned Grid */}
                         {product.benefits && product.benefits.length > 0 && (
-                            <div>
+                            <div className=''>
                                 <h3 className="text-2xl font-bold text-gray-900 mb-6">Key Benefits</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                                <div className="grid grid-cols-1 gap-x-8 gap-y-4">
                                     {product.benefits.map((benefit, idx) => (
-                                        <div key={idx} className="flex items-center gap-3">
-                                            <div className="w-2 h-2 rounded-full bg-primary shrink-0" />
+                                        <div key={idx} className="flex items-start gap-3">
+                                            <div className="w-2 h-2 rounded-full bg-primary shrink-0 mt-2" />
                                             <span className="font-medium text-gray-800 text-lg">{benefit.title}</span>
                                         </div>
                                     ))}
@@ -226,7 +194,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
                     {/* --- RIGHT COLUMN (Sticky Sidebar) --- */}
                     <div className="lg:col-span-4 space-y-8 relative">
-                        <div className="sticky top-24 space-y-8">
+                        <div className="sticky top-42 space-y-8">
 
                             {/* CTA Box (Primary Focus) */}
                             <div className="bg-linear-to-br from-teal-900 to-teal-800 text-white p-8 rounded-3xl shadow-2xl relative overflow-hidden group">
@@ -250,11 +218,12 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                                     <div className="mt-8 space-y-4 border-t border-white/10 pt-6">
                                         <div className="flex items-center gap-4 text-sm group/item">
                                             <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover/item:bg-primary transition-colors"><Phone size={18} /></div>
-                                            <span className="font-medium">+966 50 000 0000</span>
+                                            <span className="font-medium">+966590391128</span>
+                                            <span className="font-medium">+966530275784</span>
                                         </div>
                                         <div className="flex items-center gap-4 text-sm group/item">
                                             <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover/item:bg-primary transition-colors"><Mail size={18} /></div>
-                                            <span className="font-medium">sales@detco.sa</span>
+                                            <span className="font-medium">detcoshade@gmail.com</span>
                                         </div>
                                     </div>
                                 </div>
