@@ -52,8 +52,8 @@ const LoginPage = () => {
     } = useForm<FormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            email: "admin@detco.sa",
-            password: "admin123",
+            // email: "admin@detco.sa",
+            // password: "admin123",
         },
     })
 
@@ -108,9 +108,10 @@ const LoginPage = () => {
                                 <Input
                                     id="email"
                                     type="email"
-                                    placeholder="admin@example.com"
+                                    placeholder="admin@detco.sa"
                                     autoComplete="email"
                                     {...register("email")}
+
                                     className={`transition-colors ${errors.email ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
                                 />
                                 {errors.email && (
@@ -130,7 +131,7 @@ const LoginPage = () => {
                                 <Input
                                     id="password"
                                     type="password"
-                                    placeholder="••••••••"
+                                    placeholder="admin123"
                                     autoComplete="current-password"
                                     {...register("password")}
                                     className={`transition-colors ${errors.password ? 'border-red-500 focus-visible:ring-red-500' : ''}`}

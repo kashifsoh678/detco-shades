@@ -95,7 +95,7 @@ export default function ServicesPage() {
             </div>
 
             {/* CTA Section */}
-            <div className="bg-teal-50 py-20">
+            <div className="bg-primary/10 pt-20 pb-20">
                 <div className="container mx-auto px-4 text-center">
                     <h2 className="text-3xl font-bold text-gray-900 mb-6">Need a Custom Solution?</h2>
                     <p className="text-gray-600 mb-8 max-w-2xl mx-auto">

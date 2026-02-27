@@ -22,9 +22,9 @@ interface SidebarProps {
 
 const sidebarLinks = [
     { name: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
-    { name: 'Projects', href: '/admin/projects', icon: FolderKanban },
     { name: 'Products', href: '/admin/products', icon: Package },
     { name: 'Services', href: '/admin/services', icon: Briefcase },
+    { name: 'Projects', href: '/admin/projects', icon: FolderKanban },
     { name: 'Clients', href: '/admin/clients', icon: Users },
     { name: 'Quotes', href: '/admin/quotes', icon: MessageSquareQuote },
 ]

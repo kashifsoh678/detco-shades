@@ -82,7 +82,8 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Phone</p>
-                                        <p className="font-medium text-gray-900">+966 55 018 1214</p>
+                                        <p className="font-medium text-gray-900">+966590391128</p>
+                                        <p className="font-light text-sm text-gray-900">+966530275784</p>
                                     </div>
                                 </div>
 
@@ -194,7 +195,7 @@ export default function ContactPage() {
                                             id="phone"
                                             {...register("phone")}
                                             className={`w-full px-4 py-3 bg-gray-50 border ${errors.phone ? 'border-red-500' : 'border-gray-200'} rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-gray-400`}
-                                            placeholder="+966 50 000 0000"
+                                            placeholder="+966 50 xxx xxxx"
                                         />
                                         {errors.phone && <p className="text-xs text-red-500 font-medium">{errors.phone.message}</p>}
                                     </div>
