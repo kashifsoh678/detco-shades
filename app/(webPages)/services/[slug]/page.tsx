@@ -1,14 +1,37 @@
-import React from 'react';
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import { ArrowRight, CheckCircle2, ArrowLeft, HelpCircle } from 'lucide-react';
-import * as LucideIcons from 'lucide-react';
 import HeroRFQForm from '@/components/HeroRFQForm';
+import DetailPageHeroBanner from '@/components/web/DetailPageHeroBanner';
 import { db } from '@/db';
 import { services } from '@/db/schema';
 import { eq } from 'drizzle-orm';
-import Image from 'next/image';
-import DetailPageHeroBanner from '@/components/web/DetailPageHeroBanner';
+import * as LucideIcons from 'lucide-react';
+import { CheckCircle2, HelpCircle } from 'lucide-react';
+import { notFound } from 'next/navigation';
+
+function normalizeQuillHtml(html: string | null | undefined) {
+    if (!html) return '';
+
+    // Strip explicit word-break hints and invisible characters that can split words mid-letter
+    const cleaned = html
+        // Tag-based word break opportunities
+        .replace(/<wbr\s*\/?>/gi, '')
+        // Zero-width characters / word joiners / BOM
+        .replace(/[\u200B\u200C\u200D\u2060\uFEFF]/g, '')
+        .replace(/\u00AD/g, '') // soft hyphen
+        // HTML entities for the same characters
+        .replace(/&(?:shy|ZeroWidthSpace);/gi, '')
+        .replace(/&#(?:173|8203);/g, '')
+        .replace(/&#x(?:00ad|200b);/gi, '');
+
+    // Prevent breaking at literal hyphens inside words or numeric ranges (e.g. "precision-engineered", "95-99")
+    // Only modify text nodes (leave tags/attributes intact).
+    return cleaned
+        .split(/(<[^>]+>)/g)
+        .map((part) => {
+            if (part.startsWith('<')) return part;
+            return part.replace(/([A-Za-z0-9])\-([A-Za-z0-9])/g, '$1\u2011$2'); // non-breaking hyphen
+        })
+        .join('');
+}
 
 // 1. Generate Static Params for SSG (Optional, but good for performance)
 export async function generateStaticParams() {
@@ -53,6 +76,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
     }
 
     const Icon = (LucideIcons as any)[service.iconName] || HelpCircle;
+    const safeDetailsHtml = normalizeQuillHtml(service.details);
 
     return (
         <main className="min-h-screen bg-white">
@@ -70,8 +94,8 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                         <div className="prose prose-lg prose-headings:font-bold prose-headings:text-gray-900 text-gray-600 max-w-none prose-primary">
                             <h2 className="text-3xl font-bold text-gray-900 mb-6">Overview</h2>
                             <div
-                                className="quill-content leading-relaxed   "
-                                dangerouslySetInnerHTML={{ __html: service.details }}
+                                className="quill-content leading-relaxed"
+                                dangerouslySetInnerHTML={{ __html: safeDetailsHtml }}
                             />
                         </div>
 

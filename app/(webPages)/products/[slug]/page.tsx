@@ -10,6 +10,34 @@ import ProductGallery from '@/components/web/ProductGallery';
 import ProductFAQ from '@/components/ProductFAQ';
 import DetailPageHeroBanner from '@/components/web/DetailPageHeroBanner';
 
+function normalizeQuillHtml(html: string | null | undefined) {
+    if (!html) return '';
+
+    // Text pasted from PDFs/Word often includes zero-width spaces or soft hyphens
+    // that cause strange mid-word wrapping in the browser.
+    const cleaned = html
+        // Tag-based word break opportunities
+        .replace(/<wbr\s*\/?>/gi, '')
+        // Unicode characters that introduce break opportunities / artifacts
+        .replace(/[\u200B\u200C\u200D\u2060\uFEFF]/g, '') // zwsp/zwnj/zwj/word-joiner/bom
+        .replace(/\u00AD/g, '') // soft hyphen
+        // Common HTML entities for the same characters
+        .replace(/&(?:shy|ZeroWidthSpace);/gi, '')
+        .replace(/&#(?:173|8203);/g, '')
+        .replace(/&#x(?:00ad|200b);/gi, '');
+
+    // Prevent breaking at literal hyphens inside words (e.g. "precision-engineered").
+    // We only apply this to text outside HTML tags to avoid corrupting attributes/classes.
+    return cleaned
+        .split(/(<[^>]+>)/g)
+        .map((part) => {
+            if (part.startsWith('<')) return part;
+            // Non-breaking hyphen between letters or digits, e.g. "precision-engineered", "95-99"
+            return part.replace(/([A-Za-z0-9])\-([A-Za-z0-9])/g, '$1\u2011$2');
+        })
+        .join('');
+}
+
 // 1. Dynamic Metadata Generation for SEO
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
@@ -105,6 +133,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     }
 
     const heroImage = product.coverImage?.url || product.thumbnail?.url || 'https://placehold.co/1920x600/0f766e/ffffff?text=Detco+Shades';
+    const safeDescriptionHtml = normalizeQuillHtml(product.description);
 
     return (
         <main className="min-h-screen bg-white">
@@ -138,15 +167,15 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                                     max-w-none
                                     prose-headings:font-semibold
                                     prose-headings:text-gray-900
-                                    prose-p:text-gray-600
-                                    prose-li:text-gray-600
+                                    prose-p:text-gray-800
+                                    prose-li:text-gray-800
                                     prose-strong:text-primary
                                     prose-a:text-primary
                                     prose-a:underline
                                     dark:prose-invert
                                     dark:prose-headings:text-gray-100
                                     "
-                                dangerouslySetInnerHTML={{ __html: product.description }}
+                                dangerouslySetInnerHTML={{ __html: safeDescriptionHtml }}
                             />
                         </section>
 
