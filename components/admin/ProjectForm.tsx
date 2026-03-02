@@ -25,11 +25,11 @@ const projectSchema = z.object({
     serviceId: z.string().min(1, "Please select a service"),
     thumbnailId: z.string().min(1, "Thumbnail is required"),
     thumbnailUrl: z.string().optional(),
-    description: z.string().min(1, "Description is required"),
+    description: z.string().min(1, "Description is required").max(5000),
     gallery: z.array(z.object({
         imageId: z.string().min(1, "Image is required"),
         url: z.string().optional()
-    })).min(1, "At least one gallery image is required").max(5, "Maximum 5 gallery images are allowed"),
+    })).min(1, "At least one gallery image is required").max(8, "Maximum 8 gallery images are allowed"),
     isActive: z.boolean(),
 });
 
@@ -259,7 +259,7 @@ const ProjectForm = ({
                                     value={watch("description")}
                                     onChange={(val) => setValue("description", val)}
                                     placeholder="Write about the project scope, challenges, and results..."
-                                    maxLength={3000}
+                                    maxLength={5000}
                                     className="min-h-[400px]"
                                     error={errors.description?.message}
                                 />
@@ -326,7 +326,7 @@ const ProjectForm = ({
                                 )}
 
                                 <div >
-                                    {galleryFields.length < 5 && (
+                                    {galleryFields.length < 8 && (
                                         <button
                                             type="button"
                                             onClick={() => appendImage({ imageId: "", url: "" })}

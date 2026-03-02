@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 const serviceSchema = z.object({
     title: z.string().trim().min(1, "Title is required").max(200),
     slug: z.string().trim().min(1, "Slug is required").max(200),
-    shortDescription: z.string().trim().min(1, "Short description is required").max(300),
+    shortDescription: z.string().trim().min(1, "Short description is required").max(600),
     details: z.string().min(1, "Details are required"),
     iconName: z.string().min(1, "Icon is required"),
     coverImageId: z.string().nullable(),
