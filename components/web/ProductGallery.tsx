@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Play, Pause, ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import cloudinaryLoader from "@/lib/image-loader";
 
 interface MediaItem {
     type: "image" | "video";
@@ -58,17 +59,19 @@ const getVideoEmbedInfo = (url: string): { platform: 'youtube' | 'vimeo' | 'dire
     };
 };
 
-const SafeImage = ({ src, alt, className, fill, priority }: { src: string, alt: string, className?: string, fill?: boolean, priority?: boolean }) => {
+const SafeImage = ({ src, alt, className, fill, priority, sizes }: { src: string, alt: string, className?: string, fill?: boolean, priority?: boolean, sizes?: string }) => {
     const [imgSrc, setImgSrc] = useState(src);
 
     return (
         <Image
+            loader={src.includes('res.cloudinary.com') ? cloudinaryLoader : undefined}
             src={imgSrc}
             alt={alt}
             fill={fill}
             className={className}
             priority={priority}
             onError={() => setImgSrc(PLACEHOLDER_IMAGE)}
+            sizes={sizes}
         />
     );
 };
@@ -134,6 +137,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ items }) => {
                         fill
                         className="object-contain group-hover:scale-105 transition-transform duration-700"
                         priority={activeIndex === 0}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
                     />
                 )}
             </div>
@@ -175,6 +179,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ items }) => {
                                     alt={item.alt || "Thumbnail"}
                                     fill
                                     className="object-cover"
+                                    sizes="100px"
                                 />
                             )
                             }

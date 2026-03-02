@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Project } from "@/hooks/use-projects";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import cloudinaryLoader from "@/lib/image-loader";
 
 function normalizeQuillHtml(html: string | null | undefined) {
     if (!html) return "";
@@ -101,11 +102,13 @@ const ProjectQuickView = ({ project, isOpen, onClose }: ProjectQuickViewProps) =
                                 >
                                     {images.length > 0 ? (
                                         <Image
+                                            loader={images[currentImageIndex]?.includes('res.cloudinary.com') ? cloudinaryLoader : undefined}
                                             src={images[currentImageIndex]}
                                             alt={project.title}
                                             fill
                                             className="object-contain md:object-cover"
                                             priority
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 1000px"
                                         />
                                     ) : (
                                         <div className="w-full h-full flex flex-col items-center justify-center text-gray-700 bg-gray-100">

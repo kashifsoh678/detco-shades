@@ -10,6 +10,7 @@ import ClientForm from '@/components/admin/ClientForm'
 import { useClients } from '@/hooks/use-clients'
 import { Client } from '@/types/clients'
 import Image from 'next/image'
+import cloudinaryLoader from '@/lib/image-loader'
 
 const ClientsPage = () => {
     const [page, setPage] = useState(1)
@@ -135,10 +136,12 @@ const ClientsPage = () => {
                             <div className="relative aspect-square rounded-xl bg-gray-50 flex items-center justify-center overflow-hidden mb-4">
                                 {client.image?.url ? (
                                     <Image
+                                        loader={client.image.url.includes('res.cloudinary.com') ? cloudinaryLoader : undefined}
                                         src={client.image.url}
                                         alt={client.name}
                                         fill
                                         className="object-contain p-4 group-hover:scale-110 transition-transform duration-500"
+                                        sizes="150px"
                                     />
                                 ) : (
                                     <ExternalLink size={24} className="text-gray-300" />

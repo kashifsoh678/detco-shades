@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import cloudinaryLoader from '@/lib/image-loader';
 
 interface Client {
     name: string;
@@ -51,6 +52,7 @@ export default function ClientsTicker({ clients }: ClientsTickerProps) {
                         >
                             {client.logo ? (
                                 <Image
+                                    loader={client.logo?.includes('res.cloudinary.com') ? cloudinaryLoader : undefined}
                                     src={client.logo}
                                     alt={client.name}
                                     fill
