@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-const DetailPageHeroBanner = ({ heroImage, parentRoute = "products", data }: { heroImage: string; parentRoute: string; data: any }) => {
+const DetailPageHeroBanner = ({ heroImage, parentRoute = "products", data }: { heroImage?: string; parentRoute: string; data: any }) => {
     return (
         <div className="relative min-h-[400px] flex items-center bg-primary overflow-hidden py-20">
             {/* Hero Background with Cover Image if available */}

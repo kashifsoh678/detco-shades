@@ -1,13 +1,37 @@
-import React from 'react';
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import { ArrowRight, CheckCircle2, ArrowLeft, HelpCircle } from 'lucide-react';
-import * as LucideIcons from 'lucide-react';
 import HeroRFQForm from '@/components/HeroRFQForm';
+import DetailPageHeroBanner from '@/components/web/DetailPageHeroBanner';
 import { db } from '@/db';
 import { services } from '@/db/schema';
 import { eq } from 'drizzle-orm';
-import Image from 'next/image';
+import * as LucideIcons from 'lucide-react';
+import { CheckCircle2, HelpCircle } from 'lucide-react';
+import { notFound } from 'next/navigation';
+
+function normalizeQuillHtml(html: string | null | undefined) {
+    if (!html) return '';
+
+    // Strip explicit word-break hints and invisible characters that can split words mid-letter
+    const cleaned = html
+        // Tag-based word break opportunities
+        .replace(/<wbr\s*\/?>/gi, '')
+        // Zero-width characters / word joiners / BOM
+        .replace(/[\u200B\u200C\u200D\u2060\uFEFF]/g, '')
+        .replace(/\u00AD/g, '') // soft hyphen
+        // HTML entities for the same characters
+        .replace(/&(?:shy|ZeroWidthSpace);/gi, '')
+        .replace(/&#(?:173|8203);/g, '')
+        .replace(/&#x(?:00ad|200b);/gi, '');
+
+    // Prevent breaking at literal hyphens inside words or numeric ranges (e.g. "precision-engineered", "95-99")
+    // Only modify text nodes (leave tags/attributes intact).
+    return cleaned
+        .split(/(<[^>]+>)/g)
+        .map((part) => {
+            if (part.startsWith('<')) return part;
+            return part.replace(/([A-Za-z0-9])\-([A-Za-z0-9])/g, '$1\u2011$2'); // non-breaking hyphen
+        })
+        .join('');
+}
 
 // 1. Generate Static Params for SSG (Optional, but good for performance)
 export async function generateStaticParams() {
@@ -52,43 +76,13 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
     }
 
     const Icon = (LucideIcons as any)[service.iconName] || HelpCircle;
+    const safeDetailsHtml = normalizeQuillHtml(service.details);
 
     return (
         <main className="min-h-screen bg-white">
             {/* --- HERO SECTION --- */}
-            <div className="relative min-h-[400px] flex items-center bg-primary overflow-hidden py-20">
-                {service.coverImage?.url ? (
-                    <Image
-                        src={service.coverImage.url}
-                        alt={service.title}
-                        fill
-                        className="object-cover opacity-20"
-                        priority
-                    />
-                ) : (
-                    <div className="absolute inset-0 bg-primary opacity-10" />
-                )}
+            <DetailPageHeroBanner heroImage={service.coverImage?.url} parentRoute="services" data={service} />
 
-                <div className="container mx-auto px-4 relative z-10">
-                    <div className="max-w-4xl">
-                        <div className="flex items-center flex-wrap gap-2 text-sm text-teal-200 mb-6 font-medium tracking-wide uppercase">
-                            <Link href="/" className="hover:text-white transition-colors">Home</Link>
-                            <span>/</span>
-                            <Link href="/services" className="hover:text-white transition-colors">Services</Link>
-                            <span>/</span>
-                            <span className="text-white border-b border-teal-400">{service.title}</span>
-                        </div>
-                        {/* H1: Primary Keyword Target */}
-                        <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 shadow-sm leading-tight">
-                            {service.title}
-                        </h1>
-                        <p className="text-xl text-teal-50 max-w-2xl font-light capitalize">
-                            {service.shortDescription}
-                        </p>
-                    </div>
-
-                </div>
-            </div>
 
             <div className="container mx-auto px-4 py-16 md:py-24">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
@@ -100,8 +94,8 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                         <div className="prose prose-lg prose-headings:font-bold prose-headings:text-gray-900 text-gray-600 max-w-none prose-primary">
                             <h2 className="text-3xl font-bold text-gray-900 mb-6">Overview</h2>
                             <div
-                                className="quill-content leading-relaxed   "
-                                dangerouslySetInnerHTML={{ __html: service.details }}
+                                className="quill-content leading-relaxed"
+                                dangerouslySetInnerHTML={{ __html: safeDetailsHtml }}
                             />
                         </div>
 
@@ -145,7 +139,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
 
                     {/* --- RIGHT COLUMN: Sidebar --- */}
                     <div className="lg:col-span-4 space-y-8 relative">
-                        <div className="sticky top-24">
+                        <div className="sticky top-42">
                             <div className="bg-gray-900 rounded-3xl p-1 shadow-2xl relative overflow-hidden">
                                 <div className="absolute inset-0 bg-primary/20 backdrop-blur-sm z-0" />
                                 <div className="relative z-10">
@@ -156,7 +150,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                             <div className="mt-8 bg-teal-50 rounded-3xl p-8 border border-white shadow-sm text-center">
                                 <h3 className="font-bold text-gray-900 mb-2">Need direct assistance?</h3>
                                 <p className="text-gray-600 text-sm mb-6">Our engineers are available 24/7 for consultation.</p>
-                                <a href="tel:+966590391128" className="inline-flex items-center justify-center w-full py-3 bg-white text-primary font-bold rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100">
+                                <a href="tel:+966590391128" className="mb-4 inline-flex items-center justify-center w-full py-3 bg-white text-primary font-bold rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100">
                                     Call +966590391128
                                 </a>
                                 <a href="tel:+966530275784" className="inline-flex items-center justify-center w-full py-3 bg-white text-primary font-bold rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100">

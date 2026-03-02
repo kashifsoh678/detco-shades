@@ -8,6 +8,33 @@ import { Project } from "@/hooks/use-projects";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+function normalizeQuillHtml(html: string | null | undefined) {
+    if (!html) return "";
+
+    // Remove explicit word-break hints and invisible characters that can split words
+    const cleaned = html
+        // Tag-based break opportunities
+        .replace(/<wbr\s*\/?>/gi, "")
+        // Zero-width characters / word joiners / BOM
+        .replace(/[\u200B\u200C\u200D\u2060\uFEFF]/g, "")
+        .replace(/\u00AD/g, "") // soft hyphen
+        // Common HTML entities for same characters
+        .replace(/&(?:shy|ZeroWidthSpace);/gi, "")
+        .replace(/&#(?:173|8203);/g, "")
+        .replace(/&#x(?:00ad|200b);/gi, "");
+
+    // Prevent breaking at literal hyphens inside words (e.g. "precision-engineered")
+    // Only modify text nodes (not tags/attributes)
+    return cleaned
+        .split(/(<[^>]+>)/g)
+        .map((part) => {
+            if (part.startsWith("<")) return part;
+            // Non-breaking hyphen between letters or digits, e.g. "precision-engineered", "95-99"
+            return part.replace(/([A-Za-z0-9])\-([A-Za-z0-9])/g, "$1\u2011$2");
+        })
+        .join("");
+}
+
 interface ProjectQuickViewProps {
     project: Project | null;
     isOpen: boolean;
@@ -18,6 +45,8 @@ const ProjectQuickView = ({ project, isOpen, onClose }: ProjectQuickViewProps) =
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     if (!project) return null;
+
+    const safeDescriptionHtml = normalizeQuillHtml(project.description);
 
     const images = project.images?.map(img => img.image.url) || [];
     if (project.thumbnail?.url && !images.includes(project.thumbnail.url)) {
@@ -139,7 +168,7 @@ const ProjectQuickView = ({ project, isOpen, onClose }: ProjectQuickViewProps) =
                                 </div>
 
                                 <div className="prose prose-lg text-gray-600 max-w-none quill-content capitalize text-[12px]!">
-                                    <div dangerouslySetInnerHTML={{ __html: project.description }} />
+                                    <div dangerouslySetInnerHTML={{ __html: safeDescriptionHtml }} />
                                 </div>
                             </div>
 
