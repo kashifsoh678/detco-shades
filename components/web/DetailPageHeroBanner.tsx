@@ -1,14 +1,26 @@
+"use client";
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
+import cloudinaryLoader from '@/lib/image-loader'
 
 const DetailPageHeroBanner = ({ heroImage, parentRoute = "products", data }: { heroImage?: string; parentRoute: string; data: any }) => {
     return (
         <div className="relative min-h-[400px] flex items-center bg-primary overflow-hidden py-20">
             {/* Hero Background with Cover Image if available */}
-            <div
-                className="absolute inset-0 opacity-20 bg-cover bg-center"
-                style={{ backgroundImage: `url('${heroImage}')` }}
-            />
+            {heroImage && (
+                <div className="absolute inset-0 opacity-20">
+                    <Image
+                        loader={heroImage.includes('res.cloudinary.com') ? cloudinaryLoader : undefined}
+                        src={heroImage}
+                        alt={data.title}
+                        fill
+                        className="object-cover object-center"
+                        priority
+                        sizes="100vw"
+                    />
+                </div>
+            )}
             <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
 
             <div className="container mx-auto px-4 relative z-10">

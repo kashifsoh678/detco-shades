@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { MapPin, Eye } from 'lucide-react';
 import Image from 'next/image';
 import { PLACEHOLDER_IMAGE } from '@/constants/api';
+import cloudinaryLoader from '@/lib/image-loader';
 
 interface ProjectCardProps {
     id: string;
@@ -30,6 +31,7 @@ export default function ProjectCard({ title, service, location, thumbnail, index
             {/* Image - Hover View Icon */}
             <div className="aspect-4/2 w-full overflow-hidden relative bg-gray-100">
                 <Image
+                    loader={imgSrc.includes('res.cloudinary.com') ? cloudinaryLoader : undefined}
                     src={imgSrc}
                     alt={title}
                     fill

@@ -102,7 +102,6 @@ export default function Navbar() {
                                 height={100}
                                 className="h-18 lg:h-28 xl:h-34 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                                 priority
-                                unoptimized
                             />
                         </Link>
 

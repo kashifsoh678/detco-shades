@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { Users } from "lucide-react";
 import { PLACEHOLDER_IMAGE } from "@/constants/api";
+import cloudinaryLoader from "@/lib/image-loader";
 
 interface Client {
     id: string;
@@ -27,6 +28,7 @@ const ClientCardItem = ({ client }: { client: Client }) => {
 
             <div className="relative w-full h-full">
                 <Image
+                    loader={imgSrc.includes('res.cloudinary.com') ? cloudinaryLoader : undefined}
                     src={imgSrc}
                     alt={client.name}
                     fill

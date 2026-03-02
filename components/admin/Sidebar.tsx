@@ -59,7 +59,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                                 alt="Detco Logo"
                                 fill
                                 className="object-cover w-full h-full "
-                                unoptimized
+                                sizes="128px"
                             />
                         </div>
                     </Link>

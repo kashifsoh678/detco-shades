@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { motion, Variants } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { PLACEHOLDER_IMAGE } from "@/constants/api";
+import cloudinaryLoader from '@/lib/image-loader';
 
 interface Product {
     id: string;
@@ -55,6 +56,7 @@ const ProductCardItem = ({ product }: { product: Product }) => {
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors z-10 duration-500" />
 
                 <Image
+                    loader={imgSrc.includes('res.cloudinary.com') ? cloudinaryLoader : undefined}
                     src={imgSrc}
                     alt={product.title}
                     fill

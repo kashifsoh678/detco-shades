@@ -19,6 +19,7 @@ import ConfirmModal from "@/components/ui/ConfirmModal";
 import ServiceForm from "@/components/admin/ServiceForm";
 import { useServices, Service } from "@/hooks/use-services";
 import Image from "next/image";
+import cloudinaryLoader from "@/lib/image-loader";
 
 const ServicesPage = () => {
     const [page, setPage] = useState(1);
@@ -156,10 +157,12 @@ const ServicesPage = () => {
                                 <div className="relative h-48 bg-gray-100">
                                     {service.coverImage?.url ? (
                                         <Image
+                                            loader={service.coverImage.url.includes('res.cloudinary.com') ? cloudinaryLoader : undefined}
                                             src={service.coverImage.url}
                                             alt={service.title}
                                             fill
                                             className="object-cover"
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                                         />
                                     ) : (
                                         <div className="w-full h-full flex items-center justify-center text-gray-300">

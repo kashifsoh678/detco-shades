@@ -6,6 +6,7 @@ import axiosInstance from '@/lib/axios'
 import { toast } from 'sonner'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
+import cloudinaryLoader from '@/lib/image-loader'
 
 interface ImageUploadProps {
     value?: string; // URL of already uploaded image
@@ -101,10 +102,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 {value ? (
                     <div className="relative w-full h-40 rounded-xl overflow-hidden group border border-gray-200 ">
                         <Image
+                            loader={value.includes('res.cloudinary.com') ? cloudinaryLoader : undefined}
                             src={value}
                             alt="Uploaded image"
                             fill
                             className="object-cover transition-transform group-hover:scale-105"
+                            sizes="(max-width: 768px) 100vw, 400px"
                         />
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                             <button

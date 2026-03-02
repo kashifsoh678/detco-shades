@@ -21,6 +21,7 @@ import ProductForm from "@/components/admin/ProductForm";
 import { useProducts, Product } from "@/hooks/use-products";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import cloudinaryLoader from "@/lib/image-loader";
 
 const ProductsPage = () => {
     const [page, setPage] = useState(1);
@@ -151,10 +152,12 @@ const ProductsPage = () => {
                             <div className="relative h-56 bg-gray-50">
                                 {product.thumbnail?.url ? (
                                     <Image
+                                        loader={product.thumbnail.url.includes('res.cloudinary.com') ? cloudinaryLoader : undefined}
                                         src={product.thumbnail.url}
                                         alt={product.title}
                                         fill
                                         className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                                     />
                                 ) : (
                                     <div className="w-full h-full flex items-center justify-center text-gray-300">
