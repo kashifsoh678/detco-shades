@@ -1,13 +1,12 @@
 "use client";
 
-import React from 'react';
-import { Phone, Mail, MapPin, Clock, MessageSquare, Send, Loader2 } from 'lucide-react';
-import { useServices, Service } from '@/hooks/use-services';
-import { useQuotes } from '@/hooks/use-quotes';
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import PageBanner from '@/components/web/PageBanner';
+import { useQuotes } from '@/hooks/use-quotes';
+import { Service, useServices } from '@/hooks/use-services';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Clock, Loader2, Mail, MapPin, MessageSquare, Phone, Send } from 'lucide-react';
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 const contactSchema = z.object({
     name: z.string().min(2, "Full name is required"),
@@ -82,8 +81,15 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Phone</p>
-                                        <p className="font-medium text-gray-900">+966590391128</p>
-                                        <p className="font-light text-sm text-gray-900">+966530275784</p>
+                                        <p className="font-medium text-gray-900">
+                                            <a href="tel:+966550181214" className="hover:text-primary transition-colors">+966550181214</a>
+                                        </p>
+                                        <p className="font-medium text-gray-900">
+                                            <a href="tel:+966507450956" className="hover:text-primary transition-colors">+966507450956</a>
+                                        </p>
+                                        <p className="font-medium text-gray-900">
+                                            <a href="tel:0530275784" className="hover:text-primary transition-colors">0530275784</a>
+                                        </p>
                                     </div>
                                 </div>
 
@@ -93,7 +99,7 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">WhatsApp</p>
-                                        <a href="https://wa.me/966559611821" target="_blank" rel="noopener noreferrer" className="font-medium text-gray-900 hover:text-primary transition-colors">
+                                        <a href="https://wa.me/966550181214" target="_blank" rel="noopener noreferrer" className="font-medium text-gray-900 hover:text-primary transition-colors">
                                             Chat with Support
                                         </a>
                                     </div>

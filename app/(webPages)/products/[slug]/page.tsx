@@ -247,8 +247,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                                     <div className="mt-8 space-y-4 border-t border-white/10 pt-6">
                                         <div className="flex items-center gap-4 text-sm group/item">
                                             <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover/item:bg-primary transition-colors"><Phone size={18} /></div>
-                                            <span className="font-medium">+966590391128</span>
-                                            <span className="font-medium">+966530275784</span>
+                                            <a href="tel:+966507450956" className="font-medium hover:text-primary hover:underline transition-colors">+966507450956</a>
+                                            <a href="tel:0530275784" className="font-medium hover:text-primary hover:underline transition-colors">0530275784</a>
                                         </div>
                                         <div className="flex items-center gap-4 text-sm group/item">
                                             <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover/item:bg-primary transition-colors"><Mail size={18} /></div>

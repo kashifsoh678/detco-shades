@@ -1,9 +1,8 @@
 "use client"
-import React from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
-import { hasAdminPath } from './Navbar';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { hasAdminPath } from './Navbar';
 
 export default function Footer() {
     const pathname = usePathname();
@@ -55,15 +54,15 @@ export default function Footer() {
                         <h3 className="text-xl font-bold mb-6 border-b border-gray-600 pb-2 inline-block">Contact Info</h3>
                         <div className="space-y-4 text-gray-400">
                             <p className="flex items-start gap-3">
-                                <span className="text-primary mt-1">📍</span>
                                 <span>HQ, As Saadah, Riyadh<br />Service Regions: Riyadh, Dammam, Khobar, Jubail, Yanbu, Tabuk</span>
                             </p>
-                            <p className="flex items-center gap-3">
-                                <span className="text-primary">📞</span>
-                                <a href="tel:+966590391128" className="hover:text-primary transition-colors">+966590391128</a> | <a href="tel:+966530275784" className="hover:text-primary transition-colors">+966530275784</a>
+                            <p className="flex flex-col md:flex-row md:items-center gap-3">
+
+                                <a href="tel:+966550181214" className="hover:text-primary transition-colors">+966550181214</a>
+                                <a href="tel:+966507450956" className="hover:text-primary transition-colors">+966507450956</a>
+                                <a href="tel:0530275784" className="hover:text-primary transition-colors">0530275784</a>
                             </p>
                             <p className="flex items-center gap-3">
-                                <span className="text-primary">✉️</span>
                                 <a href="mailto:detcoshade@gmail.com" className="hover:text-primary transition-colors">detcoshade@gmail.com</a>
                             </p>
                         </div>
